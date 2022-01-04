@@ -1,30 +1,25 @@
 
 -- Доллар/рубль
-script_path = getScriptPath()
+-- script_path = getScriptPath()
 
-local script_path = getScriptPath()
+ script_path = getScriptPath()
+
 dofile(script_path .. "\\setting\\path.lua");
  
 
-local Setting=  dofile(script_path .. "\\setting\\work_si.lua");
+local Setting =  dofile(script_path .. "\\setting\\work_si.lua");
  
 
 local EngineClass = dofile(script_path .. "\\modules\\start_engine.lua");
 local Loger = dofile(script_path .. "\\engine\\loger.lua");
 
 
-
-
- -- message(Setting.version .. ' =  ' .. Setting.SEC_CODE.. Setting.test())
- 
-
-
- 
 local Log = Loger:new(Setting);
 local Engine = EngineClass:new(Setting, Log);
 
 function OnInit()
-    Engine.EngineInit()
+    Engine.EngineOnInit()
+    
 end
 
 

@@ -1,14 +1,5 @@
--- local lua51path = "C:\\Program Files (x86)\\Lua\\5.1\\" -- путь, куда установлен дистрибутив Lua 5.1 for Windows
 
--- package.cpath = "./?.dll;./?51.dll;" .. lua51path .. "?.dll;" .. lua51path ..
---                   "?51.dll;" .. lua51path .. "clibs/?.dll;" .. lua51path ..
---                    "clibs/?51.dll;" .. lua51path .. "loadall.dll;" .. lua51path ..
---                    "clibs/loadall.dll;" .. package.cpath
--- package.path = package.path .. ";./?.lua;" .. lua51path .. "lua/?.lua;" ..
---                   lua51path .. "lua/?/init.lua;" .. lua51path .. "?.lua;" ..
---                   lua51path .. "?/init.lua;" .. lua51path .. "lua/?.luac;"
-
- local lua54path = "F:\\Lua\\" -- путь, куда установлен дистрибутив Lua 5.1 for Windows
+ local lua54path = "F:\\Lua\\" -- путь, куда установлен дистрибутив Lua 5.* for Windows
 
  package.cpath = "./?.dll;./?54.dll;" .. lua54path .. "?.dll;" .. lua54path ..
                    "?54.dll;" .. lua54path .. "clibs/?.dll;" .. lua54path ..
@@ -20,6 +11,10 @@
 
 require("table")
 
-setting = {};
-stopClass = {};
-engine = {};
+-- for extand classes
+function extended (child, parent)
+  --  local child = {}
+    setmetatable(child,{__index = parent})
+  --  return child
+end
+ 

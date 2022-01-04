@@ -4,26 +4,41 @@ local M = {}
 local dataLog = getScriptPath() .. "\\log\\dataLog.txt";
 local logSignal = getScriptPath() .. "\\log\\EventLog.txt";
 
-local function saveFile(file, text)
+local Log = {}
 
-    f = io.open(file, "a");
-    if f == nil then
-        f = io.open(file, "w");
-        f:close();
-        f = io.open(file, "a");
+function Log:new(_setting)
+    
+    -- свойства
+    local obj= {}
+
+    local function _saveFile(file, text)
+        
+        if(text ~= nil)then 
+            f = io.open(file, "a");
+            if f == nil then
+                f = io.open(file, "w");
+                f:close();
+                f = io.open(file, "a");
+            end
+            f:write(text .. "\n")
+            -- Закрывает файл
+            f:close();
+        end
+
     end
-    f:write(text .. "\n")
-    -- Закрывает файл
-    f:close();
 
-end
+    -- I try to open this file
+    function obj:save(text) 
+        _saveFile(dataLog, text) 
+    end
 
--- I try to open this file
-local function save(text) saveFile(dataLog, text) end
+    -- I try to open this file
+    function obj:saveSignal(text) 
+        _saveFile(logSignal, text) 
+    end 
+    
+        setmetatable(obj, self)
+        self.__index = self; return obj
 
--- I try to open this file
-local function saveSignal(text) saveFile(logSignal, text) end
-
-M.save = save
-M.saveSignal = saveSignal
-return M
+end 
+return Log
