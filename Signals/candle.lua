@@ -238,7 +238,12 @@ function Candle:new(setting, Log)
         end
 
         setArrayCandles(bar, obj.Setting.number_of_candle);
+
+        -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
+
+      --   obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
+
         obj.Setting.datetime = bar.datetime;
 
         calculateSignal(bar);
@@ -267,6 +272,10 @@ function Candle:new(setting, Log)
                                                    obj.Setting.number_of_candle -
                                                        2 * len - shift, 2 * len)
         -- analyse candles 
+
+
+      --  obj.Log:save('setting.current_price 1 ======= ' .. obj.Setting.current_price);
+
         i = len
         j = 2 * len
         while i >= 1 do
@@ -300,6 +309,12 @@ function Candle:new(setting, Log)
             t = len + 1
         end
     end
+
+    -- вызывается при остановке скрипта при кнопке стоп
+    function obj:destructor()
+        obj.lineBuyHigh.destructor()
+    end
+
 
     setmetatable(obj, self)
     self.__index = self;

@@ -1,6 +1,6 @@
 -- базовые функции, чтобы не переносить с одного файла в другой
 local LogicClass = dofile(script_path .. "\\modules\\logic.lua")
-local candleClass = dofile(script_path .. "\\Signals\\candle.lua")
+local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 
 local Engine = {}
 
@@ -10,8 +10,7 @@ function Engine:new(setting, Log)
     local obj = {}
     obj.Log = Log
     obj.Setting = setting
- 
-
+  
  
      
     
@@ -39,7 +38,11 @@ function Engine:new(setting, Log)
 
     function obj:update() end
 
-    function obj:EngineStop() obj.Setting.Run = false end
+    function obj:EngineStop() 
+        obj.Setting.Run = false 
+        obj.candleClass:destructor()
+        obj.Logic:destructor()
+    end
 
     function obj:eventTranc(price, datetime, levelLocal, event) end
 

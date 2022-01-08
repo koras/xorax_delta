@@ -52,13 +52,14 @@ function EngineSetting:new()
 
     -- status gap
     setting.gap = {}
-    setting.gap.status = true;
+
+    setting.gap.status = true
     --  0 - gap start 
     -- 1 - buy OR sell contract 
     -- 2 - closed position 
     setting.gap.phase = 0;
 
-    setting.gap.direct = "";
+    setting.gap.direct = 'buy'
     -- разрешено ли использовать такую стратегию торговли
     setting.gap.allowed = true;
     -- цена открытия позиции

@@ -84,14 +84,14 @@ function Setting:new()
     setting.use_contract = 1;
 
     
-    setting.gap = {};
+    setting.gapper = {};
     -- сколько использовать контрактов для гэпа
-    setting.gap.use_contract = 1;
+    setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gap.well_price = 20;
+    setting.gapper.well_price = 20;
     
-    setting.gap.takeProfit = 350;
-    setting.gap.stopLimit = 20;
+    setting.gapper.takeProfit = 350;
+    setting.gapper.stopLimit = 20;
     
 
 
