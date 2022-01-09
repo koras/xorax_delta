@@ -63,7 +63,6 @@ function getRandSell(price)
                     -- short
                     if setting.sellTable[j_checkRange].price - setting.profit_range <= price and price <= setting.sellTable[j_checkRange].price + setting.profit_range then
                         checkRange = false;
-   
                     end
 
                 end

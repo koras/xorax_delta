@@ -10,17 +10,14 @@ function Engine:new(setting, Log)
     local obj = {}
     obj.Log = Log
     obj.Setting = setting
-  
- 
-     
-    
 
     function obj:EngineOnInit()
         -- логика  
         obj.Logic = LogicClass:new(obj.Setting, obj.Log)
-        --    obj.Logic:Init() 
-            obj.candleClass = candleClass:new(obj.Setting, obj.Log)
-            obj.Log:save(obj.candleClass.test)
+        obj.Logic:init()
+        --  работа с графиком
+        obj.candleClass = candleClass:new(obj.Setting, obj.Log)
+        obj.Log:save(obj.candleClass.test)
     end
 
     -- срабатывает при обновлении свечи
@@ -38,8 +35,8 @@ function Engine:new(setting, Log)
 
     function obj:update() end
 
-    function obj:EngineStop() 
-        obj.Setting.Run = false 
+    function obj:EngineStop()
+        obj.Setting.Run = false
         obj.candleClass:destructor()
         obj.Logic:destructor()
     end
@@ -53,9 +50,8 @@ function Engine:new(setting, Log)
     -- срабатывает при обновлении свечи
     local function updateTick(result) end
 
-    function obj:EngineMain() 
-         
- 
+    function obj:EngineMain()
+
         -- получаем график и сигнал
         obj.candleClass:getSignal(updateTick)
 
@@ -71,8 +67,6 @@ function Engine:new(setting, Log)
 
         while obj.Setting.Run do
 
- 
-
             sleep(obj.Setting.sleep)
 
             -- сработал стоп, проверка 
@@ -87,7 +81,7 @@ function Engine:new(setting, Log)
                 obj.Logic:conditionTimeTrading()
                 --  conditionTimeTrading(setting);
                 -- старая схема покупок на объёмах
-                
+
                 obj.candleClass:getSignal(updateTick)
                 --        candles.getSignal(setting, updateTick)
             end

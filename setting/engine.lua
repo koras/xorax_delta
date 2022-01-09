@@ -24,9 +24,9 @@ function EngineSetting:new()
     setting.version = "2.0.1";
 
     -- второй минимум
-    setting.low_formacia = {};
-
-    setting.candle_test = 0;
+    setting.low_formacia = {}
+    
+    setting.candle_test = 0
 
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки
     setting.candle_current_low = 0; -- верхняя граница свечи; для промежутка покупки
@@ -70,6 +70,8 @@ function EngineSetting:new()
     setting.gap.nextPriceStop = 0
     -- где должна быть цена чтобы мы передвинули стоп
     setting.gap.whereIsPriceForStop = 0
+
+    setting.labels = {}
 
     -- Здесь сохраняем id лэйблы для стопов
     setting.gap.label = {}
