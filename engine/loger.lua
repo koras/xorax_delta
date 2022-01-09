@@ -28,7 +28,15 @@ function Log:new(_setting)
     end
 
     -- I try to open this file
-    function obj:save(text) 
+    function obj:save(txt, models)
+        local  modelName = ''
+        if(txt == nil) then 
+            return;
+        end
+        if(models ~= nil) then 
+            modelName = ' :'.. models 
+        end
+        text  = txt .. ' '.. modelName
         _saveFile(dataLog, text) 
     end
 

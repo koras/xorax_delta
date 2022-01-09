@@ -18,7 +18,7 @@ local Log = Loger:new(Setting);
 local Engine = EngineClass:new(Setting, Log);
 
 if (Setting.gap.status) then
-    Log:save("-- setting.gap.phase 125125125125")
+    Log:save("-- Setting.gap.status",' start')
 end
 
 

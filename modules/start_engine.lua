@@ -45,9 +45,50 @@ function Engine:new(setting, Log)
 
     function obj:EngineOrder(order) end
 
-    function obj:EngineOnTrade(trade) end
 
-    -- срабатывает при обновлении свечи
+-- OnTransReply -> OnTrade -> OnOrder 
+-- The function is called by the terminal when information on the deal comes from the server
+    function obj:EngineOnTrade(trade)
+
+    message(trade.order_num)
+    
+        obj.Log:save('OnTrade ' .. trade.order_num)
+
+   -- riskStop.updateOrderNumber(trade);
+
+    local sell = CheckBit(trade.flags, 1);
+
+    if (sell == 0) then end
+
+
+
+    if bit.band(trade.flags, 2) == 0 then
+        -- direction
+       -- market.startContract(trade);
+        
+    --    marketGap.executedContract(setting,trade);
+    else
+        obj.Log:save('OnTrade ')
+      --  market.takeExecutedContract(trade);
+    end
+
+    if not obj.Setting:CheckBit(trade.flags, 0) and not obj.Setting:CheckBit(trade.flags, 1) then
+
+        
+        if bit.band(trade.flags, 2) == 0 then
+
+         --   market.startContract(trade);
+         --   marketGap.executedContract(setting,trade);
+        else
+            obj.Log:save(  'OnTrade  flag 2')
+         --   market.takeExecutedContract(trade);
+        end
+    end
+
+    
+    end
+
+    -- when update a candle
     local function updateTick(result) end
 
     function obj:EngineMain()
