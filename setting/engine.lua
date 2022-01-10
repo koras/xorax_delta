@@ -59,7 +59,7 @@ function EngineSetting:new()
     -- 2 - closed position 
     setting.gap.phase = 0;
 
-    setting.gap.direct = 'buy'
+    setting.gap.direct = 'none direct'
     -- разрешено ли использовать такую стратегию торговли
     setting.gap.allowed = true;
     -- цена открытия позиции

@@ -13,7 +13,8 @@ function Log:new(_setting)
 
     local function _saveFile(file, text)
         
-        if(text ~= nil)then 
+        if(text ~= nil)then  
+
             f = io.open(file, "a");
             if f == nil then
                 f = io.open(file, "w");
@@ -28,7 +29,15 @@ function Log:new(_setting)
     end
 
     -- I try to open this file
-    function obj:save(text) 
+    function obj:save(txt, models)
+        local  modelName = ''
+        if(txt == nil) then 
+            return;
+        end
+        if(models ~= nil) then 
+            modelName = ' :'.. models 
+        end
+        text  = txt .. ' '.. modelName
         _saveFile(dataLog, text) 
     end
 
@@ -37,6 +46,12 @@ function Log:new(_setting)
         _saveFile(logSignal, text) 
     end 
     
+    function obj:clearFile()
+        -- только на время разработки
+        io.open(dataLog,"w"):close()
+        io.open(logSignal,"w"):close()
+    end
+
         setmetatable(obj, self)
         self.__index = self; return obj
 

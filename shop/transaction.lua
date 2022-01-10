@@ -121,8 +121,7 @@ function delete(transId_del_order, stopOrder_num, type)
     Transaction.ORDER_KEY = tostring(stopOrder_num);
     Transaction.TYPE = "L";
 
-    loger.save("Delete :  " .. tostring(transId_del_order) ..
-                   "  Transaction.ACTION = " .. tostring(Transaction.ACTION))
+    loger.save("Delete :  " .. tostring(transId_del_order) .. "  Transaction.ACTION = " .. tostring(Transaction.ACTION))
 
     local res = sendTransaction(Transaction)
     if string.len(res) ~= 0 then

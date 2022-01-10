@@ -4,6 +4,10 @@ local lineBuyHighClass = dofile(script_path .. "\\modules\\lineBuyHigh.lua")
 
 local Candle = {}
 
+-- перебор графика идёт с право на лево. 
+-- Это важно при получении информации о свечках и анализе роботом
+-- Время получается именно от сюда
+
 function Candle:new(setting, Log)
 
     local obj = {}
@@ -45,9 +49,11 @@ function Candle:new(setting, Log)
 
             obj.Setting.not_buy_high = obj.Setting.not_buy_high_UP +
                                            barCandleLocal.close;
-
-            obj.Setting.datetime = barCandleLocal.datetime;
-
+            
+             obj.Setting.datetime = os.date("!*t", os.time())
+            --obj.Setting.datetime = barCandleLocal.datetime;
+         --   obj.Log:save(tostring(obj.Setting.datetime.hour .. " //datetime  ".. obj.Setting.datetime.min))
+         
             obj.lineBuyHigh.updateBuyHigh()
 
             obj.Setting.not_buy_low = barCandleLocal.close -
@@ -119,6 +125,13 @@ function Candle:new(setting, Log)
                     end
 
                 end
+                
+                if (candle == 1) then
+                    -- устанавливаем время, берём из свечей
+                    obj.Setting.datetime = obj.Setting.array_candle[candle].datetime
+                 end
+                    
+               
             end
 
             -- max  = barCandle.high
@@ -162,8 +175,7 @@ function Candle:new(setting, Log)
             if obj.Setting.candle_current_high < localCandle.high then
                 obj.Setting.candle_current_high = localCandle.high;
             end
-
-            obj.Setting.datetime = localCandle.datetime;
+ 
 
             if obj.Setting.candle_current_low > localCandle.low then
                 obj.Setting.candle_current_low = localCandle.low;
@@ -171,7 +183,7 @@ function Candle:new(setting, Log)
             end
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
                 localCandle;
-        end
+        end 
         --  candleGraff.addSignal(obj.Setting.array_candle); 
     end
 
@@ -209,10 +221,13 @@ function Candle:new(setting, Log)
             if candlesArray[j - 1].datetime.hour ~= nil then
 
                 if candlesArray[j - 1].datetime.hour >= 10 then
+                    local dt = candlesArray[j - 1].datetime;
                     local bar = candlesArray[j - 1];
                     bar.numberCandle = first_candle + j - 1;
-                    obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
-                        bar;
+                    obj.Setting.array_candle[#obj.Setting.array_candle + 1] =bar;
+
+                   -- obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
+         
                     i = i - 1
                 end
                 j = j - 1
@@ -242,9 +257,9 @@ function Candle:new(setting, Log)
         -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
 
-      --   obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
-
-        obj.Setting.datetime = bar.datetime;
+        -- obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
+      
+        --obj.Setting.datetime = bar.datetime;
 
         calculateSignal(bar);
         if nil ~= collbackFunc then collbackFunc(setting, bar); end
@@ -256,7 +271,11 @@ function Candle:new(setting, Log)
     
 
         if obj.Setting.number_of_candle_init then
-            obj.Setting.datetime = os.date("!*t", os.time())
+
+           -- obj.Setting.datetime = os.date("!*t", os.time())
+           -- datetime = obj.Setting.datetime
+         --   obj.Log:save(tostring(datetime.hour .. " // os.date  "..datetime.min))
+        
             initCandles();
             obj.Setting.number_of_candle_init = false
             return;
@@ -271,11 +290,7 @@ function Candle:new(setting, Log)
         bars_temp, res, legend = getCandlesByIndex(obj.Setting.tag, 0,
                                                    obj.Setting.number_of_candle -
                                                        2 * len - shift, 2 * len)
-        -- analyse candles 
-
-
-      --  obj.Log:save('setting.current_price 1 ======= ' .. obj.Setting.current_price);
-
+        -- analyse candles  
         i = len
         j = 2 * len
         while i >= 1 do
@@ -288,9 +303,9 @@ function Candle:new(setting, Log)
 
             if bars_temp[j - 1].datetime.hour ~= nil then
 
-                obj.Setting.datetime = bars_temp[j - 1].datetime;
-                -- obj.Log:save('currentTime   = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min); 
-                if bars_temp[j - 1].datetime.hour >= 7 then
+            --    obj.Setting.datetime = bars_temp[j - 1].datetime;
+
+                 if bars_temp[j - 1].datetime.hour >= 7 then
 
                     --    loger.save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min); 
                     local bar = bars_temp[j - 1];
@@ -309,6 +324,11 @@ function Candle:new(setting, Log)
             t = len + 1
         end
     end
+
+
+
+
+    
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
