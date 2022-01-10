@@ -17,7 +17,7 @@ function Engine:new(setting, Log)
         obj.Logic:init()
         --  работа с графиком
         obj.candleClass = candleClass:new(obj.Setting, obj.Log)
-        obj.Log:save(obj.candleClass.test)
+        obj.Log:clearFile()
     end
 
     -- срабатывает при обновлении свечи
@@ -52,7 +52,7 @@ function Engine:new(setting, Log)
 
     message(trade.order_num)
     
-        obj.Log:save('OnTrade ' .. trade.order_num)
+    obj.Log:save('OnTrade ' .. trade.order_num)
 
    -- riskStop.updateOrderNumber(trade);
 
@@ -66,7 +66,7 @@ function Engine:new(setting, Log)
         -- direction
        -- market.startContract(trade);
         
-    --    marketGap.executedContract(setting,trade);
+    --    marketGap.executedContract(trade);
     else
         obj.Log:save('OnTrade ')
       --  market.takeExecutedContract(trade);
@@ -78,7 +78,7 @@ function Engine:new(setting, Log)
         if bit.band(trade.flags, 2) == 0 then
 
          --   market.startContract(trade);
-         --   marketGap.executedContract(setting,trade);
+         --   marketGap.executedContract(trade);
         else
             obj.Log:save(  'OnTrade  flag 2')
          --   market.takeExecutedContract(trade);

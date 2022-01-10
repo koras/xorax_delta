@@ -52,7 +52,7 @@ function Candle:new(setting, Log)
             
              obj.Setting.datetime = os.date("!*t", os.time())
             --obj.Setting.datetime = barCandleLocal.datetime;
-            obj.Log:save(tostring(obj.Setting.datetime.hour .. " //datetime  ".. obj.Setting.datetime.min))
+         --   obj.Log:save(tostring(obj.Setting.datetime.hour .. " //datetime  ".. obj.Setting.datetime.min))
          
             obj.lineBuyHigh.updateBuyHigh()
 
@@ -221,10 +221,13 @@ function Candle:new(setting, Log)
             if candlesArray[j - 1].datetime.hour ~= nil then
 
                 if candlesArray[j - 1].datetime.hour >= 10 then
+                    local dt = candlesArray[j - 1].datetime;
                     local bar = candlesArray[j - 1];
                     bar.numberCandle = first_candle + j - 1;
-                    obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
-                        bar;
+                    obj.Setting.array_candle[#obj.Setting.array_candle + 1] =bar;
+
+                   -- obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
+         
                     i = i - 1
                 end
                 j = j - 1
@@ -254,7 +257,7 @@ function Candle:new(setting, Log)
         -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
 
-      --   obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
+        -- obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
       
         --obj.Setting.datetime = bar.datetime;
 
@@ -321,6 +324,11 @@ function Candle:new(setting, Log)
             t = len + 1
         end
     end
+
+
+
+
+    
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
