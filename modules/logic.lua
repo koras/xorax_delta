@@ -76,7 +76,7 @@ function Logic:new(setting, Log)
         obj.Log:save('obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
     end
 
-    
+
     
     -- we are checking a position for 
     function obj:executedContract(trade)
