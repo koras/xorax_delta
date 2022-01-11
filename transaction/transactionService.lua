@@ -44,7 +44,13 @@ function transactionService:new(setting, Log)
     end
     -- set current price for a order
     local function setPrice(price)
-        obj.Transaction.PRICE = price;
+
+        if obj.Setting.type_instrument  == 3 then 
+            obj.Transaction.PRICE = tostring(math.ceil(price));
+        else 
+            obj.Transaction.PRICE = tostring(price);
+        end;
+         
     end
     -- set transaction id for a order
     local function setTransId(transId)
@@ -53,6 +59,7 @@ function transactionService:new(setting, Log)
 
     -- set count contract
     local function setContractsCount(contractsCount)
+        obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount))
         obj.Transaction.QUANTITY = tostring(contractsCount)
     end
 
@@ -76,6 +83,11 @@ function transactionService:new(setting, Log)
            -- set(Operation, Price, datetime, count, textInfo)
         else
             -- http://luaq.ru/sendTransaction.html
+           
+            obj.Log:save("obj.Transaction.PRICE " .. obj.Transaction.PRICE)
+            obj.Log:save("obj.Transaction.QUANTITY" .. obj.Transaction.QUANTITY)
+            obj.Log:save("obj.Transaction.OPERATION" .. obj.Transaction.OPERATION)
+       
             local res = sendTransaction(obj.Transaction)
             if string.len(res) ~= 0 then 
                 obj.Log:save("execute: fail " .. tostring(res))
@@ -90,7 +102,9 @@ function transactionService:new(setting, Log)
     -- @param type string - type
     -- @param price integer|float - cost
     -- @param transId integer - random number
-    function obj:send(direct, type, price, transId, contractsCount)
+    -- @param event integer - какое событие сейчас происходит
+    
+    function obj:send(direct, type, price, transId, contractsCount, event)
         setDirect(direct)
         setType(type)
         setPrice(price)
@@ -104,7 +118,7 @@ function transactionService:new(setting, Log)
 
         if obj.Setting.emulation then
             -- mode edulation
-            message('transactionService:send' .. obj.Setting.gap.data.buy_contract)
+            message('transactionService:send' .. obj.Setting.gapper.data.buy_contract)
 
         else
 
