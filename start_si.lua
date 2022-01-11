@@ -43,6 +43,7 @@ end
 
 -- OnTransReply -> OnTrade -> OnOrder 
 -- The function is called by the terminal when information on the deal comes from the server
+-- Функция вызывается терминалом QUIK при получении сделки или при изменении параметров существующей сделки.
 function OnTrade(trade)
     Engine:EngineOnTrade(trade)
 end

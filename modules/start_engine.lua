@@ -58,7 +58,9 @@ function Engine:new(setting, Log)
 
         local sell = obj.Setting:CheckBit(trade.flags, 1);
 
-        if (sell == 0) then end
+        if (sell == 0) then
+            obj.Log:save('OnTrade(6)  flag 2')
+        end
 
         if bit.band(trade.flags, 2) == 0 then
             -- direction
@@ -78,6 +80,8 @@ function Engine:new(setting, Log)
             obj.Log:save('OnTrade(4)  flag 2')
             if bit.band(trade.flags, 2) == 0 then
 
+                obj.Logic:executedContract(trade);
+
                 obj.Log:save('OnTrade(1)  flag 2')
                 --   market.startContract(trade);
                 --   marketGap.executedContract(trade);
@@ -92,7 +96,7 @@ function Engine:new(setting, Log)
     -- when update a candle
     local function updateTick(result)
 
-        obj.Log:save("updateTick  -- when update a candle")
+       -- obj.Log:save("updateTick  -- when update a candle")
     end
 
     function obj:EngineMain()

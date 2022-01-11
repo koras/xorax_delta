@@ -69,11 +69,14 @@ function Logic:new(setting, Log)
     -- второй этап регистрации события
     -- если шорт, то здесь выставляем заявку на покупку, после продажи
     -- лонг, выставляем заявку на продажу, если купили контракт
-    -- @order
-    -- @contract
-    local function secondOperation(order, contract) 
+    -- @params trade
+    -- @params contract
+    
+    function obj:secondOperation(trade, contract) 
+        -- ставим лимитку на профит и стоп
         obj.Setting.gap.phase = 2
         obj.Log:save('obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
+        
     end
 
     
@@ -83,13 +86,12 @@ function Logic:new(setting, Log)
     function obj:executedContract(trade)
         -- сперва находим контракт который (купили|продали) и ставим статус что мы купили контракт
         -- which a phase? 
+        
+        obj.Log:save('obj:executedContract '  )
         if #obj.Setting.sellTable > 0 then
             for contract = 1, #obj.Setting.sellTable do
                 if obj.Setting.sellTable[contract].executed == false and 
-                obj.Setting.sellTable[contract].trans_id == trade.trans_id then
-
-                    obj.Log:save('addSignal = trans_id ' .. trade.trans_id)
-
+                tostring(obj.Setting.sellTable[contract].trans_id) == tostring(trade.trans_id) then
                     obj.Setting.sellTable[contract].executed = true;
                     -- выставляем на продажу контракт.
                     -- ставим стоп, ибо нехуй деньгами разбрасываться 
@@ -149,13 +151,13 @@ function Logic:new(setting, Log)
         -- type order
         data.type = "NEW_ORDER";
 
-        data.work = true;
-        data.executed = false;
-        data.direct = obj.Setting.gapper.direct;
-        data.emulation = obj.Setting.emulation;
-        data.contract = use_contract;
-        data.buy_contract = newPrice; -- стоимость продажи
-        obj.Setting.gap.data = data;
+        data.work = true
+        data.executed = false
+        data.direct = obj.Setting.gapper.direct
+        data.emulation = obj.Setting.emulation
+        data.contract = use_contract
+        data.buy_contract = newPrice -- стоимость продажи
+        obj.Setting.gap.data = data
         -- send a order
 
         
