@@ -102,7 +102,9 @@ function transactionService:new(setting, Log)
     -- @param type string - type
     -- @param price integer|float - cost
     -- @param transId integer - random number
-    function obj:send(direct, type, price, transId, contractsCount)
+    -- @param event integer - какое событие сейчас происходит
+    
+    function obj:send(direct, type, price, transId, contractsCount, event)
         setDirect(direct)
         setType(type)
         setPrice(price)
