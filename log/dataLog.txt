@@ -1,14 +1,19 @@
 start 
 Current step price : 1.000000 
 -- setting.gap.phase == 0 
-76156.0 >=   76169.0 
-old price = 76169.0setting.current_price = 76156.0 
+75600.0 >=   75610.0 
+old price = 75610.0setting.current_price = 75600.0 
 direct = S 
 sendTransaction NEW_ORDER NEW_ORDER 
-obj:nextEmulation --- 
+obj.Transaction.contractsCount1 
 obj:nextEmulation 1 
-obj:nextEmulation--- 1 
-addSignal = trans_id 2502442 
+obj:nextEmulation 1 
+obj:executedContract  
+trade.qtye = 1 
+createTake phase:2 secondOperation 
+New take price = 0 
+sendTransaction NEW_ORDER NEW_ORDER 
+obj.Transaction.contractsCount1 
 obj.Setting.gap.phase 2 
 -- setting.gap.phase == 2 
 ============ LineBuyHigh:destructor 
