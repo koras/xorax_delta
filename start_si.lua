@@ -53,7 +53,9 @@ function OnStopOrder(trade)
     Engine:EngineStopOrder(trade)
 end
 
- 
+ -- @link http://luaq.ru/OnTransReply.html
+ -- Функция вызывается терминалом QUIK при получении ответа на транзакцию пользователя
+
 function OnTransReply(trans_reply) 
     Engine:EngineTransReply(trans_reply)
 end

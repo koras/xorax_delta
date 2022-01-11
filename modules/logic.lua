@@ -133,11 +133,11 @@ function Logic:new(setting, Log)
         -- генерация trans_id для эмуляции 
         local trans_id = getRand()
 
-        local use_contract = obj.Setting.gap.use_contract;
+        local use_contract = obj.Setting.gapper.use_contract;
         obj.Setting.count_contract = use_contract;
 
         if obj.Setting.emulation == false then
-            --    trans_id = transaction.send(obj.Setting.gap.direct, newPrice, use_contract, type, 0);
+            --    trans_id = transaction.send(obj.Setting.gapper.direct, newPrice, use_contract, type, 0);
         end
 
         local data = {};
@@ -157,6 +157,10 @@ function Logic:new(setting, Log)
         data.buy_contract = newPrice; -- стоимость продажи
         obj.Setting.gap.data = data;
         -- send a order
+
+        
+        obj.Log:save('use_contract = ' .. use_contract);
+
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
                              use_contract);
         -- call mode emulation for next step
