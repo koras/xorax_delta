@@ -40,12 +40,10 @@ function Logic:new(setting, Log)
     GET_GRAFFIC = ds:SetEmptyCallback();
 
     -- получаем новую стоимость позиции
-
+    -- только при запуске скрипта
     local function getNewPriceForPosition()
-
         local rangeCost = obj.Setting.instrument_measurement;
         local currentPrice = obj.Setting.current_price
-
         if (obj.Setting.gap.direct == 'B') then
             obj.Setting.current_price = currentPrice + rangeCost +
                                             obj.Setting.profit_infelicity +
@@ -57,56 +55,83 @@ function Logic:new(setting, Log)
                                             obj.Setting.profit_infelicity -
                                             obj.Setting.profit_infelicity;
         end
-        return obj.Setting.current_price;
+        return obj.Setting.current_price
     end
 
     local function getRand() return tostring(math.random(2000000000)); end
 
 
+    function getPriceTake(contract)
+        local price = 0; 
+        if tostring(contract.direct) == "B" then
+            price = contract.price + obj.Setting.gapper.takeProfit 
+        else
+            -- gap down
+            price = contract.price - obj.Setting.gapper.takeProfit
+        end
+        obj.Log:save('New take price = '.. price)
+        return price
+    end
 
 
+    -- set stop
+    -- @param contract
+    function createTake(contract) 
+        obj.Log:save('createTake ') 
+        getPriceTake(contract)
+        if obj.Setting.emulation then
 
+        end
+    end
+
+    -- set stop
+    -- @param contract
+    function createStop(contract) 
+        obj.Log:save('createStop') 
+
+        if obj.Setting.emulation then
+
+        end
+    end
     -- второй этап регистрации события
     -- если шорт, то здесь выставляем заявку на покупку, после продажи
     -- лонг, выставляем заявку на продажу, если купили контракт
-    -- @params trade
-    -- @params contract
-    
-    function obj:secondOperation(trade, contract) 
+    -- @param trade
+    -- @param contract
+
+    function obj:secondOperation(trade, contract)
         -- ставим лимитку на профит и стоп
+        createTake(contract)
+        createStop(contract)
         obj.Setting.gap.phase = 2
         obj.Log:save('obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
-        
     end
 
-    
-
-    
     -- we are checking a position for 
     function obj:executedContract(trade)
         -- сперва находим контракт который (купили|продали) и ставим статус что мы купили контракт
         -- which a phase? 
-        
-        obj.Log:save('obj:executedContract '  )
+
+        obj.Log:save('obj:executedContract ')
         if #obj.Setting.sellTable > 0 then
             for contract = 1, #obj.Setting.sellTable do
-                if obj.Setting.sellTable[contract].executed == false and 
-                tostring(obj.Setting.sellTable[contract].trans_id) == tostring(trade.trans_id) then
+                if obj.Setting.sellTable[contract].executed == false and
+                    tostring(obj.Setting.sellTable[contract].trans_id) ==
+                    tostring(trade.trans_id) then
                     obj.Setting.sellTable[contract].executed = true;
                     -- выставляем на продажу контракт.
                     -- ставим стоп, ибо нехуй деньгами разбрасываться 
-                    secondOperation(trade, obj.Setting.sellTable[contract])
+                    obj:secondOperation(trade, obj.Setting.sellTable[contract])
                     return;
                 end
             end
         end
     end
 
-
     function nextEmulation()
         obj.Log:save('obj:nextEmulation ---')
         if obj.Setting.emulation then
-            obj.Log:save('obj:nextEmulation '..obj.Setting.gap.phase)
+            obj.Log:save('obj:nextEmulation ' .. obj.Setting.gap.phase)
             if obj.Setting.gap.phase == 1 then
                 obj.Log:save('obj:nextEmulation--- 1')
                 -- step 1
@@ -143,7 +168,8 @@ function Logic:new(setting, Log)
         end
 
         local data = {};
-        data.price = newPrice;
+        data.price = newPrice
+        data.direct = obj.Setting.gapper.direct
         data.datetime = obj.Setting.datetime;
         data.trans_id = trans_id;
         -- сколько контрактов исполнилось 
@@ -152,15 +178,13 @@ function Logic:new(setting, Log)
         data.type = "NEW_ORDER";
 
         data.work = true
-        data.executed = false
-        data.direct = obj.Setting.gapper.direct
+        data.executed = false 
         data.emulation = obj.Setting.emulation
         data.contract = use_contract
         data.buy_contract = newPrice -- стоимость продажи
         obj.Setting.gap.data = data
         -- send a order
 
-        
         obj.Log:save('use_contract = ' .. use_contract);
 
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
@@ -197,9 +221,6 @@ function Logic:new(setting, Log)
 
     end
 
- 
- 
- 
     --  end
     -- первоначальная логика которая решает как сработает гэп
     function logicGap_1()
@@ -268,7 +289,7 @@ function Logic:new(setting, Log)
         end
 
         if obj.Setting.gap.phase == 1 and obj.Setting.gap.status then
-          --  obj.Log:save("-- setting.gap.phase == 1")
+            --  obj.Log:save("-- setting.gap.phase == 1")
             -- look at closing a position
             -- closed positions 
 
