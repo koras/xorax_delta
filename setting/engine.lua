@@ -72,7 +72,9 @@ function EngineSetting:new()
     setting.gap.whereIsPriceForStop = 0
 
     setting.labels = {}
-
+    setting.STOPPRICE = 0
+    setting.SPREAD = 0
+    setting.STOPPRICE2 = 0 --stopprice2, -- Цена Стоп-Лосса
     -- Здесь сохраняем id лэйблы для стопов
     setting.gap.label = {}
     -- stop

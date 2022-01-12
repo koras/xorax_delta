@@ -36,20 +36,50 @@ function transactionService:new(setting, Log)
          obj.Transaction.OPERATION = direct
     end
     -- set type a order
-    local function setType(type)
-        if type == 'NEW_ORDER' then
+    local function setType(type) 
+        if tostring(type) == 'NEW_ORDER' then
           obj.Transaction.ACTION = 'NEW_ORDER'
         end
-        obj.Log:save('sendTransaction NEW_ORDER ' ..  obj.Transaction.ACTION);
+        if tostring(type) == 'TAKE_PROFIT_AND_STOP_LIMIT_ORDER' then
+            -- https://forum.quik.ru/forum10/topic1404/
+            
+          obj.Transaction.ACTION = 'NEW_STOP_ORDER'
+          obj.Transaction.STOP_ORDER_KIND = 'TAKE_PROFIT_AND_STOP_LIMIT_ORDER'
+        --  ["STOPPRICE"]           = stopprice, -- Цена Тэйк-Профита
+       -- ["EXPIRY_DATE"]         = "TODAY", -- Срок действия стоп-заявки ("GTC" – до отмены,"TODAY" - до окончания текущей торговой сессии, Дата в формате "ГГММДД")
+       -- ["SPREAD_UNITS"]        = "PRICE_UNITS", -- Единицы измерения защитного спрэда ("PRICE_UNITS" - шаг цены, или "PERCENTS" - проценты)
+       --  ["SPREAD"]              = tostring(100*SEC_PRICE_STEP),
+       --["STOPPRICE2"]          = stopprice2, -- Цена Стоп-Лосса
+        end 
     end
     -- set current price for a order
     local function setPrice(price)
 
         if obj.Setting.type_instrument  == 3 then 
             obj.Transaction.PRICE = tostring(math.ceil(price));
+            
+            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
+
+                obj.Transaction.SPREAD =  tostring(math.ceil(obj.Setting.SPREAD))
+                obj.Transaction.STOPPRICE =  tostring(math.ceil( obj.Setting.STOPPRICE))  
+                obj.Transaction.STOPPRICE2 = tostring(math.ceil( obj.Setting.STOPPRICE2)) --stopprice2, -- Цена Стоп-Лосса
+            end
+
         else 
             obj.Transaction.PRICE = tostring(price);
+
+            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
+ 
+                obj.Transaction.SPREAD =  tostring(obj.Setting.SPREAD)
+                obj.Transaction.STOPPRICE =  tostring( obj.Setting.STOPPRICE) 
+                -- stopprice2, -- Цена Стоп-Лосса 
+                obj.Transaction.STOPPRICE2 = tostring( obj.Setting.STOPPRICE2) --stopprice2, -- Цена Стоп-Лосса
+            end
+
         end;
+
+  
+
          
     end
     -- set transaction id for a order
@@ -59,7 +89,7 @@ function transactionService:new(setting, Log)
 
     -- set count contract
     local function setContractsCount(contractsCount)
-        obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount))
+    --    obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount))
         obj.Transaction.QUANTITY = tostring(contractsCount)
     end
 
@@ -84,9 +114,9 @@ function transactionService:new(setting, Log)
         else
             -- http://luaq.ru/sendTransaction.html
            
-            obj.Log:save("obj.Transaction.PRICE " .. obj.Transaction.PRICE)
-            obj.Log:save("obj.Transaction.QUANTITY" .. obj.Transaction.QUANTITY)
-            obj.Log:save("obj.Transaction.OPERATION" .. obj.Transaction.OPERATION)
+          --  obj.Log:save("obj.Transaction.PRICE " .. obj.Transaction.PRICE)
+          --  obj.Log:save("obj.Transaction.QUANTITY" .. obj.Transaction.QUANTITY)
+           -- obj.Log:save("obj.Transaction.OPERATION" .. obj.Transaction.OPERATION)
        
             local res = sendTransaction(obj.Transaction)
             if string.len(res) ~= 0 then 
