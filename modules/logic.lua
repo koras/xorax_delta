@@ -88,7 +88,7 @@ function Logic:new(setting, Log)
     
     local function getTypeTakeAndStop(contract)
         if obj.Setting.gapper.typeType == "stop" then
-            obj.Setting.gapper.typeTypeTake = "S" 
+            obj.Setting.gapper.typeTypeTake = "TAKE_PROFIT_AND_STOP_LIMIT_ORDER" 
         end
     end
     --   if obj.Setting.emulation then end
