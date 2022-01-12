@@ -106,9 +106,13 @@ function Logic:new(setting, Log)
     -- @param trade
     -- @param contract
 
-    function obj:secondOperation(trade, contract)
+    function obj:secondOperation(trade)
+        local contract = {}
 
-        obj.Log:save('trade.qtye = ' .. trade.qty)
+        contract.price = 75836
+        contract.direct = "S"
+        
+        
         -- ставим лимитку на профит и стоп 
         obj.Setting.gap.phase = 2
         local event = 2;
@@ -126,9 +130,9 @@ function Logic:new(setting, Log)
         data.direct = obj.Setting.gap.directionTake
         data.datetime = obj.Setting.datetime;
         data.trans_id = getRand();
-        data.relation_trans_id = trade.trans_id
+        data.relation_trans_id = 1111111
         -- сколько контрактов исполнилось
-        data.use_contract = trade.qty
+        data.use_contract = 1
         -- type order
         data.type = "NEW_ORDER";
         data.type = obj.Setting.gapper.typeTypeTake
@@ -136,13 +140,13 @@ function Logic:new(setting, Log)
         data.phase = obj.Setting.gap.phase
         data.executed = false
         data.emulation = obj.Setting.emulation
-        data.contract = trade.qty
+        data.contract = t1
         data.buy_contract = obj.Setting.gap.priceTake
         obj.Setting.gap.dataTake = data
         obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
 
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
-                             trade.qty,  data.phase);
+                             1,  data.phase);
 
         nextEmulation();
 
