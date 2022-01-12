@@ -84,6 +84,13 @@ function Logic:new(setting, Log)
             obj.Setting.gap.directionTake = "B"
         end
     end
+    -- @link http://luaq.ru/sendTransaction.html
+    
+    local function getTypeTakeAndStop(contract)
+        if obj.Setting.gapper.typeType == "stop" then
+            obj.Setting.gapper.typeTypeTake = "S" 
+        end
+    end
     --   if obj.Setting.emulation then end
 
     -- @description  второй этап регистрации события
@@ -103,6 +110,8 @@ function Logic:new(setting, Log)
         getPriceTakeAndStop(contract)
 
         getDirectionTakeAndStop(contract)
+
+        getTypeTakeAndStop(contract)
         -- генерация trans_id 
 
         local data = {};
@@ -115,7 +124,9 @@ function Logic:new(setting, Log)
         data.use_contract = trade.qty
         -- type order
         data.type = "NEW_ORDER";
+        data.type = obj.Setting.gapper.typeTypeTake
         data.work = true
+        data.phase = obj.Setting.gap.phase
         data.executed = false
         data.emulation = obj.Setting.emulation
         data.contract = trade.qty
@@ -124,7 +135,9 @@ function Logic:new(setting, Log)
         obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
 
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
-                             trade.qty, event);
+                             trade.qty,  data.phase);
+
+        nextEmulation();
 
         obj.Log:save('obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
     end
@@ -162,11 +175,13 @@ function Logic:new(setting, Log)
                 trade.datetime = data.datetime
                 trade.qty = obj.Setting.gapper.use_contract
                 trade.order_num = getRand()
-                
-                obj.Log:save('obj:nextEmulation 1')
                 obj:executedContract(trade)
             elseif obj.Setting.gap.phase == 2 then
                 -- step 2
+
+                obj.Log:save('obj:nextEmulation 2')
+
+
 
             elseif obj.Setting.gap.phase == 3 then
                 -- step 3
@@ -193,7 +208,7 @@ function Logic:new(setting, Log)
         data.use_contract = obj.Setting.gapper.use_contract;
         -- type order
         data.type = "NEW_ORDER";
-
+        data.phase = 1
         data.work = true
         data.executed = false
         data.emulation = obj.Setting.emulation
@@ -202,7 +217,7 @@ function Logic:new(setting, Log)
         obj.Setting.gap.data = data
         -- send a order 
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
-                             obj.Setting.gapper.use_contract, event);
+                             obj.Setting.gapper.use_contract, data.phase);
         -- call mode emulation for next step
 
         obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
@@ -237,7 +252,7 @@ function Logic:new(setting, Log)
 
     --  end
     -- первоначальная логика которая решает как сработает гэп
-    function logicGap_1()
+    function logicGap()
         -- получаем направление для торговли в GAP
         getDirection();
         openPosition()
@@ -285,7 +300,7 @@ function Logic:new(setting, Log)
 
                 obj.Log:save("-- setting.gap.phase == 0")
                 -- если время подошло, можно смотреть логику
-                logicGap_1();
+                logicGap();
 
                 --    obj.Setting.gap.phase = 1;
             end

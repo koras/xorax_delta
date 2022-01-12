@@ -92,6 +92,9 @@ function Setting:new()
     
     setting.gapper.takeProfit = 350;
     setting.gapper.stopLimit = 20;
+    -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
+    setting.gapper.typeType = 'stop';
+    setting.gapper.typeTypeTake = '';
     
 
 
