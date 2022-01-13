@@ -90,7 +90,7 @@ function Setting:new()
     -- разрыв цены от открытия позиции
     setting.gapper.well_price = 20;
     
-    setting.gapper.takeProfit = 350;
+    setting.gapper.takeProfit = 100;
     setting.gapper.stopLimit = 20;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.gapper.typeType = 'stop';

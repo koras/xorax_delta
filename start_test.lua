@@ -51,7 +51,9 @@ end
 
 -- The function is called by the terminal when information on the deal comes from the server
 function OnStopOrder(trade)
-  --  Engine:EngineStopOrder(trade)
+  Log:save("--  OnStopOrder".. trade.order_num	)
+ 
+   Engine:EngineStopOrder(trade)
 end
 
  -- @link http://luaq.ru/OnTransReply.html
@@ -63,5 +65,6 @@ end
 
 -- This function is called when the script is stopped
 function OnStop()
+  Log:save("--  OnStop",' start')
  --   Engine:EngineStop()
 end

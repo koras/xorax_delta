@@ -140,10 +140,7 @@ function Engine:new(setting, Log)
             end
         end
     end
-
-    -- Функция вызывается терминалом когда с сервера приходит информация по сделке
-    function obj:EngineStopOrder(trade) end
-
+ 
     -- Функция вызывается терминалом QUIK при получении новой стоп-заявки или при изменении параметров существующей стоп-заявки (Таблица стоп-заявок).
     -- OnStopOrder(stop_order)
     function obj:EngineTransReply(trans_reply)
@@ -151,6 +148,13 @@ function Engine:new(setting, Log)
                          trans_reply.trans_id);
         -- loger.save('trans_reply.result_msg ' ..  trans_reply.result_msg );
         obj.Log:save('EngineTransReply order_num ' .. trans_reply.order_num);
+
+    end
+
+    -- Функция вызывается терминалом когда с сервера приходит информация по сделке
+    function obj:EngineStopOrder(trade)
+        Log:save("-- obj:EngineStopOrder ".. trade.order_num	)
+        obj.Logic:EngineStopOrder(trade)
 
     end
 

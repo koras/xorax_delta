@@ -54,6 +54,8 @@ function transactionService:new(setting, Log)
     end
     -- set current price for a order
     local function setPrice(price)
+        obj.Transaction.MARKET_TAKE_PROFIT = "NO"
+
 
         if obj.Setting.type_instrument  == 3 then 
             obj.Transaction.PRICE = tostring(math.ceil(price));
@@ -63,17 +65,23 @@ function transactionService:new(setting, Log)
                 obj.Transaction.SPREAD =  tostring(math.ceil(obj.Setting.SPREAD))
                 obj.Transaction.STOPPRICE =  tostring(math.ceil( obj.Setting.STOPPRICE))  
                 obj.Transaction.STOPPRICE2 = tostring(math.ceil( obj.Setting.STOPPRICE2)) --stopprice2, -- Цена Стоп-Лосса
+                obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
+                obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
+                obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
             end
 
         else 
             obj.Transaction.PRICE = tostring(price);
 
-            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
+            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then  
  
-                obj.Transaction.SPREAD =  tostring(obj.Setting.SPREAD)
+                obj.Transaction.SPREAD =  tostring(obj.Setting.SPREAD) 
                 obj.Transaction.STOPPRICE =  tostring( obj.Setting.STOPPRICE) 
                 -- stopprice2, -- Цена Стоп-Лосса 
                 obj.Transaction.STOPPRICE2 = tostring( obj.Setting.STOPPRICE2) --stopprice2, -- Цена Стоп-Лосса
+                obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
+                obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
+                obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
             end
 
         end;
@@ -89,8 +97,12 @@ function transactionService:new(setting, Log)
 
     -- set count contract
     local function setContractsCount(contractsCount)
-    --    obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount))
-        obj.Transaction.QUANTITY = tostring(contractsCount)
+    --    obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount)) 
+
+        
+         contractsCount = tostring(math.ceil( contractsCount)) 
+        obj.Log:save("contractsCount " .. contractsCount)
+        obj.Transaction.QUANTITY = contractsCount
     end
 
     -- 
@@ -100,8 +112,7 @@ function transactionService:new(setting, Log)
             --message('transactionService:send')
             -- данные собраны по ходу формирования транкзакции
             -- ставим метку
-            local price = obj.Transaction.PRICE
-            local QUANTITY = obj.Transaction.QUANTITY
+            local price = obj.Transaction.PRICE 
             local datetime = obj.Setting.datetime
              
             local text ='create new position'
@@ -118,6 +129,8 @@ function transactionService:new(setting, Log)
           --  obj.Log:save("obj.Transaction.QUANTITY" .. obj.Transaction.QUANTITY)
            -- obj.Log:save("obj.Transaction.OPERATION" .. obj.Transaction.OPERATION)
        
+         --  local QUANTITY = tostring(math.ceil( obj.Transaction.QUANTITY)) 
+         --  obj.Log:save("QUANTITY" .. QUANTITY)
             local res = sendTransaction(obj.Transaction)
             if string.len(res) ~= 0 then 
                 obj.Log:save("execute: fail " .. tostring(res))

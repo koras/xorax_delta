@@ -1,6 +1,66 @@
 start 
 Current step price : 1.000000 
+-- setting.gap.phase == 0 
+77366.0 >=   77363.0 
+old price = 77363.0setting.current_price = 77366.0 
+direct = B 
+contractsCount 1 
+execute: success  
+EngineTransReply trans_rtrans_rtrans_r 2502442 
+EngineTransReply order_num 1892946976754737903 
+OnTrade 1892946976754737903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+trade.qtye = 1.0 
 createTake phase:2 secondOperation 
+-- setting.gap.phase == 2 
 New take price = 0 
+obj.Transaction.SPREAD 1 20 
+obj.Transaction.STOPPRICE  1 77716 
+ obj.Transaction.STOPPRICE2  1 77346 
+contractsCount 1 
 execute: success  
 obj.Setting.gap.phase 2 
+OnTrade(1)  flag 2 
+OnTrade 1892946976754737903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+OnTrade(1)  flag 2 
+OnTrade 1892946976754737903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+OnTrade(1)  flag 2 
+EngineTransReply trans_rtrans_rtrans_r 959716797 
+EngineTransReply order_num 832290502 
+-- obj:EngineStopOrder 832290502 
+EngineStopOrder(1)  flag 2 
+-- set stop 832290502 
+-- obj:EngineStopOrder 832290502 
+EngineStopOrder(2)  flag 2 
+-- delete stop 832290502 
+-- obj:EngineStopOrder 832290521 
+EngineStopOrder(1)  flag 2 
+-- set stop 832290521 
+-- obj:EngineStopOrder 832290521 
+EngineStopOrder(1)  flag 2 
+-- obj:EngineStopOrder 832290521 
+EngineStopOrder(1)  flag 2 
+OnTrade 1892946976754742903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+OnTrade(1)  flag 2 
+OnTrade 1892946976754742903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+OnTrade(1)  flag 2 
+OnTrade 1892946976754742903 
+OnTrade(5)  flag 2 
+OnTrade(4)  flag 2 
+obj:executedContract  
+OnTrade(1)  flag 2 
+============ LineBuyHigh:destructor 
