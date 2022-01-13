@@ -88,10 +88,13 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 20;
+    setting.gapper.well_price = 5;
     
-    setting.gapper.takeProfit = 100;
-    setting.gapper.stopLimit = 20;
+    setting.gapper.takeProfit = 10;
+    setting.gapper.stopLimit = 5;
+
+    setting.gapper.SPREAD = 5;
+
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.gapper.typeType = 'stop';
     setting.gapper.typeTypeTake = '';

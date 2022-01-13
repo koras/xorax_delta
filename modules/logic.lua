@@ -55,21 +55,22 @@ function Logic:new(setting, Log)
                                             obj.Setting.profit_infelicity -
                                             obj.Setting.profit_infelicity;
         end
-        obj.Setting.PRICE =  obj.Setting.current_price
+        obj.Setting.PRICE = obj.Setting.current_price
         return obj.Setting.current_price
     end
 
     local function getRand() return tostring(math.random(2000000000)); end
 
     local function getPriceTakeAndStop(contract)
-        --local price = 0;
+        -- local price = 0;
         if tostring(contract.direct) == "B" then
             obj.Setting.gap.priceTake = contract.price +
                                             obj.Setting.gapper.takeProfit
             obj.Setting.gap.priceStop = contract.price -
                                             obj.Setting.gapper.stopLimit
-                                            
-            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop - obj.Setting.gapper.takeProfit
+
+            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop -
+                                        obj.Setting.gapper.takeProfit
         else
             -- gap down
             obj.Setting.gap.priceTake = contract.price -
@@ -77,18 +78,18 @@ function Logic:new(setting, Log)
             obj.Setting.gap.priceStop = contract.price +
                                             obj.Setting.gapper.stopLimit
 
-                                            
-            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop + obj.Setting.gapper.takeProfit
-                                            
+            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop +
+                                        obj.Setting.gapper.takeProfit
+
         end
-        obj.Setting.PRICE =  obj.Setting.gap.PRICE;
+        obj.Setting.PRICE = obj.Setting.gap.PRICE;
         -- Цена Тэйк-Профита 
         obj.Setting.STOPPRICE = obj.Setting.gap.priceTake
         -- Цена Стоп-Лосса 
-        obj.Setting.STOPPRICE2 =  obj.Setting.gap.priceStop
+        obj.Setting.STOPPRICE2 = obj.Setting.gap.priceStop
 
         obj.Setting.SPREAD = obj.Setting.gapper.stopLimit
-        obj.Log:save('New take price = ' ..  obj.Setting.PRICE )
+        obj.Log:save('New take price = ' .. obj.Setting.PRICE)
     end
 
     local function getDirectionTakeAndStop(contract)
@@ -99,10 +100,10 @@ function Logic:new(setting, Log)
         end
     end
     -- @link http://luaq.ru/sendTransaction.html
-    
+
     local function getTypeTakeAndStop(contract)
         if obj.Setting.gapper.typeType == "stop" then
-            obj.Setting.gapper.typeTypeTake = "TAKE_PROFIT_AND_STOP_LIMIT_ORDER" 
+            obj.Setting.gapper.typeTypeTake = "TAKE_PROFIT_AND_STOP_LIMIT_ORDER"
         end
     end
     --   if obj.Setting.emulation then end
@@ -114,45 +115,47 @@ function Logic:new(setting, Log)
     -- @param contract
 
     function obj:secondOperation(trade, contract)
+        
+        obj.Log:save('obj:secondOperation  ' .. obj.Setting.gap.phase)
+        if obj.Setting.gap.phase == 1 then
+            obj.Log:save('trade.qtye = ' .. trade.qty)
+            -- ставим лимитку на профит и стоп 
+            obj.Setting.gap.phase = 2
+            local event = 2;
 
-        obj.Log:save('trade.qtye = ' .. trade.qty)
-        -- ставим лимитку на профит и стоп 
-        obj.Setting.gap.phase = 2
-        local event = 2;
+            obj.Log:save('createTake phase:2 secondOperation')
+            getPriceTakeAndStop(contract)
 
-        obj.Log:save('createTake phase:2 secondOperation')
-        getPriceTakeAndStop(contract)
+            getDirectionTakeAndStop(contract)
 
-        getDirectionTakeAndStop(contract)
+            getTypeTakeAndStop(contract)
+            -- генерация trans_id 
 
-        getTypeTakeAndStop(contract)
-        -- генерация trans_id 
+            local data = {};
+            data.price = obj.Setting.gap.priceTake
+            data.direct = obj.Setting.gap.directionTake
+            data.datetime = obj.Setting.datetime;
+            data.trans_id = getRand();
+            data.relation_trans_id = trade.trans_id
+            -- сколько контрактов исполнилось
+            data.use_contract = trade.qty
+            -- type order
+            data.type = "NEW_ORDER";
+            data.type = obj.Setting.gapper.typeTypeTake
+            data.work = true
+            data.phase = obj.Setting.gap.phase
+            data.executed = false
+            data.emulation = obj.Setting.emulation
+            data.contract = trade.qty
+            data.buy_contract = obj.Setting.gap.priceTake
+            obj.Setting.gap.dataTake = data
+            obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
 
-        local data = {};
-        data.price = obj.Setting.gap.priceTake
-        data.direct = obj.Setting.gap.directionTake
-        data.datetime = obj.Setting.datetime;
-        data.trans_id = getRand();
-        data.relation_trans_id = trade.trans_id
-        -- сколько контрактов исполнилось
-        data.use_contract = trade.qty
-        -- type order
-        data.type = "NEW_ORDER";
-        data.type = obj.Setting.gapper.typeTypeTake
-        data.work = true
-        data.phase = obj.Setting.gap.phase
-        data.executed = false
-        data.emulation = obj.Setting.emulation
-        data.contract = trade.qty
-        data.buy_contract = obj.Setting.gap.priceTake
-        obj.Setting.gap.dataTake = data
-        obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
+            obj.transaction:send(data.direct, data.type, data.price,
+                                 data.trans_id, trade.qty, data.phase);
 
-        obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
-                             trade.qty,  data.phase);
-
-        nextEmulation();
-
+            nextEmulation();
+        end
         obj.Log:save('obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
     end
 
@@ -170,15 +173,23 @@ function Logic:new(setting, Log)
                     obj.Setting.sellTable[contract].executed = true;
                     -- выставляем на продажу контракт.
                     -- ставим стоп, ибо нехуй деньгами разбрасываться 
-                    obj:secondOperation(trade, obj.Setting.sellTable[contract])
+                    
+                    obj.Log:save('obj.Setting.gap.phase '.. obj.Setting.gap.phase)
+
+                    if obj.Setting.gap.phase == 1 then
+                        -- сработать может только 1 раз
+                        obj:secondOperation(trade,
+                                            obj.Setting.sellTable[contract])
+
+                    end
                     return;
                 end
             end
         end
     end
 
-    function nextEmulation() 
-        if obj.Setting.emulation then 
+    function nextEmulation()
+        if obj.Setting.emulation then
             if obj.Setting.gap.phase == 1 then
                 obj.Log:save('obj:nextEmulation 1')
                 -- step 1
@@ -194,8 +205,6 @@ function Logic:new(setting, Log)
                 -- step 2
 
                 obj.Log:save('obj:nextEmulation 2')
-
-
 
             elseif obj.Setting.gap.phase == 3 then
                 -- step 3
@@ -214,7 +223,7 @@ function Logic:new(setting, Log)
 
         obj.Setting.count_contract = obj.Setting.gapper.use_contract
         local data = {};
-        data.price =  obj.Setting.PRICE
+        data.price = obj.Setting.PRICE
         data.direct = obj.Setting.gapper.direct
         data.datetime = obj.Setting.datetime;
         data.trans_id = trans_id;
@@ -347,31 +356,56 @@ function Logic:new(setting, Log)
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end
 
-
     -- стоп заявка установлена 
     function obj:EngineStopOrder(trade)
         if bit.band(trade.flags, 2) == 0 then
-            
-            obj.Setting.gap.phase = 3
+
+            -- obj.Setting.gap.phase = 3
             obj.Log:save('EngineStopOrder(1)  flag 2')
             --   market.startContract(trade);
             --   marketGap.executedContract(trade);
-            if obj.Setting.gap.order_num_stop == 0 then 
+            if obj.Setting.gap.order_num_stop == 0 then
                 obj.Setting.gap.order_num_stop = trade.order_num
-                obj.Log:save("-- set stop "..trade.order_num)
-            end 
+                obj.Setting.gap.phase = 3
+                obj.Log:save("-- set stop " .. trade.order_num)
+                obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase, 'obj:EngineStopOrder')
+            end
 
         else
-            if obj.Setting.gap.order_num_stop  == trade.order_num  then 
+            if obj.Setting.gap.order_num_stop == trade.order_num then
                 obj.Log:save('EngineStopOrder(2)  flag 2')
                 obj.Setting.gap.order_num_stop = 0
-                obj.Log:save("-- delete stop "..  trade.order_num)
+                obj.Log:save("-- delete stop " .. trade.order_num)
                 --   market.takeExecutedContract(trade);
             end
         end
     end
 
-     
+    -- меняем фазу потому что установлен стоп
+    function obj:EngineTransReply(trade)
+        obj.Log:save('obj:EngineTransReply')
+
+        if bit.band(trade.flags, 2) == 0 then
+
+         
+                obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase, 'obj:EngineTransReply')
+            obj.Log:save('obj:EngineTransReply')
+            --   market.startContract(trade);
+            --   marketGap.executedContract(trade);
+            if obj.Setting.gap.order_num_stop == 0 then
+                obj.Setting.gap.order_num_stop = trade.order_num
+                obj.Log:save("-- set stop " .. trade.order_num)
+            end
+
+        else
+            if obj.Setting.gap.order_num_stop == trade.order_num then
+                obj.Log:save('EngineStopOrder(2)  flag 2')
+                obj.Setting.gap.order_num_stop = 0
+                obj.Log:save("-- delete stop " .. trade.order_num)
+                --   market.takeExecutedContract(trade);
+            end
+        end
+    end
 
     setmetatable(obj, self)
     self.__index = self;

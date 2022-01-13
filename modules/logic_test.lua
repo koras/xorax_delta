@@ -80,8 +80,9 @@ function Logic:new(setting, Log)
         -- Цена Стоп-Лосса 
         obj.Setting.STOPPRICE2 =  obj.Setting.gap.priceStop
 
-        obj.Setting.SPREAD = obj.Setting.gapper.stopLimit
+        obj.Setting.SPREAD = setting.gapper.SPREAD
         obj.Log:save('New take price = ' .. price)
+        obj.Log:save('obj.Setting.SPREAD = ' .. obj.Setting.SPREAD)
     end
 
     local function getDirectionTakeAndStop(contract)
