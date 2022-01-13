@@ -58,7 +58,7 @@ function transactionService:new(setting, Log)
 
 
         if obj.Setting.type_instrument  == 3 then 
-            obj.Transaction.PRICE = tostring(math.ceil(price));
+            obj.Transaction.PRICE = tostring(math.ceil( obj.Setting.PRICE));
             
             if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
 
@@ -71,7 +71,7 @@ function transactionService:new(setting, Log)
             end
 
         else 
-            obj.Transaction.PRICE = tostring(price);
+            obj.Transaction.PRICE = tostring( obj.Setting.PRICE);
 
             if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then  
  

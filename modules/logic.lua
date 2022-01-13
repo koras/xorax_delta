@@ -55,33 +55,40 @@ function Logic:new(setting, Log)
                                             obj.Setting.profit_infelicity -
                                             obj.Setting.profit_infelicity;
         end
+        obj.Setting.PRICE =  obj.Setting.current_price
         return obj.Setting.current_price
     end
 
     local function getRand() return tostring(math.random(2000000000)); end
 
     local function getPriceTakeAndStop(contract)
-        local price = 0;
+        --local price = 0;
         if tostring(contract.direct) == "B" then
             obj.Setting.gap.priceTake = contract.price +
                                             obj.Setting.gapper.takeProfit
             obj.Setting.gap.priceStop = contract.price -
                                             obj.Setting.gapper.stopLimit
+                                            
+            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop - obj.Setting.gapper.takeProfit
         else
             -- gap down
             obj.Setting.gap.priceTake = contract.price -
                                             obj.Setting.gapper.takeProfit
             obj.Setting.gap.priceStop = contract.price +
                                             obj.Setting.gapper.stopLimit
+
+                                            
+            obj.Setting.gap.PRICE = obj.Setting.gap.priceStop + obj.Setting.gapper.takeProfit
                                             
         end
-        -- Цена Тэйк-Профита
+        obj.Setting.PRICE =  obj.Setting.gap.PRICE;
+        -- Цена Тэйк-Профита 
         obj.Setting.STOPPRICE = obj.Setting.gap.priceTake
         -- Цена Стоп-Лосса 
         obj.Setting.STOPPRICE2 =  obj.Setting.gap.priceStop
 
         obj.Setting.SPREAD = obj.Setting.gapper.stopLimit
-        obj.Log:save('New take price = ' .. price)
+        obj.Log:save('New take price = ' ..  obj.Setting.PRICE )
     end
 
     local function getDirectionTakeAndStop(contract)
@@ -207,7 +214,7 @@ function Logic:new(setting, Log)
 
         obj.Setting.count_contract = obj.Setting.gapper.use_contract
         local data = {};
-        data.price = newPrice
+        data.price =  obj.Setting.PRICE
         data.direct = obj.Setting.gapper.direct
         data.datetime = obj.Setting.datetime;
         data.trans_id = trans_id;
@@ -220,7 +227,7 @@ function Logic:new(setting, Log)
         data.executed = false
         data.emulation = obj.Setting.emulation
         data.contract = obj.Setting.gapper.use_contract
-        data.buy_contract = newPrice -- стоимость продажи
+        data.buy_contract = obj.Setting.PRICE -- стоимость 
         obj.Setting.gap.data = data
         -- send a order 
         obj.transaction:send(data.direct, data.type, data.price, data.trans_id,
