@@ -117,7 +117,7 @@ function transactionService:new(setting, Log)
              
             local text ='create new position'
 
-            local labelId = obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, QUANTITY, text)
+            local labelId = obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, obj.Transaction.QUANTITY, text)
                 message(labelId)
          --   obj.Setting.labelsTransaction[#obj.Setting.labelsTransaction + 1] = labelId;
 

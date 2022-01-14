@@ -64,7 +64,7 @@ function Engine:new(setting, Log)
 
         if bit.band(trade.flags, 2) == 0 then
             -- direction
-            obj.Log:save('OnTrade(5)  flag 2')
+           -- obj.Log:save('OnTrade(5)  flag 2')
             -- market.startContract(trade);
 
             --    marketGap.executedContract(trade);
@@ -77,7 +77,7 @@ function Engine:new(setting, Log)
         if not obj.Setting:CheckBit(trade.flags, 0) and
             not obj.Setting:CheckBit(trade.flags, 1) then
 
-            obj.Log:save('OnTrade(4)  flag 2')
+          --  obj.Log:save('OnTrade(4)  flag 2')
             if bit.band(trade.flags, 2) == 0 then
 
                 obj.Logic:executedContract(trade);
@@ -94,7 +94,9 @@ function Engine:new(setting, Log)
     end
 
     -- when update a candle
-    local function updateTick(result)
+    local function updateTick(candle)
+        --obj.Logic:getPriceStep()
+        obj.Logic:tick(candle)
 
        -- obj.Log:save("updateTick  -- when update a candle")
     end
@@ -146,11 +148,12 @@ function Engine:new(setting, Log)
 
     -- Функция вызывается терминалом QUIK при выставлении новой стоп-заявки или при изменении параметров существующей стоп-заявки (Таблица стоп-заявок).
     -- OnStopOrder(stop_order)
-    function obj:EngineTransReply(trans_reply)
-        obj.Logic:EngineTransReply(trans_reply)
+    function obj:EngineTransReply(trans_reply) 
         obj.Log:save('EngineTransReply trans_rtrans_rtrans_r ' ..
                          trans_reply.trans_id);
-        -- loger.save('trans_reply.result_msg ' ..  trans_reply.result_msg );
+
+                         
+        obj.Logic:EngineTransReply(trans_reply) 
         obj.Log:save('EngineTransReply order_num ' .. trans_reply.order_num);
 
     end

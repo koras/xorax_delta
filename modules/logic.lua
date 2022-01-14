@@ -106,6 +106,23 @@ function Logic:new(setting, Log)
             obj.Setting.gapper.typeTypeTake = "TAKE_PROFIT_AND_STOP_LIMIT_ORDER"
         end
     end
+
+    -- конвертируем цену
+    -- @param price string
+    function getPrice(price)
+        if obj.Setting.type_instrument == 3 then
+
+            return tostring(math.ceil(price));
+        else
+            return tostring(price);
+        end
+    end
+    function obj:tick(candle)
+        local price = getPrice(candle.close)
+    --    obj.Log:save('price=  ' .. price, 'obj:tick')
+
+    end
+
     --   if obj.Setting.emulation then end
 
     -- @description  второй этап регистрации события
@@ -115,7 +132,7 @@ function Logic:new(setting, Log)
     -- @param contract
 
     function obj:secondOperation(trade, contract)
-        
+
         obj.Log:save('obj:secondOperation  ' .. obj.Setting.gap.phase)
         if obj.Setting.gap.phase == 1 then
             obj.Log:save('trade.qtye = ' .. trade.qty)
@@ -164,6 +181,10 @@ function Logic:new(setting, Log)
         -- сперва находим контракт который (купили|продали) и ставим статус что мы купили контракт
         -- which a phase? 
 
+        if obj.Setting.gap.phase > 2 then
+        --    obj.Setting.gap.phase = 10
+        end
+
         obj.Log:save('obj:executedContract ')
         if #obj.Setting.sellTable > 0 then
             for contract = 1, #obj.Setting.sellTable do
@@ -173,15 +194,16 @@ function Logic:new(setting, Log)
                     obj.Setting.sellTable[contract].executed = true;
                     -- выставляем на продажу контракт.
                     -- ставим стоп, ибо нехуй деньгами разбрасываться 
-                    
-                    obj.Log:save('obj.Setting.gap.phase '.. obj.Setting.gap.phase)
+
+                    obj.Log:save('obj.Setting.gap.phase ' ..
+                                     obj.Setting.gap.phase)
 
                     if obj.Setting.gap.phase == 1 then
                         -- сработать может только 1 раз
-                        obj:secondOperation(trade,
-                                            obj.Setting.sellTable[contract])
+                        obj:secondOperation(trade, obj.Setting.sellTable[contract])
 
                     end
+
                     return;
                 end
             end
@@ -356,55 +378,114 @@ function Logic:new(setting, Log)
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end
 
+
+
+
+
+    -- http://luaq.ru/OnStopOrder.html#param_table_20
     -- стоп заявка установлена 
     function obj:EngineStopOrder(trade)
-        if bit.band(trade.flags, 2) == 0 then
 
-            -- obj.Setting.gap.phase = 3
-            obj.Log:save('EngineStopOrder(1)  flag 2')
+        if bit.band(trade.flags, 2) == 0 then
+ 
+            obj.Log:save('EngineStopOrder start')
+            obj.Log:save('trade.order_num = '.. trade.order_num)
+            obj.Log:save('obj.Setting.gap.order_num_stop = '.. obj.Setting.gap.order_num_stop)
+            obj.Log:save('obj.Setting.gap.phase = '.. obj.Setting.gap.phase)
+             
             --   market.startContract(trade);
             --   marketGap.executedContract(trade);
             if obj.Setting.gap.order_num_stop == 0 then
                 obj.Setting.gap.order_num_stop = trade.order_num
                 obj.Setting.gap.phase = 3
-                obj.Log:save("-- set stop " .. trade.order_num)
-                obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase, 'obj:EngineStopOrder')
+                obj.Log:save("-- set stop.. " .. trade.order_num)
+                obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase,
+                             'obj:EngineStopOrder')
             end
 
         else
-            if obj.Setting.gap.order_num_stop == trade.order_num then
+            if tostring(obj.Setting.gap.order_num_stop) == tostring(trade.order_num) then
                 obj.Log:save('EngineStopOrder(2)  flag 2')
                 obj.Setting.gap.order_num_stop = 0
                 obj.Log:save("-- delete stop " .. trade.order_num)
                 --   market.takeExecutedContract(trade);
             end
         end
+
+ 
+
+        if bit.band(trade.stopflags, 7) == 0 then
+            obj.Log:save("bit.band(trade.stopflags, 7) " .. trade.order_num)
+            --	Выполнение тейк-профита по рыночной цене
+        else
+            
+            obj.Log:save("bit.band(trade.flags, 7) ~= 0 " .. trade.order_num)
+        end 
+
+        if bit.band(trade.stopflags, 8) == 0 then
+            obj.Log:save("bit.band(trade.stopflags, 8) " .. trade.order_num)
+            --	Выполнение стоп-заявки по рыночной цене
+        else
+            
+            obj.Log:save("bit.band(trade.flags, 8) ~= 0 " .. trade.order_num)
+        end 
+         
+        if bit.band(trade.flags, 5) == 0 then
+            obj.Log:save("bit.band(trade.stopflags, 5) " .. trade.order_num)
+            --	Стоп-заявка ожидает активации
+            obj.Setting.gap.phase = 5
+        else
+            
+            obj.Log:save("bit.band(trade.flags, 5) ~= 0 " .. trade.order_num)
+        end 
+        
+        obj.Log:save("bobj.Setting.gap.phase " .. obj.Setting.gap.phase)
+        obj.Log:save('EngineStopOrder end')
     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     -- меняем фазу потому что установлен стоп
     function obj:EngineTransReply(trade)
-        obj.Log:save('obj:EngineTransReply')
+        obj.Log:save('obj:EngineTransReply start')
 
         if bit.band(trade.flags, 2) == 0 then
 
-         
-                obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase, 'obj:EngineTransReply')
-            obj.Log:save('obj:EngineTransReply')
+            obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase,
+                         'obj:EngineTransReply') 
             --   market.startContract(trade);
             --   marketGap.executedContract(trade);
             if obj.Setting.gap.order_num_stop == 0 then
+
                 obj.Setting.gap.order_num_stop = trade.order_num
-                obj.Log:save("-- set stop " .. trade.order_num)
+                obj.Log:save("-- set stop?? " .. trade.order_num)
             end
 
         else
-            if obj.Setting.gap.order_num_stop == trade.order_num then
+            if tostring(obj.Setting.gap.order_num_stop) == tostring(trade.order_num) then
                 obj.Log:save('EngineStopOrder(2)  flag 2')
                 obj.Setting.gap.order_num_stop = 0
-                obj.Log:save("-- delete stop " .. trade.order_num)
+                obj.Log:save("-- delete stop?? " .. trade.order_num)
                 --   market.takeExecutedContract(trade);
             end
         end
+        obj.Log:save('obj:EngineTransReply end')
     end
 
     setmetatable(obj, self)

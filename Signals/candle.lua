@@ -262,7 +262,7 @@ function Candle:new(setting, Log)
         --obj.Setting.datetime = bar.datetime;
 
         calculateSignal(bar);
-        if nil ~= collbackFunc then collbackFunc(setting, bar); end
+        if nil ~= collbackFunc then collbackFunc(bar); end
     end
 
     -- вызывается для сигналов
