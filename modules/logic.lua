@@ -117,9 +117,34 @@ function Logic:new(setting, Log)
             return tostring(price);
         end
     end
+
+
     function obj:tick(candle)
+
         local price = getPrice(candle.close)
     --    obj.Log:save('price=  ' .. price, 'obj:tick')
+        local stopPrice = 0 
+    
+        if obj.Setting.gap.phase == 3 then
+         --   obj.Log:save('obj:tick(candle) = obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
+
+            if tostring(obj.Setting.gap.directionTake) == "B" then
+                -- покупка
+                 stopPrice = obj.Setting.gap.priceStop + obj.Setting.gapper.trolling_next_price;
+              --  obj.Log:save(' stopPrice ' ..  stopPrice)
+             --   obj.Log:save('price  ' ..  price )
+                 if  tonumber(price) >  tonumber(stopPrice) then
+                     -- переносим стоп
+                     obj.transaction:deleteStop(obj.Setting.gap.order_num);
+                     obj.Setting.gap.phase = 4
+               --      obj.transaction:deleteStop(obj.Setting.gap.order_num_stop);
+                 end
+            else
+                -- продажа
+             
+            end
+       
+        end
 
     end
 
@@ -208,6 +233,14 @@ function Logic:new(setting, Log)
                 end
             end
         end
+
+
+        if obj.Setting.gap.phase > 6 then
+            -- исполнение стопа
+            obj.Setting.gap.phase = 10
+        end
+
+
     end
 
     function nextEmulation()
@@ -386,11 +419,26 @@ function Logic:new(setting, Log)
     -- стоп заявка установлена 
     function obj:EngineStopOrder(trade)
 
+
+
+        obj.Log:save('EngineStopOrder start')
+
+        if bit.band(trade.flags, 0) == 0 then
+            obj.Log:save("bit.band(trade.flags, 0) == 0 then" .. trade.order_num)
+                --	Заявка активна, иначе не активна
+        else
+            --	Заявка активна, иначе не активна
+            obj.Log:save("bit.band(trade.flags, 0) ~= 0 then" .. trade.order_num)
+        end 
+
+
         if bit.band(trade.flags, 2) == 0 then
- 
-            obj.Log:save('EngineStopOrder start')
-            obj.Log:save('trade.order_num = '.. trade.order_num)
+
             obj.Log:save('obj.Setting.gap.order_num_stop = '.. obj.Setting.gap.order_num_stop)
+
+            obj.Setting.gap.order_num_stop =trade.order_num
+
+            obj.Log:save('trade.order_num = '.. trade.order_num) 
             obj.Log:save('obj.Setting.gap.phase = '.. obj.Setting.gap.phase)
              
             --   market.startContract(trade);
@@ -429,17 +477,21 @@ function Logic:new(setting, Log)
             
             obj.Log:save("bit.band(trade.flags, 8) ~= 0 " .. trade.order_num)
         end 
+
+        obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase)
          
         if bit.band(trade.flags, 5) == 0 then
-            obj.Log:save("bit.band(trade.stopflags, 5) " .. trade.order_num)
+            obj.Log:save("if bit.band(trade.flags, 5) == 0 then " .. trade.order_num)
             --	Стоп-заявка ожидает активации
-            obj.Setting.gap.phase = 5
+        --    obj.Setting.gap.phase = 6
         else
-            
+            obj.Setting.gap.phase = 3
             obj.Log:save("bit.band(trade.flags, 5) ~= 0 " .. trade.order_num)
+            
+            obj.Setting.gap.order_num = trade.order_num
         end 
         
-        obj.Log:save("bobj.Setting.gap.phase " .. obj.Setting.gap.phase)
+        obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase)
         obj.Log:save('EngineStopOrder end')
     end
 

@@ -1,80 +1,85 @@
 start 
 Current step price : 1.000000 
 -- setting.gap.phase == 0 
-77379.0 >=   77381.0 
-old price = 77381.0setting.current_price = 77379.0 
-direct = S 
+77367.0 >=   77367.0 
+old price = 77367.0setting.current_price = 77367.0 
+direct = B 
 contractsCount 1 
 execute: success  
-EngineTransReply trans_rtrans_rtrans_r 2502442 
+startEngine EngineTransReply 2502442/1892946981048939924 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 1  :obj:EngineTransReply
--- set stop?? 1892946981047840504 
+-- set stop?? 1892946981048939924 
 obj:EngineTransReply end 
-EngineTransReply order_num 1892946981047840504 
-OnTrade 1892946981047840504 
+OnTrade 1892946981048939924 
 obj:executedContract  
 obj.Setting.gap.phase 1 
 obj:secondOperation  1 
 trade.qtye = 1.0 
 createTake phase:2 secondOperation 
-New take price = 77499.0 
+New take price = 77247.0 
 obj.Transaction.SPREAD 1 20 
+obj.Transaction.STOPPRICE  1 77467 
+ obj.Transaction.STOPPRICE2  1 77347 
 -- setting.gap.phase == 2 
-obj.Transaction.STOPPRICE  1 77279 
- obj.Transaction.STOPPRICE2  1 77399 
 contractsCount 1 
 execute: success  
 obj.Setting.gap.phase 2 
 OnTrade(1)  flag 2 
-OnTrade 1892946981047840504 
+OnTrade 1892946981048939924 
 obj:executedContract  
 OnTrade(1)  flag 2 
-OnTrade 1892946981047840504 
+OnTrade 1892946981048939924 
 obj:executedContract  
 OnTrade(1)  flag 2 
-EngineTransReply trans_rtrans_rtrans_r 1453308106 
+startEngine EngineTransReply 1354370118/832315010 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 2  :obj:EngineTransReply
 obj:EngineTransReply end 
-EngineTransReply order_num 832311131 
--- obj:EngineStopOrder 832311131 
+-- obj:EngineStopOrder 832315010 
 EngineStopOrder start 
-trade.order_num = 832311131 
-obj.Setting.gap.order_num_stop = 1892946981047840504 
+bit.band(trade.flags, 0) == 0 then832315010 
+obj.Setting.gap.order_num_stop = 1892946981048939924 
+trade.order_num = 832315010 
 obj.Setting.gap.phase = 2 
-bit.band(trade.flags, 7) ~= 0 832311131 
-bit.band(trade.stopflags, 8) 832311131 
-bit.band(trade.flags, 5) ~= 0 832311131 
-EngineStopOrder end 
-
---------------------------------------------------------------------------------------------------
--- obj:EngineStopOrder 832311131 
-EngineStopOrder start 
-trade.order_num = 832311131 
-obj.Setting.gap.order_num_stop = 1892946981047840504 
-obj.Setting.gap.phase = 2 
-bit.band(trade.flags, 7) ~= 0 832311131 
-bit.band(trade.stopflags, 8) 832311131 
-bit.band(trade.stopflags, 8) 832311131 
-EngineStopOrder end 
--- obj:EngineStopOrder 832311131 
-EngineStopOrder start 
-trade.order_num = 832311131 
-obj.Setting.gap.order_num_stop = 1892946981047840504 
-obj.Setting.gap.phase = 2 
-bit.band(trade.flags, 7) ~= 0 832311131 
-bit.band(trade.stopflags, 8) 832311131 
-bit.band(trade.stopflags, 5) 832311131 
-EngineStopOrder end 
-OnTrade 1892946981047842774 
-obj:executedContract  
+bit.band(trade.flags, 7) ~= 0 832315010 
+bit.band(trade.stopflags, 8) 832315010 
 obj.Setting.gap.phase 2 
+bit.band(trade.flags, 5) ~= 0 832315010 
+obj.Setting.gap.phase 3 
+EngineStopOrder end 
+-- obj:EngineStopOrder 832315010 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832315010 
+obj.Setting.gap.order_num_stop = 832315010 
+trade.order_num = 832315010 
+obj.Setting.gap.phase = 3 
+bit.band(trade.flags, 7) ~= 0 832315010 
+bit.band(trade.stopflags, 8) 832315010 
+obj.Setting.gap.phase 3 
+bit.band(trade.flags, 5) ~= 0 832315010 
+obj.Setting.gap.phase 3 
+EngineStopOrder end 
+-- obj:EngineStopOrder 832315010 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832315010 
+obj.Setting.gap.order_num_stop = 832315010 
+trade.order_num = 832315010 
+obj.Setting.gap.phase = 3 
+bit.band(trade.flags, 7) ~= 0 832315010 
+bit.band(trade.stopflags, 8) 832315010 
+obj.Setting.gap.phase 3 
+bit.band(trade.flags, 5) ~= 0 832315010 
+obj.Setting.gap.phase 3 
+EngineStopOrder end 
+OnTrade 1892946981048942514 
+obj:executedContract  
+obj.Setting.gap.phase 3 
 OnTrade(1)  flag 2 
-OnTrade 1892946981047842774 
+OnTrade 1892946981048942514 
 obj:executedContract  
 OnTrade(1)  flag 2 
-OnTrade 1892946981047842774 
+OnTrade 1892946981048942514 
 obj:executedContract  
 OnTrade(1)  flag 2 
 ============ LineBuyHigh:destructor 

@@ -156,6 +156,15 @@ function transactionService:new(setting, Log)
         execute(transId)
     end
 
+    function obj:deleteStop(stopOrder_num)
+      
+        obj.Log:save("obj:deleteStop " )
+        obj.Transaction.ACTION = "KILL_STOP_ORDER"
+        obj.Transaction.STOP_ORDER_KEY = tostring(stopOrder_num)
+        execute(0) 
+    end
+
+
     -- send request for delete a order
     function obj:delete()
 

@@ -149,12 +149,10 @@ function Engine:new(setting, Log)
     -- Функция вызывается терминалом QUIK при выставлении новой стоп-заявки или при изменении параметров существующей стоп-заявки (Таблица стоп-заявок).
     -- OnStopOrder(stop_order)
     function obj:EngineTransReply(trans_reply) 
-        obj.Log:save('EngineTransReply trans_rtrans_rtrans_r ' ..
-                         trans_reply.trans_id);
+        obj.Log:save('startEngine EngineTransReply ' ..   trans_reply.trans_id  ..'/' .. trans_reply.order_num);
 
                          
         obj.Logic:EngineTransReply(trans_reply) 
-        obj.Log:save('EngineTransReply order_num ' .. trans_reply.order_num);
 
     end
 
