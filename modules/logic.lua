@@ -129,25 +129,96 @@ function Logic:new(setting, Log)
          --   obj.Log:save('obj:tick(candle) = obj.Setting.gap.phase ' .. obj.Setting.gap.phase)
 
             if tostring(obj.Setting.gap.directionTake) == "B" then
-                -- покупка
-                 stopPrice = obj.Setting.gap.priceStop + obj.Setting.gapper.trolling_next_price;
+ 
+
+                -- покупка 
+                 stopPrice = tonumber(obj.Setting.gap.priceStop) - tonumber(obj.Setting.gapper.trolling_next_price);
+
+                 obj.Log:save('obj:tick(candle) '.. tostring(obj.Setting.gap.directionTake)..' price '.. price .. ' = ' .. obj.Setting.gapper.trolling_next_price ..' = '..tonumber(stopPrice) )
+              
+              --  obj.Log:save(' stopPrice ' ..  stopPrice)
+             --   obj.Log:save('price  ' ..  price )
+                 if  tonumber(price) <  tonumber(stopPrice) then
+                     -- переносим стоп
+                    
+                     obj.Log:save('prepare delete stop'.. tonumber(price))
+                        obj.Setting.gap.phase = 4
+                        obj.transaction:deleteStop(obj.Setting.gap.order_num);
+               --      obj.transaction:deleteStop(obj.Setting.gap.order_num_stop);
+                     obj.Setting.gap.priceStop = stopPrice
+                     obj.Setting.STOPPRICE2 = stopPrice
+ 
+                         obj.Log:save('obj:tick(candle) tostring(obj.Setting.gap.directionTake) = '.. tostring(obj.Setting.gap.directionTake))
+
+                 end
+                -- продажа
+            end 
+        
+            if tostring(obj.Setting.gap.directionTake) == "S" then
+
+                 
+                -- покупка 
+                 stopPrice = tonumber(obj.Setting.gap.priceStop) + tonumber(obj.Setting.gapper.trolling_next_price);
+
+                 
+                obj.Log:save('obj:tick(candle) '.. tostring(obj.Setting.gap.directionTake)..' price '.. price .. ' = ' .. obj.Setting.gapper.trolling_next_price ..' = '..stopPrice )
               --  obj.Log:save(' stopPrice ' ..  stopPrice)
              --   obj.Log:save('price  ' ..  price )
                  if  tonumber(price) >  tonumber(stopPrice) then
                      -- переносим стоп
-                     obj.transaction:deleteStop(obj.Setting.gap.order_num);
-                     obj.Setting.gap.phase = 4
-               --      obj.transaction:deleteStop(obj.Setting.gap.order_num_stop);
+                        obj.Setting.gap.priceStop = stopPrice
+                        obj.Setting.STOPPRICE2 = stopPrice
+                    
+                        obj.Log:save('prepare delete stop'.. tonumber(price))
+                        obj.Setting.gap.phase = 4
+                        obj.transaction:deleteStop(obj.Setting.gap.order_num);
+               --      obj.transaction:deleteStop(obj.Setting.gap.order_num_stop); 
+                        obj.Log:save('obj:tick(candle) tostring(obj.Setting.gap.directionTake) = '.. tostring(obj.Setting.gap.directionTake))
+                    
                  end
-            else
                 -- продажа
-             
-            end
-       
-        end
+            end 
+            
+         end
+
+
 
     end
 
+
+
+    function obj:setNewStop()
+        obj.Log:save('obj:setNewStop()')
+        if obj.Setting.gap.phase == 4 then
+            
+            obj.Log:save('obj:setNewStop() '.. obj.Setting.gap.phase)
+            local data = {};
+            data.price = obj.Setting.gap.priceTake
+            data.direct = obj.Setting.gap.directionTake
+            data.datetime = obj.Setting.datetime;
+            data.trans_id = getRand();
+         --   data.relation_trans_id = trade.trans_id
+            -- сколько контрактов исполнилось
+          --  data.use_contract = trade.qty
+            -- type order
+            data.type = "NEW_ORDER";
+            data.type = obj.Setting.gapper.typeTypeTake
+            data.work = true
+            data.phase = obj.Setting.gap.phase
+            data.executed = false
+            data.emulation = obj.Setting.emulation
+            data.contract =  obj.Setting.gapper.use_contract
+            data.buy_contract = obj.Setting.gap.priceTake
+            obj.Setting.gap.dataTake = data
+           -- obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
+
+            obj.transaction:send(data.direct, data.type, data.price,
+                                data.trans_id,  data.contract, data.phase); 
+
+            nextEmulation();
+            obj.Log:save('obj:setNewStop() end  '.. obj.Setting.gap.phase)
+        end
+    end
     --   if obj.Setting.emulation then end
 
     -- @description  второй этап регистрации события
@@ -490,7 +561,59 @@ function Logic:new(setting, Log)
             
             obj.Setting.gap.order_num = trade.order_num
         end 
+
+
+
         
+        if bit.band(trade.flags, 1) == 0 and 
+        if bit.band(trade.flags, 5) == 0 and 
+        obj.Setting.gap.phase == 4 then
+            setNewStop()
+
+        end
+
+
+
+        if bit.band(trade.flags, 1) == 0 then
+
+
+         
+
+            -- или исполнение или снятие заявки 
+            obj.Log:save("======================" .. trade.order_num)
+            --	Стоп-заявка ожидает активации
+             obj.Setting.gap.phase = 6
+
+        else 
+            obj.Log:save("~~~~~~~~~~~~~~~~~~~ " .. trade.order_num)
+            
+          --  obj.Setting.gap.order_num = trade.order_num
+        end 
+
+
+        
+        if bit.band(trade.flags, 1) == 1 then
+            obj.Log:save("---------------------" .. trade.order_num)
+      
+            obj.Setting.gap.phase = 3
+        else 
+
+            obj.Log:save("....................... " .. trade.order_num)
+            
+          --  obj.Setting.gap.order_num = trade.order_num
+        end 
+        
+
+        if bit.band(trade.flags, 5) == 1 and  bit.band(trade.flags, 1) == 0 then
+
+            obj.Log:save("DDDDDDDDDDDD " .. trade.order_num)
+            obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase)
+        else
+
+            obj.Log:save("000000000000 " .. obj.Setting.gap.phase)
+
+        end
+
         obj.Log:save("obj.Setting.gap.phase " .. obj.Setting.gap.phase)
         obj.Log:save('EngineStopOrder end')
     end

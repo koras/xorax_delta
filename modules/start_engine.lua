@@ -26,8 +26,8 @@ function Engine:new(setting, Log)
 
         if setting.emulation then
             -- обработка во время эмуляции
-            market.callSELL_emulation(setting, result);
-            marketGap.tick(setting, result);
+          --  market.callSELL_emulation(setting, result);
+          --  marketGap.tick(setting, result);
             -- сработал стоп в режиме эмуляции
             --  riskStop.appruveOrderStopEmulation(result)
         end
