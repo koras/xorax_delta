@@ -36,15 +36,59 @@ function transactionService:new(setting, Log)
          obj.Transaction.OPERATION = direct
     end
     -- set type a order
-    local function setType(type)
-        if type == 'NEW_ORDER' then
+    local function setType(type) 
+        if tostring(type) == 'NEW_ORDER' then
           obj.Transaction.ACTION = 'NEW_ORDER'
         end
-        obj.Log:save('sendTransaction NEW_ORDER ' ..  obj.Transaction.ACTION);
+        if tostring(type) == 'TAKE_PROFIT_AND_STOP_LIMIT_ORDER' then
+            -- https://forum.quik.ru/forum10/topic1404/
+            
+          obj.Transaction.ACTION = 'NEW_STOP_ORDER'
+          obj.Transaction.STOP_ORDER_KIND = 'TAKE_PROFIT_AND_STOP_LIMIT_ORDER'
+        --  ["STOPPRICE"]           = stopprice, -- Цена Тэйк-Профита
+       -- ["EXPIRY_DATE"]         = "TODAY", -- Срок действия стоп-заявки ("GTC" – до отмены,"TODAY" - до окончания текущей торговой сессии, Дата в формате "ГГММДД")
+       -- ["SPREAD_UNITS"]        = "PRICE_UNITS", -- Единицы измерения защитного спрэда ("PRICE_UNITS" - шаг цены, или "PERCENTS" - проценты)
+       --  ["SPREAD"]              = tostring(100*SEC_PRICE_STEP),
+       --["STOPPRICE2"]          = stopprice2, -- Цена Стоп-Лосса
+        end 
     end
     -- set current price for a order
     local function setPrice(price)
-        obj.Transaction.PRICE = price;
+        obj.Transaction.MARKET_TAKE_PROFIT = "NO"
+
+
+        if obj.Setting.type_instrument  == 3 then 
+            obj.Transaction.PRICE = tostring(math.ceil( obj.Setting.PRICE));
+            
+            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
+
+                obj.Transaction.SPREAD =  tostring(math.ceil(obj.Setting.SPREAD))
+                obj.Transaction.STOPPRICE =  tostring(math.ceil( obj.Setting.STOPPRICE))  
+                obj.Transaction.STOPPRICE2 = tostring(math.ceil( obj.Setting.STOPPRICE2)) --stopprice2, -- Цена Стоп-Лосса
+                obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
+                obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
+                obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
+            end
+
+        else 
+            obj.Transaction.PRICE = tostring( obj.Setting.PRICE);
+
+            if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then  
+ 
+                obj.Transaction.SPREAD =  tostring(obj.Setting.SPREAD) 
+                obj.Transaction.STOPPRICE =  tostring( obj.Setting.STOPPRICE) 
+                -- stopprice2, -- Цена Стоп-Лосса 
+                obj.Transaction.STOPPRICE2 = tostring( obj.Setting.STOPPRICE2) --stopprice2, -- Цена Стоп-Лосса
+                obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
+                obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
+                obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
+            end
+
+        end;
+
+  
+
+         
     end
     -- set transaction id for a order
     local function setTransId(transId)
@@ -53,7 +97,12 @@ function transactionService:new(setting, Log)
 
     -- set count contract
     local function setContractsCount(contractsCount)
-        obj.Transaction.QUANTITY = tostring(contractsCount)
+    --    obj.Log:save("obj.Transaction.contractsCount" .. tostring(contractsCount)) 
+
+        
+         contractsCount = tostring(math.ceil( contractsCount)) 
+        obj.Log:save("contractsCount " .. contractsCount)
+        obj.Transaction.QUANTITY = contractsCount
     end
 
     -- 
@@ -63,19 +112,25 @@ function transactionService:new(setting, Log)
             --message('transactionService:send')
             -- данные собраны по ходу формирования транкзакции
             -- ставим метку
-            local price = obj.Transaction.PRICE
-            local QUANTITY = obj.Transaction.QUANTITY
+            local price = obj.Transaction.PRICE 
             local datetime = obj.Setting.datetime
              
             local text ='create new position'
 
-            local labelId = obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, QUANTITY, text)
+            local labelId = obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, obj.Transaction.QUANTITY, text)
                 message(labelId)
          --   obj.Setting.labelsTransaction[#obj.Setting.labelsTransaction + 1] = labelId;
 
            -- set(Operation, Price, datetime, count, textInfo)
         else
             -- http://luaq.ru/sendTransaction.html
+           
+          --  obj.Log:save("obj.Transaction.PRICE " .. obj.Transaction.PRICE)
+          --  obj.Log:save("obj.Transaction.QUANTITY" .. obj.Transaction.QUANTITY)
+           -- obj.Log:save("obj.Transaction.OPERATION" .. obj.Transaction.OPERATION)
+       
+         --  local QUANTITY = tostring(math.ceil( obj.Transaction.QUANTITY)) 
+         --  obj.Log:save("QUANTITY" .. QUANTITY)
             local res = sendTransaction(obj.Transaction)
             if string.len(res) ~= 0 then 
                 obj.Log:save("execute: fail " .. tostring(res))
@@ -90,7 +145,9 @@ function transactionService:new(setting, Log)
     -- @param type string - type
     -- @param price integer|float - cost
     -- @param transId integer - random number
-    function obj:send(direct, type, price, transId, contractsCount)
+    -- @param event integer - какое событие сейчас происходит
+    
+    function obj:send(direct, type, price, transId, contractsCount, event)
         setDirect(direct)
         setType(type)
         setPrice(price)
@@ -99,12 +156,21 @@ function transactionService:new(setting, Log)
         execute(transId)
     end
 
+    function obj:deleteStop(stopOrder_num)
+      
+        obj.Log:save("obj:deleteStop " )
+        obj.Transaction.ACTION = "KILL_STOP_ORDER"
+        obj.Transaction.STOP_ORDER_KEY = tostring(stopOrder_num)
+        execute(0) 
+    end
+
+
     -- send request for delete a order
     function obj:delete()
 
         if obj.Setting.emulation then
             -- mode edulation
-            message('transactionService:send' .. obj.Setting.gap.data.buy_contract)
+            message('transactionService:send' .. obj.Setting.gapper.data.buy_contract)
 
         else
 

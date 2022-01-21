@@ -64,6 +64,10 @@ function EngineSetting:new()
     setting.gap.allowed = true;
     -- цена открытия позиции
     setting.gap.price = 0
+
+    setting.gap.order_num_stop = 0;
+
+    setting.gap.order_num = 0;
     -- тейк профит
     setting.gap.priceProfit = 0
     -- следующий шаг для передвижения стопа
@@ -72,7 +76,9 @@ function EngineSetting:new()
     setting.gap.whereIsPriceForStop = 0
 
     setting.labels = {}
-
+    setting.STOPPRICE = 0
+    setting.SPREAD = 0
+    setting.STOPPRICE2 = 0 --stopprice2, -- Цена Стоп-Лосса
     -- Здесь сохраняем id лэйблы для стопов
     setting.gap.label = {}
     -- stop

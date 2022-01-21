@@ -88,34 +88,52 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 20;
+    setting.gapper.well_price = 10;
     
-    setting.gapper.takeProfit = 350;
+    setting.gapper.takeProfit = 100;
     setting.gapper.stopLimit = 20;
-    
+
+    -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
+    -- то стоп необходимо передвинуть 
+
+    -- движение цены от текущей позиции
+    setting.gapper.trolling_next_price = 50
+
+    -- сдвигаем стоп на N шагов по направлению тейка
+    setting.gapper.trolling = 25
+
+
+    setting.gapper.SPREAD = 10;
+
+
+
+    -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
+    setting.gapper.typeType = 'stop';
+    setting.gapper.typeTypeTake = '';
+
 
 
 
     -- включён или выключен режим эмуляции по умолчанию
-    setting.emulation = true;
+    setting.emulation = false
 
     -- Выставлять контракт на продажу через тейки или лимитки
     -- Если рыно слабо ходит то выгоднее лимитки. Так как при выставлении тейков, продаваться будет ниже, что не выгодно.
     -- по умолчанию стоят тейки
-    setting.sell_take_or_limit = true;
+    setting.sell_take_or_limit = true
 
 
-    setting.SPRED_LONG_BUY_UP = 2; -- условия; не покупаем если здесь ранее мы купили | вверх диапозон;
-    setting.SPRED_LONG_BUY_down = 1; -- условия; не покупаем если здесь ранее мы купили | вниз диапозон
+    setting.SPRED_LONG_BUY_UP = 2 -- условия; не покупаем если здесь ранее мы купили | вверх диапозон;
+    setting.SPRED_LONG_BUY_down = 1 -- условия; не покупаем если здесь ранее мы купили | вниз диапозон
 
-    setting.not_buy_high_UP = 400; -- условия; цена входа при запуске скрипта 
-    setting.not_buy_high_change = 30; --  изменения в контрольеой панели
+    setting.not_buy_high_UP = 400 -- условия; цена входа при запуске скрипта 
+    setting.not_buy_high_change = 30 --  изменения в контрольеой панели
 
-    setting.not_buy_low_UP = 1500; -- условия; цена входа при запуске скрипта 
-    setting.not_buy_low_change = 10; --  изменения в контрольеой панели
+    setting.not_buy_low_UP = 1500 -- условия; цена входа при запуске скрипта 
+    setting.not_buy_low_change = 10 --  изменения в контрольеой панели
 
-    setting.take_profit_offset = 10;
-    setting.take_profit_spread = 10;
+    setting.take_profit_offset = 10
+    setting.take_profit_spread = 10
 
     
     setting.candle_buy_number_down_price = 6; -- сколько свечей должно пройти чтобы отпустить продажу  
