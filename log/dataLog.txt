@@ -1,93 +1,55 @@
 start 
 Current step price : 1.000000 
 -- setting.gap.phase == 0 
-77638.0 >=   77639.0 
-old price = 77639.0setting.current_price = 77638.0 
+77554.0 >=   77556.0 
+old price = 77556.0setting.current_price = 77554.0 
 direct = S 
 contractsCount 1 
 execute: success  
-startEngine EngineTransReply 2502442/1892946998228772424 
+startEngine EngineTransReply 2502442/1892946998233505715 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 1  :obj:EngineTransReply
--- set stop?? 1892946998228772424 
+-- set stop?? 1892946998233505715 
 obj:EngineTransReply end 
-OnTrade 1892946998228772424 
+OnTrade 1892946998233505715 
 obj:executedContract  
 obj.Setting.gap.phase 1 
 obj:secondOperation  1 
 trade.qtye = 1.0 
 createTake phase:2 secondOperation 
-New take price = 77743.0 
-obj.Transaction.SPREAD 1 5 
-obj.Transaction.STOPPRICE  1 77538 
- obj.Transaction.STOPPRICE2  1 77643 
+New take price = 77684.0 
+obj.Transaction.SPREAD 1 30 
+obj.Transaction.STOPPRICE  1 77454 
+ obj.Transaction.STOPPRICE2  1 77584 
 contractsCount 1 
-execute: success  
 -- setting.gap.phase == 2 
+execute: success  
 obj.Setting.gap.phase 2 
 OnTrade(1)  flag 2 
-OnTrade 1892946998228772424 
+OnTrade 1892946998233505715 
 obj:executedContract  
 OnTrade(1)  flag 2 
-OnTrade 1892946998228772424 
+OnTrade 1892946998233505715 
 obj:executedContract  
 OnTrade(1)  flag 2 
-startEngine EngineTransReply 182800293/832414843 
+startEngine EngineTransReply 1559265137/832428901 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 2  :obj:EngineTransReply
 obj:EngineTransReply end 
--- obj:EngineStopOrder 832414843 
+-- obj:EngineStopOrder 832428901 
 EngineStopOrder start 
-bit.band(trade.flags, 0) == 0 then832414843 
-obj.Setting.gap.order_num_stop = 1892946998228772424 
-trade.order_num = 832414843 
+bit.band(trade.flags, 0) == 0 then832428901 
+bit.band(trade.flags, 0) ~= 0 then832428901 
+obj.Setting.gap.order_num_stop = 1892946998233505715 
+trade.order_num = 832428901 
 obj.Setting.gap.phase = 2 
-bit.band(trade.flags, 7) ~= 0 832414843 
-bit.band(trade.stopflags, 8) 832414843 
+bit.band(trade.flags, 7) ~= 0 832428901 
+bit.band(trade.stopflags, 8) 832428901 
 obj.Setting.gap.phase 2 
-bit.band(trade.flags, 5) ~= 0 832414843 
-~~~~~~~~~~~~~~~~~~~ 832414843 
----------------------832414843 
+bit.band(trade.flags, 5) ~= 0 832428901 
+setNewStop() setNewStop() setNewStop()832428901 
+~~~~~~~~~~~~~~~~~~~ 832428901 
+---------------------832428901 
 000000000000 3 
 obj.Setting.gap.phase 3 
 EngineStopOrder end 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77638 = 10 = 77633.0 
-obj:tick(candle) B price 77632 = 10 = 77633.0 
-prepare delete stop77632 
-obj:deleteStop  
-execute: success  
-obj:tick(candle) tostring(obj.Setting.gap.directionTake) = B 
-startEngine EngineTransReply 182800293/0 
-obj:EngineTransReply start 
-obj.Setting.gap.phase 4  :obj:EngineTransReply
-obj:EngineTransReply end 
--- obj:EngineStopOrder 832414843 
-EngineStopOrder start 
-bit.band(trade.flags, 0) == 0 then832414843 
-EngineStopOrder(2)  flag 2 
--- delete stop 832414843 
-bit.band(trade.flags, 7) ~= 0 832414843 
-bit.band(trade.stopflags, 8) 832414843 
-obj.Setting.gap.phase 4 
-if bit.band(trade.flags, 5) == 0 then 832414843 
-======================832414843 
-....................... 832414843 
-000000000000 6 
-obj.Setting.gap.phase 6 
-EngineStopOrder end 
-============ LineBuyHigh:destructor 

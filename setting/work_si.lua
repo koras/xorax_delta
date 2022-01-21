@@ -88,16 +88,16 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 5;
+    setting.gapper.well_price = 10;
     
     setting.gapper.takeProfit = 100;
-    setting.gapper.stopLimit = 5;
+    setting.gapper.stopLimit = 20;
 
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
 
     -- движение цены от текущей позиции
-    setting.gapper.trolling_next_price = 10
+    setting.gapper.trolling_next_price = 50
     -- сдвигаем стоп на N шагов по направлению тейка
     setting.gapper.trolling = 20
 
