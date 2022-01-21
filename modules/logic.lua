@@ -112,9 +112,9 @@ function Logic:new(setting, Log)
     function getPrice(price)
         if obj.Setting.type_instrument == 3 then
 
-            return tostring(math.ceil(price));
+            return tonumber(math.ceil(price));
         else
-            return tostring(price);
+            return tonumber(price);
         end
     end
 
@@ -136,7 +136,7 @@ function Logic:new(setting, Log)
                                 
                 --  obj.Log:save(' stopPrice ' ..  stopPrice)
                 --   obj.Log:save('price  ' ..  price )
-                if tonumber(price) < tonumber(stopPrice) then
+                if  price < tonumber(stopPrice) then
                     -- переносим стоп
 
                     local newStopPrice = tonumber(obj.Setting.gap.priceStop) - tonumber(obj.Setting.gapper.trolling)
@@ -148,8 +148,12 @@ function Logic:new(setting, Log)
 
                     obj.Log:save('Delete stop ' .. tonumber(price))
                     obj.Setting.gap.phase = 4
-                    obj.transaction:deleteStop(obj.Setting.gap.order_num); 
- 
+                    obj.transaction:deleteStop(obj.Setting.gap.order_num)
+
+                else
+                   
+                    obj.Log:save('nest stop B ' .. price - tonumber(stopPrice) )
+
 
 
                 end
@@ -168,7 +172,7 @@ function Logic:new(setting, Log)
                 --   obj.Log:save('price  ' ..  price )
                 if tonumber(price) > tonumber(stopPrice) then
                     -- переносим стоп
-                    local newStopPrice = tonumber(obj.Setting.gap.priceStop) +tonumber(obj.Setting.gapper.trolling)
+                    local newStopPrice = tonumber(obj.Setting.gap.priceStop) + tonumber(obj.Setting.gapper.trolling)
                     
 
                     obj.Setting.gap.priceStop = newStopPrice
@@ -176,7 +180,9 @@ function Logic:new(setting, Log)
                     obj.Log:save('Delete stop ' .. tonumber(price))
                     obj.Setting.gap.phase = 4
                     obj.transaction:deleteStop(obj.Setting.gap.order_num); 
+                else
                    
+                    obj.Log:save('nest stop S ' .. tonumber(stopPrice) - tonumber(price))
 
                 end
                 -- продажа

@@ -1,55 +1,875 @@
 start 
 Current step price : 1.000000 
 -- setting.gap.phase == 0 
-77554.0 >=   77556.0 
-old price = 77556.0setting.current_price = 77554.0 
+77461.0 >=   77483.0 
+old price = 77483.0setting.current_price = 77461.0 
 direct = S 
 contractsCount 1 
 execute: success  
-startEngine EngineTransReply 2502442/1892946998233505715 
+startEngine EngineTransReply 2502442/1892946998233811854 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 1  :obj:EngineTransReply
--- set stop?? 1892946998233505715 
+-- set stop?? 1892946998233811854 
 obj:EngineTransReply end 
-OnTrade 1892946998233505715 
+OnTrade 1892946998233811854 
 obj:executedContract  
 obj.Setting.gap.phase 1 
 obj:secondOperation  1 
 trade.qtye = 1.0 
 createTake phase:2 secondOperation 
-New take price = 77684.0 
-obj.Transaction.SPREAD 1 30 
-obj.Transaction.STOPPRICE  1 77454 
- obj.Transaction.STOPPRICE2  1 77584 
+New take price = 77581.0 
+obj.Transaction.SPREAD 1 20 
+obj.Transaction.STOPPRICE  1 77361 
+ obj.Transaction.STOPPRICE2  1 77481 
 contractsCount 1 
--- setting.gap.phase == 2 
 execute: success  
 obj.Setting.gap.phase 2 
 OnTrade(1)  flag 2 
-OnTrade 1892946998233505715 
+OnTrade 1892946998233811854 
+obj:executedContract  
+-- setting.gap.phase == 2 
+OnTrade(1)  flag 2 
+OnTrade 1892946998233811854 
 obj:executedContract  
 OnTrade(1)  flag 2 
-OnTrade 1892946998233505715 
-obj:executedContract  
-OnTrade(1)  flag 2 
-startEngine EngineTransReply 1559265137/832428901 
+startEngine EngineTransReply 751708985/832429641 
 obj:EngineTransReply start 
 obj.Setting.gap.phase 2  :obj:EngineTransReply
 obj:EngineTransReply end 
--- obj:EngineStopOrder 832428901 
+-- obj:EngineStopOrder 832429641 
 EngineStopOrder start 
-bit.band(trade.flags, 0) == 0 then832428901 
-bit.band(trade.flags, 0) ~= 0 then832428901 
-obj.Setting.gap.order_num_stop = 1892946998233505715 
-trade.order_num = 832428901 
+bit.band(trade.flags, 0) == 0 then832429641 
+bit.band(trade.flags, 0) ~= 0 then832429641 
+obj.Setting.gap.order_num_stop = 1892946998233811854 
+trade.order_num = 832429641 
 obj.Setting.gap.phase = 2 
-bit.band(trade.flags, 7) ~= 0 832428901 
-bit.band(trade.stopflags, 8) 832428901 
+bit.band(trade.flags, 7) ~= 0 832429641 
+bit.band(trade.stopflags, 8) 832429641 
 obj.Setting.gap.phase 2 
-bit.band(trade.flags, 5) ~= 0 832428901 
-setNewStop() setNewStop() setNewStop()832428901 
-~~~~~~~~~~~~~~~~~~~ 832428901 
----------------------832428901 
+bit.band(trade.flags, 5) ~= 0 832429641 
+setNewStop() setNewStop() setNewStop()832429641 
+~~~~~~~~~~~~~~~~~~~ 832429641 
+---------------------832429641 
+nest stop B 30.0 
 000000000000 3 
 obj.Setting.gap.phase 3 
 EngineStopOrder end 
+nest stop B 33.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 32.0 
+nest stop B 29.0 
+nest stop B 33.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 32.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 29.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 30.0 
+nest stop B 30.0 
+nest stop B 34.0 
+nest stop B 34.0 
+nest stop B 34.0 
+nest stop B 30.0 
+nest stop B 29.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 32.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 37.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 36.0 
+nest stop B 36.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 37.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 39.0 
+nest stop B 38.0 
+nest stop B 34.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 38.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 40.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 38.0 
+nest stop B 35.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 39.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 31.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 33.0 
+nest stop B 36.0 
+nest stop B 36.0 
+nest stop B 36.0 
+nest stop B 36.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 28.0 
+nest stop B 28.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 24.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 27.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 28.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 26.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 29.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 14.0 
+nest stop B 17.0 
+nest stop B 13.0 
+nest stop B 12.0 
+nest stop B 9.0 
+nest stop B 6.0 
+nest stop B 11.0 
+nest stop B 6.0 
+nest stop B 4.0 
+nest stop B 4.0 
+nest stop B 4.0 
+nest stop B 1.0 
+nest stop B 5.0 
+nest stop B 0.0 
+nest stop B 0.0 
+nest stop B 1.0 
+nest stop B 1.0 
+nest stop B 1.0 
+nest stop B 1.0 
+nest stop B 4.0 
+nest stop B 4.0 
+nest stop B 1.0 
+nest stop B 1.0 
+nest stop B 0.0 
+nest stop B 0.0 
+Delete stop 77430 
+obj:deleteStop  
+execute: success  
+startEngine EngineTransReply 751708985/0 
+obj:EngineTransReply start 
+obj.Setting.gap.phase 4  :obj:EngineTransReply
+obj:EngineTransReply end 
+-- obj:EngineStopOrder 832429641 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429641 
+bit.band(trade.flags, 0) == 0 then832429641 
+setNewStop() setNewStop() setNewStop()832429641 
+obj:setNewStop() 
+obj:setNewStop() 4 
+obj.Transaction.SPREAD 1 20 
+obj.Transaction.STOPPRICE  1 77361 
+ obj.Transaction.STOPPRICE2  1 77456 
+contractsCount 1 
+execute: success  
+obj:setNewStop() end  3 
+EngineStopOrder(2)  flag 2 
+-- delete stop 832429641 
+bit.band(trade.flags, 7) ~= 0 832429641 
+nest stop B 24.0 
+bit.band(trade.stopflags, 8) 832429641 
+obj.Setting.gap.phase 3 
+if bit.band(trade.flags, 5) == 0 then 832429641 
+setNewStop() setNewStop() setNewStop()832429641 
+======================832429641 
+....................... 832429641 
+000000000000 6 
+obj.Setting.gap.phase 6 
+EngineStopOrder end 
+startEngine EngineTransReply 185241700/832429649 
+obj:EngineTransReply start 
+obj.Setting.gap.phase 6  :obj:EngineTransReply
+-- set stop?? 832429649 
+obj:EngineTransReply end 
+-- obj:EngineStopOrder 832429649 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429649 
+bit.band(trade.flags, 0) ~= 0 then832429649 
+obj.Setting.gap.order_num_stop = 832429649 
+trade.order_num = 832429649 
+obj.Setting.gap.phase = 6 
+bit.band(trade.flags, 7) ~= 0 832429649 
+bit.band(trade.stopflags, 8) 832429649 
+obj.Setting.gap.phase 6 
+bit.band(trade.flags, 5) ~= 0 832429649 
+setNewStop() setNewStop() setNewStop()832429649 
+~~~~~~~~~~~~~~~~~~~ 832429649 
+---------------------832429649 
+000000000000 3 
+obj.Setting.gap.phase 3 
+EngineStopOrder end 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 28.0 
+nest stop B 23.0 
+nest stop B 24.0 
+nest stop B 25.0 
+nest stop B 21.0 
+nest stop B 20.0 
+nest stop B 19.0 
+nest stop B 20.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 16.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 15.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 19.0 
+nest stop B 23.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 21.0 
+nest stop B 21.0 
+nest stop B 21.0 
+nest stop B 21.0 
+nest stop B 13.0 
+nest stop B 14.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 16.0 
+nest stop B 11.0 
+nest stop B 16.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 10.0 
+nest stop B 10.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 14.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 14.0 
+nest stop B 12.0 
+nest stop B 11.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 6.0 
+nest stop B 15.0 
+nest stop B 10.0 
+nest stop B 10.0 
+nest stop B 10.0 
+nest stop B 3.0 
+nest stop B 10.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 8.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 13.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 9.0 
+nest stop B 20.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 14.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 11.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 14.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 7.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 8.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 13.0 
+nest stop B 8.0 
+Delete stop 77404 
+obj:deleteStop  
+execute: success  
+startEngine EngineTransReply 185241700/0 
+obj:EngineTransReply start 
+obj.Setting.gap.phase 4  :obj:EngineTransReply
+obj:EngineTransReply end 
+-- obj:EngineStopOrder 832429649 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429649 
+bit.band(trade.flags, 0) == 0 then832429649 
+setNewStop() setNewStop() setNewStop()832429649 
+obj:setNewStop() 
+obj:setNewStop() 4 
+obj.Transaction.SPREAD 1 20 
+obj.Transaction.STOPPRICE  1 77361 
+ obj.Transaction.STOPPRICE2  1 77431 
+contractsCount 1 
+execute: success  
+obj:setNewStop() end  3 
+EngineStopOrder(2)  flag 2 
+-- delete stop 832429649 
+bit.band(trade.flags, 7) ~= 0 832429649 
+bit.band(trade.stopflags, 8) 832429649 
+obj.Setting.gap.phase 3 
+if bit.band(trade.flags, 5) == 0 then 832429649 
+nest stop B 23.0 
+setNewStop() setNewStop() setNewStop()832429649 
+======================832429649 
+....................... 832429649 
+000000000000 6 
+obj.Setting.gap.phase 6 
+EngineStopOrder end 
+startEngine EngineTransReply 1354370118/832429662 
+obj:EngineTransReply start 
+obj.Setting.gap.phase 6  :obj:EngineTransReply
+-- set stop?? 832429662 
+obj:EngineTransReply end 
+-- obj:EngineStopOrder 832429662 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429662 
+bit.band(trade.flags, 0) ~= 0 then832429662 
+obj.Setting.gap.order_num_stop = 832429662 
+trade.order_num = 832429662 
+obj.Setting.gap.phase = 6 
+bit.band(trade.flags, 7) ~= 0 832429662 
+bit.band(trade.stopflags, 8) 832429662 
+obj.Setting.gap.phase 6 
+bit.band(trade.flags, 5) ~= 0 832429662 
+setNewStop() setNewStop() setNewStop()832429662 
+~~~~~~~~~~~~~~~~~~~ 832429662 
+nest stop B 27.0 
+---------------------832429662 
+000000000000 3 
+obj.Setting.gap.phase 3 
+EngineStopOrder end 
+nest stop B 27.0 
+nest stop B 33.0 
+nest stop B 27.0 
+nest stop B 26.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 27.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 28.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 28.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 25.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 25.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 26.0 
+nest stop B 26.0 
+nest stop B 24.0 
+nest stop B 24.0 
+nest stop B 20.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 23.0 
+nest stop B 23.0 
+nest stop B 21.0 
+nest stop B 21.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 22.0 
+nest stop B 20.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 20.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 22.0 
+nest stop B 15.0 
+nest stop B 18.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 16.0 
+nest stop B 13.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 12.0 
+nest stop B 16.0 
+nest stop B 15.0 
+nest stop B 15.0 
+nest stop B 12.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 16.0 
+nest stop B 12.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 17.0 
+nest stop B 13.0 
+nest stop B 18.0 
+nest stop B 18.0 
+nest stop B 21.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 19.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 20.0 
+nest stop B 21.0 
+nest stop B 21.0 
+nest stop B 35.0 
+nest stop B 35.0 
+nest stop B 35.0 
+-- obj:EngineStopOrder 832429662 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429662 
+bit.band(trade.flags, 0) ~= 0 then832429662 
+obj.Setting.gap.order_num_stop = 832429662 
+trade.order_num = 832429662 
+obj.Setting.gap.phase = 3 
+nest stop B 42.0 
+bit.band(trade.flags, 7) ~= 0 832429662 
+bit.band(trade.stopflags, 8) 832429662 
+obj.Setting.gap.phase 3 
+if bit.band(trade.flags, 5) == 0 then 832429662 
+setNewStop() setNewStop() setNewStop()832429662 
+======================832429662 
+....................... 832429662 
+000000000000 6 
+obj.Setting.gap.phase 6 
+EngineStopOrder end 
+-- obj:EngineStopOrder 832429662 
+EngineStopOrder start 
+bit.band(trade.flags, 0) == 0 then832429662 
+bit.band(trade.flags, 0) ~= 0 then832429662 
+obj.Setting.gap.order_num_stop = 832429662 
+trade.order_num = 832429662 
+obj.Setting.gap.phase = 6 
+bit.band(trade.flags, 7) ~= 0 832429662 
+bit.band(trade.stopflags, 8) 832429662 
+obj.Setting.gap.phase 6 
+if bit.band(trade.flags, 5) == 0 then 832429662 
+======================832429662 
+....................... 832429662 
+000000000000 6 
+obj.Setting.gap.phase 6 
+EngineStopOrder end 
+OnTrade 1892946998233837662 
+obj:executedContract  
+OnTrade(1)  flag 2 
+OnTrade 1892946998233837662 
+obj:executedContract  
+OnTrade(1)  flag 2 
+OnTrade 1892946998233837662 
+obj:executedContract  
+OnTrade(1)  flag 2 

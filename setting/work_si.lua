@@ -98,8 +98,9 @@ function Setting:new()
 
     -- движение цены от текущей позиции
     setting.gapper.trolling_next_price = 50
+
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 20
+    setting.gapper.trolling = 25
 
 
     setting.gapper.SPREAD = 10;
