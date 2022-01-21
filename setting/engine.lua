@@ -64,6 +64,10 @@ function EngineSetting:new()
     setting.gap.allowed = true;
     -- цена открытия позиции
     setting.gap.price = 0
+
+    setting.gap.order_num_stop = 0;
+
+    setting.gap.order_num = 0;
     -- тейк профит
     setting.gap.priceProfit = 0
     -- следующий шаг для передвижения стопа

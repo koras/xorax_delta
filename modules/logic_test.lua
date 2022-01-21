@@ -80,8 +80,9 @@ function Logic:new(setting, Log)
         -- Цена Стоп-Лосса 
         obj.Setting.STOPPRICE2 =  obj.Setting.gap.priceStop
 
-        obj.Setting.SPREAD = obj.Setting.gapper.stopLimit
+        obj.Setting.SPREAD = setting.gapper.SPREAD
         obj.Log:save('New take price = ' .. price)
+        obj.Log:save('obj.Setting.SPREAD = ' .. obj.Setting.SPREAD)
     end
 
     local function getDirectionTakeAndStop(contract)
@@ -343,6 +344,31 @@ function Logic:new(setting, Log)
         -- очистка графика от линий 
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end
+
+
+    
+    -- стоп заявка установлена 
+    function obj:EngineStopOrder(trade)
+        if bit.band(trade.flags, 2) == 0 then
+            if obj.Setting.gap.order_num_stop == 0 then 
+                obj.Setting.gap.phase = 3
+                obj.Log:save('EngineStopOrder(1)  flag 2')
+            --   market.startContract(trade);
+            --   marketGap.executedContract(trade); 
+                obj.Setting.gap.order_num_stop = trade.order_num
+                obj.Log:save("-- set stop "..trade.order_num)
+            end 
+        else
+            if obj.Setting.gap.order_num_stop  == trade.order_num  then 
+               
+                obj.Log:save('EngineStopOrder(2)  flag 2')
+                obj.Setting.gap.order_num_stop = 0
+                obj.Log:save("-- delete stop "..  trade.order_num)
+            --   market.takeExecutedContract(trade);
+            end 
+        end
+    end
+
 
     setmetatable(obj, self)
     self.__index = self;
