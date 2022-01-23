@@ -578,12 +578,8 @@ function Logic:new(setting, Log)
             obj.Setting.gap.order_num = trade.order_num
         end
 
-        if bit.band(trade.flags, 0) == 0 and obj.Setting.gap.phase == 3 then
-            obj.Log:save("setNewStop() setNewStop() setNewStop()" ..
-                             trade.order_num)
-          --  obj:setNewStop()
 
-        end
+        
 
         if bit.band(trade.flags, 1) == 0 then
 
