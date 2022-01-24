@@ -75,6 +75,12 @@ function EngineSetting:new()
     -- где должна быть цена чтобы мы передвинули стоп
     setting.gap.whereIsPriceForStop = 0
 
+    
+    setting.gap.timeWork = {}
+    -- This morning a gap
+    setting.gap.timeWork.start = {700, 710}
+ 
+
     setting.labels = {}
     setting.STOPPRICE = 0
     setting.SPREAD = 0

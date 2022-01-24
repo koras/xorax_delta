@@ -15,15 +15,18 @@ function Log:new(_setting)
         
         if(text ~= nil)then  
 
-            f = io.open(file, "a");
+            local f = assert(io.open(file, "a"));
+
             if f == nil then
                 f = io.open(file, "w");
                 f:close();
                 f = io.open(file, "a");
             end
-            f:write(text .. "\n")
-            -- Закрывает файл
-            f:close();
+            if f ~= nil then
+                f:write(text .. "\n")
+                -- Закрывает файл
+                f:close();
+            end
         end
 
     end

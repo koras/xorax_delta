@@ -102,7 +102,6 @@ function Setting:new()
     -- сдвигаем стоп на N шагов по направлению тейка
     setting.gapper.trolling = 25
 
-
     setting.gapper.SPREAD = 10;
 
 

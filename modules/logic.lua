@@ -152,7 +152,7 @@ function Logic:new(setting, Log)
 
                 else
                    
-                    obj.Log:save('nest stop B ' .. price - tonumber(stopPrice) )
+               --     obj.Log:save('nest stop B ' .. price - tonumber(stopPrice) )
 
 
 
@@ -182,7 +182,7 @@ function Logic:new(setting, Log)
                     obj.transaction:deleteStop(obj.Setting.gap.order_num); 
                 else
                    
-                    obj.Log:save('nest stop S ' .. tonumber(stopPrice) - tonumber(price))
+                 --   obj.Log:save('nest stop S ' .. tonumber(stopPrice) - tonumber(price))
 
                 end
                 -- продажа
