@@ -295,6 +295,9 @@ function EngineSetting:new()
     -- таймаут для того чтобы робот не зависал в цикле
     setting.sleep = 100
 
+    -- are you'll log in data
+    setting.log = false
+
     setting.SEC_PRICE_STEP = 0;
 
     function EngineSetting:test() return "  EngineSetting:test()" end

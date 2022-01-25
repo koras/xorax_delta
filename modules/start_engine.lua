@@ -156,8 +156,8 @@ function Engine:new(setting, Log)
                 --  obj.Log:save("start 2 ")
                 obj.candleClass:getSignal(updateTick)
                 -- time for start engine
-              --  if startTime() or true then
-                if startTime() then
+               if startTime() or true then
+                --  if startTime() then
                        obj.Logic:conditionTimeTrading()
 
                 end
