@@ -1,5 +1,5 @@
 -- базовые функции, чтобы не переносить с одного файла в другой
-local LogicClass = dofile(script_path .. "\\modules\\gap_logic.lua")
+local LogicClass = dofile(script_path .. "\\logic\\gap_logic.lua")
 --local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 
 local Engine = {}

@@ -28,6 +28,10 @@ function EngineSetting:new()
     
     setting.candle_test = 0
 
+    -- count condles inside graffic
+    setting.lenInit = 120
+
+
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки
     setting.candle_current_low = 0; -- верхняя граница свечи; для промежутка покупки
 
@@ -80,13 +84,6 @@ function EngineSetting:new()
     -- This morning a gap
     setting.gap.timeWork.start = {700, 710}
  
-
-
-
-
-
-
-
     setting.cohort2 = {}
  
     --  0 - gap start 
@@ -94,51 +91,6 @@ function EngineSetting:new()
     -- 2 - closed position 
     setting.cohort2.phase = 1212
   
-    -- setting.cohort.direct = 'none direct'
-    -- -- разрешено ли использовать такую стратегию торговли
-    -- setting.cohort.allowed = true;
-    -- -- цена открытия позиции
-    -- setting.cohort.price = 4444
-
-    -- setting.cohort.order_num_stop = 0;
-
-    -- setting.cohort.order_num = 0;
-    -- -- тейк профит
-    -- setting.cohort.priceProfit = 0
-    -- -- следующий шаг для передвижения стопа
-    -- setting.cohort.nextPriceStop = 0
-    -- -- где должна быть цена чтобы мы передвинули стоп
-    -- setting.cohort.whereIsPriceForStop = 0
-
-    
-    -- setting.cohort.timeWork = {}
-    -- -- This morning a gap
-    -- setting.cohort.timeWork.start = {700, 710}
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     setting.labels = {}
     setting.STOPPRICE = 0
     setting.SPREAD = 0
@@ -174,6 +126,7 @@ function EngineSetting:new()
 
     setting.cohorten = {}
     setting.cohorten.label = {}
+    setting.cohorten.phase = 0
     -- stop
     setting.cohorten.label.redCircle_stop = 0
     -- take

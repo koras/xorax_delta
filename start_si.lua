@@ -9,8 +9,8 @@ dofile(script_path .. "\\setting\\path.lua");
  obj.Setting =  dofile(script_path .. "\\setting\\work_si.lua");
   
 
-local Gap = dofile(script_path .. "\\modules\\gap_engine.lua");
-local Cohort = dofile(script_path .. "\\modules\\cohort_engine.lua");
+local Gap = dofile(script_path .. "\\logic\\gap_engine.lua");
+local Cohort = dofile(script_path .. "\\logic\\cohort_engine.lua");
 local Loger = dofile(script_path .. "\\engine\\loger.lua");
 
 local candleClass = dofile(script_path .. "\\signals\\candle.lua")
@@ -50,6 +50,7 @@ function main()
     
     while obj.Setting.Run do 
         
+ 
         -- get graffic and price
         obj.candleClass:getSignal(updateTick)
 

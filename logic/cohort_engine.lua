@@ -1,5 +1,5 @@
 -- базовые функции, чтобы не переносить с одного файла в другой
-local CohortClass = dofile(script_path .. "\\modules\\cohort_logic.lua") 
+local CohortClass = dofile(script_path .. "\\logic\\cohort_logic.lua") 
 
 local Engine = {}
 
