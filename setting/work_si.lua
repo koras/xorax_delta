@@ -100,9 +100,9 @@ function Setting:new()
     setting.gapper.trolling_next_price = 100
 
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 25
+    setting.gapper.trolling = 75
     -- Величина защитного спрэда.
-    setting.gapper.SPREAD = 100;
+    setting.gapper.SPREAD = 30;
 
 
 

@@ -111,10 +111,7 @@ function Engine:new(setting, Log)
     end
 
     local function startTime()
- 
 
-
- 
         local timeOS = os.date("%H%M", os.time()) + 0
         -- attempt to compare number with string
         local timeOSsecond = os.date("%S", os.time()) + 0
@@ -149,17 +146,19 @@ function Engine:new(setting, Log)
         -- show controll [anel] 
 
         while obj.Setting.Run do
+            if setting.gap.allowed then
 
-            if stopSleep() then sleep(obj.Setting.sleep) end
+                if stopSleep() then sleep(obj.Setting.sleep) end
 
-            if obj.Setting.status then
-                --  obj.Log:save("start 2 ")
-                obj.candleClass:getSignal(updateTick)
-                -- time for start engine
-               if startTime() or true then
-                --  if startTime() then
-                       obj.Logic:conditionTimeTrading()
+                if obj.Setting.status then
+                    --  obj.Log:save("start 2 ")
+                    obj.candleClass:getSignal(updateTick)
+                    -- time for start engine
+                    if startTime() then
+                        --  if startTime() then
+                        obj.Logic:conditionTimeTrading()
 
+                    end
                 end
             end
         end
