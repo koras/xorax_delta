@@ -5,9 +5,10 @@ script_path = getScriptPath()
 dofile(script_path .. "\\setting\\path.lua");
  
 
-local obj = {}
+ obj = {}
 obj.Setting =  dofile(script_path .. "\\setting\\work_si.lua");
  
+message(obj.Setting.cohort.price);
 
 local Gap = dofile(script_path .. "\\modules\\gap_engine.lua");
 local Cohort = dofile(script_path .. "\\modules\\cohort_engine.lua");
@@ -16,16 +17,17 @@ local Loger = dofile(script_path .. "\\engine\\loger.lua");
 local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 
  
-
-obj.Log = Loger:new(obj.Setting);
-obj.gap = Gap:new(obj.Setting, obj.Log);
-obj.cohort = Cohort:new(obj.Setting, obj.Log);
+ 
 
  
 
 
 function OnInit()
-    
+        
+    obj.Log = Loger:new(obj.Setting);  
+    obj.Log:save("-- obj:EngineStopOrder ".. obj.Setting.cohort.price )
+    obj.gap = Gap:new(obj.Setting, obj.Log);
+    obj.cohort = Cohort:new(obj.Setting, obj.Log);
     obj.candleClass = candleClass:new(obj.Setting, obj.Log)
     obj.gap.EngineOnInit()
     obj.cohort.EngineOnInit()

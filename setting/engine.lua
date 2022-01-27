@@ -80,6 +80,64 @@ function EngineSetting:new()
     setting.gap.timeWork.start = {700, 710}
  
 
+
+
+
+
+
+
+    setting.cohort = {}
+ 
+    --  0 - gap start 
+    -- 1 - buy OR sell contract 
+    -- 2 - closed position 
+    setting.cohort.phase = 0;
+
+    setting.cohort.direct = 'none direct'
+    -- разрешено ли использовать такую стратегию торговли
+    setting.cohort.allowed = true;
+    -- цена открытия позиции
+    setting.cohort.price = 4444
+
+    setting.cohort.order_num_stop = 0;
+
+    setting.cohort.order_num = 0;
+    -- тейк профит
+    setting.cohort.priceProfit = 0
+    -- следующий шаг для передвижения стопа
+    setting.cohort.nextPriceStop = 0
+    -- где должна быть цена чтобы мы передвинули стоп
+    setting.cohort.whereIsPriceForStop = 0
+
+    
+    setting.cohort.timeWork = {}
+    -- This morning a gap
+    setting.cohort.timeWork.start = {700, 710}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     setting.labels = {}
     setting.STOPPRICE = 0
     setting.SPREAD = 0
@@ -111,6 +169,39 @@ function EngineSetting:new()
 
     -- объект в котором храниться вся информация об открытой позиции
     setting.gap.data = {};
+
+
+    setting.cohort.label = {}
+    -- stop
+    setting.cohort.label.redCircle_stop = 0
+    -- take
+    setting.cohort.label.redCircle_take = 0
+    -- next stop
+    setting.cohort.label.circleBlue_next_stop = 0
+    -- next price point
+    setting.cohort.label.circleYellow_next_price = 0
+    -- next price point
+    setting.cohort.label.take_and_profit_trans_id = 0
+
+    setting.cohort.stop = {}
+
+    -- transaction a request. When sent a stop request
+    setting.cohort.stop.trans_id = 0
+    -- transaction get a request. When get number before sent stop a request
+    setting.cohort.stop.order_num = 0
+
+    -- stop loss trans id
+    setting.cohort.stop_loss_trans_id = 0
+    -- stop loss number
+    setting.cohort.stop_loss_order_num = 0
+
+    -- объект в котором храниться вся информация об открытой позиции
+    setting.cohort.data = {};
+
+
+
+
+
 
     setting.arrGraff = {};
 

@@ -89,27 +89,40 @@ function Setting:new()
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
     setting.gapper.well_price = 10;
-    
     setting.gapper.takeProfit = 300;
     setting.gapper.stopLimit = 30;
-
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
-
     -- движение цены от текущей позиции
     setting.gapper.trolling_next_price = 100
-
     -- сдвигаем стоп на N шагов по направлению тейка
     setting.gapper.trolling = 75
     -- Величина защитного спрэда.
     setting.gapper.SPREAD = 30;
-
-
-
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.gapper.typeType = 'stop';
     setting.gapper.typeTypeTake = '';
 
+
+    
+    setting.cohort = {};
+    -- сколько использовать контрактов для гэпа
+    setting.cohort.use_contract = 1;
+    -- разрыв цены от открытия позиции
+    setting.cohort.well_price = 10;
+    setting.cohort.takeProfit = 300;
+    setting.cohort.stopLimit = 30;
+    -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
+    -- то стоп необходимо передвинуть 
+    -- движение цены от текущей позиции
+    setting.cohort.trolling_next_price = 100
+    -- сдвигаем стоп на N шагов по направлению тейка
+    setting.cohort.trolling = 75
+    -- Величина защитного спрэда.
+    setting.cohort.SPREAD = 30;
+    -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
+    setting.cohort.typeType = 'stop';
+    setting.cohort.typeTypeTake = '';
 
 
 

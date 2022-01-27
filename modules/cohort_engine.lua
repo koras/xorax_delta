@@ -57,7 +57,7 @@ function Engine:new(setting, Log)
             -- obj.Log:save('OnTrade(5)  flag 2')
             -- market.startContract(trade);
 
-            --    marketGap.executedContract(trade);
+            --    marketcohort.executedContract(trade);
         else
             obj.Log:save('OnTrade ')
             obj.Log:save('OnTrade(3)  flag 2')
@@ -74,7 +74,7 @@ function Engine:new(setting, Log)
 
                 obj.Log:save('OnTrade(1)  flag 2')
                 --   market.startContract(trade);
-                --   marketGap.executedContract(trade);
+                --   marketcohort.executedContract(trade);
             else
                 obj.Log:save('OnTrade(2)  flag 2')
                 --   market.takeExecutedContract(trade);
@@ -97,26 +97,7 @@ function Engine:new(setting, Log)
         end
     end
 
-    local function startTime()
-
-        local timeOS = os.date("%H%M", os.time()) + 0
-        -- attempt to compare number with string
-        local timeOSsecond = os.date("%S", os.time()) + 0
-        local timeStart = obj.Setting.gap.timeWork.start[1]
-        local timeFinish = obj.Setting.gap.timeWork.start[2]
-
-        if timeStart <= timeOS and timeOS <= timeFinish then
-            obj.Log:save(
-                timeStart .. ' timeFinish ' .. timeFinish .. " timeOS " ..
-                    timeOS .. " gap " .. timeOSsecond ..
-                    "obj.Setting.current_price " .. obj.Setting.current_price)
-            return true
-        else
-            --  obj.Log:save("start 5")
-            return false
-        end
-        --   obj.Log:save(" px= " .. os.date("%H:%M:%S", px) .."\n next_px= " .. os.date("%H:%M:%S", px), 2)
-    end
+ 
 
     function obj:EngineMain()
   
@@ -130,21 +111,17 @@ function Engine:new(setting, Log)
 
         if stopSleep() then sleep(obj.Setting.sleep) end
       
-
-        if setting.gap.allowed then
-            --  obj.Log:save("start 2 ") 
-            -- time for start engine 
-            if startTime()  then
-                --  if startTime() then  
+        obj.Log:save("-- obj:EngineStopOrder ".. obj.Setting.cohort.price )
+ 
+     --   if obj.Setting.cohort.allowed then  
+                obj.Log:save("-- obj:EngineStopOrder " )
                 obj.Logic:conditionTimeTrading()
-
-            end
-        end
+      --  end
     end
 
     -- Функция вызывается терминалом когда с сервера приходит информация по сделке
     function obj:EngineStopOrder(trade)
-        Log:save("-- obj:EngineStopOrder " .. trade.order_num)
+        obj.Log:save("-- obj:EngineStopOrder " .. trade.order_num)
         obj.Logic:EngineStopOrder(trade)
 
     end
