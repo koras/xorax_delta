@@ -111,7 +111,7 @@ function Engine:new(setting, Log)
 
         if stopSleep() then sleep(obj.Setting.sleep) end
       
-        obj.Log:save("-- obj:EngineStopOrder ".. obj.Setting.cohort.price )
+        --obj.Log:save("-- obj:EngineStopOrder ".. obj.Setting.cohort.price )
  
      --   if obj.Setting.cohort.allowed then  
                 obj.Log:save("-- obj:EngineStopOrder " )

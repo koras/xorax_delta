@@ -6,9 +6,9 @@ dofile(script_path .. "\\setting\\path.lua");
  
 
  obj = {}
-obj.Setting =  dofile(script_path .. "\\setting\\work_si.lua");
+local Setting =  dofile(script_path .. "\\setting\\work_si.lua");
  
-message(obj.Setting.cohort.price);
+message(Setting.cohort.price);
 
 local Gap = dofile(script_path .. "\\modules\\gap_engine.lua");
 local Cohort = dofile(script_path .. "\\modules\\cohort_engine.lua");
@@ -24,11 +24,11 @@ local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 
 function OnInit()
         
-    obj.Log = Loger:new(obj.Setting);  
-    obj.Log:save("-- obj:EngineStopOrder ".. obj.Setting.cohort.price )
-    obj.gap = Gap:new(obj.Setting, obj.Log);
-    obj.cohort = Cohort:new(obj.Setting, obj.Log);
-    obj.candleClass = candleClass:new(obj.Setting, obj.Log)
+    obj.Log = Loger:new(Setting);  
+    obj.Log:save("-- obj:EngineStopOrder ".. Setting.ACCOUNT  )
+    obj.gap = Gap:new(Setting, obj.Log);
+    obj.cohort = Cohort:new(Setting, obj.Log);
+    obj.candleClass = candleClass:new(Setting, obj.Log)
     obj.gap.EngineOnInit()
     obj.cohort.EngineOnInit()
     
@@ -47,12 +47,12 @@ function main()
 
     obj.candleClass:getSignal(updateTick)
     
-    while obj.Setting.Run do 
+    while Setting.Run do 
         
         -- get graffic and price
         obj.candleClass:getSignal(updateTick)
 
-        if obj.Setting.status then
+        if Setting.status then
             obj.gap:EngineMain()
             obj.cohort:EngineMain()
         end
