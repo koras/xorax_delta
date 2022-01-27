@@ -7,29 +7,51 @@
 dofile(script_path .. "\\setting\\path.lua");
  
 
-local Setting =  dofile(script_path .. "\\setting\\work_si.lua");
+local obj = {}
+obj.Setting =  dofile(script_path .. "\\setting\\work_si.lua");
  
 
-local EngineClass = dofile(script_path .. "\\modules\\start_engine.lua");
+local EngineClass = dofile(script_path .. "\\modules\\gap_start_engine.lua");
 local Loger = dofile(script_path .. "\\engine\\loger.lua");
 
+local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 
-local Log = Loger:new(Setting);
-local Engine = EngineClass:new(Setting, Log);
+ 
 
-if (Setting.gap.status) then
-    Log:save("-- Setting.gap.status",' start')
-end
+obj.Log = Loger:new(obj.Setting);
+local Engine = EngineClass:new(obj.Setting, obj.Log);
+
+ 
 
 
 function OnInit()
+    
+    obj.candleClass = candleClass:new(obj.Setting, obj.Log)
     Engine.EngineOnInit()
     
 end
 
+    -- when update a candle
+function updateTick(candle)
+
+        Engine:updateTick(candle)
+end
 
 function main()
-    Engine:EngineMain()
+
+    obj.Log:save("start")
+
+    obj.candleClass:getSignal(updateTick)
+    
+    while obj.Setting.Run do 
+        
+        -- get graffic and price
+        obj.candleClass:getSignal(updateTick)
+
+        if obj.Setting.status then
+            Engine:EngineMain()
+        end
+    end
 end
 
 -- https://quikluacsharp.ru/quik-qlua/primer-prostogo-torgovogo-dvizhka-simple-engine-qlua-lua/
@@ -65,4 +87,5 @@ end
 -- This function is called when the script is stopped
 function OnStop()
     Engine:EngineStop()
+    obj.candleClass:destructor()
 end

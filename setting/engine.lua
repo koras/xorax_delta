@@ -52,8 +52,7 @@ function EngineSetting:new()
 
     -- status gap
     setting.gap = {}
-
-    setting.gap.status = true
+ 
     --  0 - gap start 
     -- 1 - buy OR sell contract 
     -- 2 - closed position 
