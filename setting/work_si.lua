@@ -90,19 +90,19 @@ function Setting:new()
     -- разрыв цены от открытия позиции
     setting.gapper.well_price = 10;
     
-    setting.gapper.takeProfit = 250;
+    setting.gapper.takeProfit = 300;
     setting.gapper.stopLimit = 30;
 
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
 
     -- движение цены от текущей позиции
-    setting.gapper.trolling_next_price = 60
+    setting.gapper.trolling_next_price = 100
 
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 25
-
-    setting.gapper.SPREAD = 10;
+    setting.gapper.trolling = 75
+    -- Величина защитного спрэда.
+    setting.gapper.SPREAD = 30;
 
 
 
@@ -132,7 +132,7 @@ function Setting:new()
     setting.not_buy_low_change = 10 --  изменения в контрольеой панели
 
     setting.take_profit_offset = 10
-    setting.take_profit_spread = 10
+    setting.take_profit_spread = 100
 
     
     setting.candle_buy_number_down_price = 6; -- сколько свечей должно пройти чтобы отпустить продажу  

@@ -1,6 +1,5 @@
 -- базовые функции, чтобы не переносить с одного файла в другой
-local LogicClass = dofile(script_path .. "\\modules\\logic.lua")
-local candleClass = dofile(script_path .. "\\signals\\candle.lua")
+local LogicClass = dofile(script_path .. "\\modules\\cohort_logic.lua") 
 
 local Engine = {}
 
@@ -17,28 +16,21 @@ function Engine:new(setting, Log)
         obj.Logic = LogicClass:new(obj.Setting, obj.Log)
         obj.Logic:init()
         --  работа с графиком
-        obj.candleClass = candleClass:new(obj.Setting, obj.Log)
+       -- obj.candleClass = candleClass:new(obj.Setting, obj.Log)
         obj.Log:clearFile()
     end
 
-    -- срабатывает при обновлении свечи
-    function obj:updateTick(setting, result)
-
-        if setting.emulation then
-            -- обработка во время эмуляции
-            --  market.callSELL_emulation(setting, result);
-            --  marketGap.tick(setting, result);
-            -- сработал стоп в режиме эмуляции
-            --  riskStop.appruveOrderStopEmulation(result)
-        end
-
+            -- when update a candle
+    function obj:updateTick(candle)
+        obj.Logic:tick(candle)
     end
+
 
     function obj:update() end
 
     function obj:EngineStop()
         obj.Setting.Run = false
-        obj.candleClass:destructor()
+       -- obj.candleClass:destructor()
         obj.Logic:destructor()
     end
 
@@ -91,12 +83,7 @@ function Engine:new(setting, Log)
 
     end
 
-    -- when update a candle
-    local function updateTick(candle)
-        -- obj.Logic:getPriceStep()
-        obj.Logic:tick(candle)
-        -- obj.Log:save("updateTick  -- when update a candle")
-    end
+ 
 
     local function stopSleep()
         local timeOS = os.date("%H:%M", os.time())
@@ -111,10 +98,7 @@ function Engine:new(setting, Log)
     end
 
     local function startTime()
- 
 
-
- 
         local timeOS = os.date("%H%M", os.time()) + 0
         -- attempt to compare number with string
         local timeOSsecond = os.date("%S", os.time()) + 0
@@ -135,11 +119,7 @@ function Engine:new(setting, Log)
     end
 
     function obj:EngineMain()
-
-        -- get graffic and price
-        obj.candleClass:getSignal(updateTick)
-
-        obj.Log:save("start")
+  
 
         -- panelBids.show(setting)
 
@@ -148,19 +128,16 @@ function Engine:new(setting, Log)
 
         -- show controll [anel] 
 
-        while obj.Setting.Run do
+        if stopSleep() then sleep(obj.Setting.sleep) end
+      
 
-            if stopSleep() then sleep(obj.Setting.sleep) end
+        if setting.gap.allowed then
+            --  obj.Log:save("start 2 ") 
+            -- time for start engine 
+            if startTime()  then
+                --  if startTime() then  
+                obj.Logic:conditionTimeTrading()
 
-            if obj.Setting.status then
-                --  obj.Log:save("start 2 ")
-                obj.candleClass:getSignal(updateTick)
-                -- time for start engine
-              --  if startTime() or true then
-                if startTime() then
-                       obj.Logic:conditionTimeTrading()
-
-                end
             end
         end
     end

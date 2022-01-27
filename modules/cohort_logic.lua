@@ -421,7 +421,7 @@ function Logic:new(setting, Log)
                                                   obj.Setting.CLASS_CODE,
                                                   obj.Setting.SEC_CODE,
                                                   "SEC_PRICE_STEP").param_value)
-        obj.Log:save("Current step price : " .. obj.Setting.SEC_PRICE_STEP)
+      --  obj.Log:save("Current step price : " .. obj.Setting.SEC_PRICE_STEP)
         if GET_GRAFFIC then
         else
             obj.Setting.Run = false;
@@ -442,10 +442,9 @@ function Logic:new(setting, Log)
         --  loger.save('currentTime currentTime = '.. currentTime);
         --     loger.save('gapTime = '.. gapTime)
 
-        -- start traiding day  
-        --   if gapTime == currentTime and setting.gap.status then 
+        -- start traiding day   
 
-        if gapTime == currentTime and obj.Setting.gap.status and
+        if gapTime == currentTime  and
             setting.current_price ~= 0 then
 
             if obj.Setting.gap.phase == 0 then
@@ -462,21 +461,20 @@ function Logic:new(setting, Log)
 
         end
 
-        if obj.Setting.gap.phase == 2 and obj.Setting.gap.status then
+        if obj.Setting.gap.phase == 2   then
             -- stop traiding
 
             obj.Log:save("-- setting.gap.phase == 2")
-            obj.Setting.gap.status = false
+     
             --  marketGap.logicGap(setting);
         end
 
-        if obj.Setting.gap.phase == 1 and obj.Setting.gap.status then
+        if obj.Setting.gap.phase == 1   then
             --  obj.Log:save("-- setting.gap.phase == 1")
             -- look at closing a position
             -- closed positions 
 
-            --   marketGap.logicGap(setting);
-            --   setting.gap.status = false 
+            --   marketGap.logicGap(setting); 
 
         end
     end
@@ -491,7 +489,7 @@ function Logic:new(setting, Log)
     -- стоп заявка установлена 
     function obj:EngineStopOrder(trade)
 
-        obj.Log:save('EngineStopOrder start')
+      --  obj.Log:save('EngineStopOrder start')
 
         if bit.band(trade.flags, 0) == 0 then
             obj.Log:save("bit.band(trade.flags, 0) == 0 then" .. trade.order_num)
