@@ -183,6 +183,8 @@ function Candle:new(setting, Log)
             end
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
                 localCandle;
+
+                obj.Log:save('124')
         end 
         --  candleGraff.addSignal(obj.Setting.array_candle); 
     end

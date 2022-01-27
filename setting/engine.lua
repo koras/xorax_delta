@@ -69,6 +69,7 @@ function EngineSetting:new()
     setting.gap.order_num = 0;
     -- тейк профит
     setting.gap.priceProfit = 0
+  
     -- следующий шаг для передвижения стопа
     setting.gap.nextPriceStop = 0
     -- где должна быть цена чтобы мы передвинули стоп
@@ -86,33 +87,33 @@ function EngineSetting:new()
 
 
 
-    setting.cohort = {}
+    setting.cohort2 = {}
  
     --  0 - gap start 
     -- 1 - buy OR sell contract 
     -- 2 - closed position 
-    setting.cohort.phase = 0;
+    setting.cohort2.phase = 1212
+  
+    -- setting.cohort.direct = 'none direct'
+    -- -- разрешено ли использовать такую стратегию торговли
+    -- setting.cohort.allowed = true;
+    -- -- цена открытия позиции
+    -- setting.cohort.price = 4444
 
-    setting.cohort.direct = 'none direct'
-    -- разрешено ли использовать такую стратегию торговли
-    setting.cohort.allowed = true;
-    -- цена открытия позиции
-    setting.cohort.price = 4444
+    -- setting.cohort.order_num_stop = 0;
 
-    setting.cohort.order_num_stop = 0;
-
-    setting.cohort.order_num = 0;
-    -- тейк профит
-    setting.cohort.priceProfit = 0
-    -- следующий шаг для передвижения стопа
-    setting.cohort.nextPriceStop = 0
-    -- где должна быть цена чтобы мы передвинули стоп
-    setting.cohort.whereIsPriceForStop = 0
+    -- setting.cohort.order_num = 0;
+    -- -- тейк профит
+    -- setting.cohort.priceProfit = 0
+    -- -- следующий шаг для передвижения стопа
+    -- setting.cohort.nextPriceStop = 0
+    -- -- где должна быть цена чтобы мы передвинули стоп
+    -- setting.cohort.whereIsPriceForStop = 0
 
     
-    setting.cohort.timeWork = {}
-    -- This morning a gap
-    setting.cohort.timeWork.start = {700, 710}
+    -- setting.cohort.timeWork = {}
+    -- -- This morning a gap
+    -- setting.cohort.timeWork.start = {700, 710}
  
 
 
@@ -171,32 +172,33 @@ function EngineSetting:new()
     setting.gap.data = {};
 
 
-    setting.cohort.label = {}
+    setting.cohorten = {}
+    setting.cohorten.label = {}
     -- stop
-    setting.cohort.label.redCircle_stop = 0
+    setting.cohorten.label.redCircle_stop = 0
     -- take
-    setting.cohort.label.redCircle_take = 0
+    setting.cohorten.label.redCircle_take = 0
     -- next stop
-    setting.cohort.label.circleBlue_next_stop = 0
+    setting.cohorten.label.circleBlue_next_stop = 0
     -- next price point
-    setting.cohort.label.circleYellow_next_price = 0
+    setting.cohorten.label.circleYellow_next_price = 0
     -- next price point
-    setting.cohort.label.take_and_profit_trans_id = 0
+    setting.cohorten.label.take_and_profit_trans_id = 0
 
-    setting.cohort.stop = {}
+    setting.cohorten.stop = {}
 
     -- transaction a request. When sent a stop request
-    setting.cohort.stop.trans_id = 0
+    setting.cohorten.stop.trans_id = 0
     -- transaction get a request. When get number before sent stop a request
-    setting.cohort.stop.order_num = 0
+    setting.cohorten.stop.order_num = 0
 
     -- stop loss trans id
-    setting.cohort.stop_loss_trans_id = 0
+    setting.cohorten.stop_loss_trans_id = 0
     -- stop loss number
-    setting.cohort.stop_loss_order_num = 0
+    setting.cohorten.stop_loss_order_num = 0
 
     -- объект в котором храниться вся информация об открытой позиции
-    setting.cohort.data = {};
+    setting.cohorten.data = {};
 
 
 

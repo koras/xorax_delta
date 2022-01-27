@@ -13,12 +13,11 @@ function Engine:new(setting, Log)
 
     function obj:EngineOnInit()
         -- логика  
-
         obj.Logic = LogicClass:new(obj.Setting, obj.Log)
-        obj.Logic:init()
+        obj.Logic:init() 
         --  работа с графиком
        -- obj.candleClass = candleClass:new(obj.Setting, obj.Log)
-        obj.Log:clearFile()
+      
     end
 
             -- when update a candle
