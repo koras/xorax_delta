@@ -230,18 +230,18 @@ function LineBuyHigh:new(setting, Log)
             end
 
 
-            obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
+          --  obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
              if(obj.points.maxOneDtName ~= 0 )then
                 
-                obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
-                 obj.Log:save('|1|= obj.points.maxOne '..obj.points.maxOne..'  dt '.. obj.points.maxOneDtName)
+               -- obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
+               --  obj.Log:save('|1|= obj.points.maxOne '..obj.points.maxOne..'  dt '.. obj.points.maxOneDtName)
                 end
-                
+
             if(obj.points.maxTwoDtName ~= 0 )then
-                 obj.Log:save('|2|= obj.points.maxTwo '..obj.points.maxTwo..'  dt '.. obj.points.maxTwoDtName)
+             --    obj.Log:save('|2|= obj.points.maxTwo '..obj.points.maxTwo..'  dt '.. obj.points.maxTwoDtName)
                 end
             if(obj.points.maxThreeDtName ~= 0 )then
-             obj.Log:save('|3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. obj.points.maxThreeDtName  )
+           --  obj.Log:save('|3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. obj.points.maxThreeDtName  )
             end
    
             
