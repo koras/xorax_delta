@@ -23,7 +23,15 @@ function LineBuyHigh:new(setting, Log)
     obj.points.maxThree = 0
     obj.points.maxThreeNum = 0
 
+    obj.points.maxOneDt = {}
+    obj.points.maxTwoDt = {}
+    obj.points.maxThreeDt = {}
 
+    obj.points.maxOneDtName = 0
+    obj.points.maxTwoDtName = 0
+    obj.points.maxThreeDtName = 0
+     
+  
     obj.points.minOne = 100000000
     obj.points.minTwo = 100000000
 
@@ -47,14 +55,15 @@ function LineBuyHigh:new(setting, Log)
 
     function getMax(number, candleGraff)
             -- мы перебираем все свечи и проверяем на свечах уровни
-            local dt = candleGraff.datetime.hour.. ':'.. candleGraff.datetime.min
+        local dt =  obj.Setting:getTime(candleGraff.datetime) 
                                 --    loger.save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min);     
-
-
+ 
             if obj.points.maxOne <= candleGraff.high then
                 obj.points.maxOne = candleGraff.high;
                 obj.points.maxOneNum = number
-               obj.Log:save(obj.points.maxOneNum .. ' |1|= obj.points.maxOne '..obj.points.maxOne..'  dt '.. dt )
+                obj.points.maxOneDt = candleGraff.datetime
+                obj.points.maxOneDtName = dt  
+           --    obj.Log:save(obj.points.maxOneNum .. ' |1|= obj.points.maxOne '..obj.points.maxOne..'  dt '.. dt )
             end
 
 
@@ -70,7 +79,13 @@ function LineBuyHigh:new(setting, Log)
                 if obj.points.maxTwo <= candleGraff.high then
                     obj.points.maxTwo = candleGraff.high;
                     obj.points.maxTwoNum = number
-                   obj.Log:save(number .. ' |2|= obj.points.maxTwo '..obj.points.maxTwo..'  dt '.. dt )
+                    obj.points.maxTwoDt = candleGraff.datetime
+
+                    obj.points.maxTwoDt = candleGraff.datetime
+                    obj.points.maxTwoDtName = dt  
+
+
+                --   obj.Log:save(number .. ' |2|= obj.points.maxTwo '..obj.points.maxTwo..'  dt '.. dt )
                 end
 
             end
@@ -86,7 +101,7 @@ function LineBuyHigh:new(setting, Log)
 
 
     -- мы перебираем все свечи и проверяем на свечах уровни
-        local dt = candleGraff.datetime.hour.. ':'.. candleGraff.datetime.min
+        local dt =  obj.Setting:getTimeFull(candleGraff.datetime) 
                         --    loger.save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min);     
  
 
@@ -117,10 +132,18 @@ function LineBuyHigh:new(setting, Log)
             if obj.points.maxThree <= candleGraff.high then
                 obj.points.maxThree = candleGraff.high;
                 obj.points.maxThreeNum = number
+                
+                obj.points.maxThreeDt = candleGraff.datetime
+
+
+                obj.points.maxThreeDt = candleGraff.datetime
+                obj.points.maxThreeDtName = dt  
+
+
              --   obj.Log:save(obj.Setting.lenInit  ..  '  dt '.. oldNum .. ' ' ..obj.points.maxOneNum  .. ' ' .. oldNum)
 
              --  obj.Log:save(number .. ' |3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. dt )
-                obj.Log:save(number .. ' |3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. dt .. '  dt '..  obj.points.maxOneNum + obj.range  )
+            --    obj.Log:save(number .. ' |3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. dt .. '  dt '..  obj.points.maxOneNum + obj.range  )
             end
 
         end
@@ -142,7 +165,7 @@ function LineBuyHigh:new(setting, Log)
     function getMin(number, candleGraff)
 
                     -- мы перебираем все свечи и проверяем на свечах уровни
-            local dt = candleGraff.datetime.hour.. ':'.. candleGraff.datetime.min
+        local dt =  obj.Setting:getTimeFull(candleGraff.datetime) 
                                
 
             if obj.points.minOne >= candleGraff.low then
@@ -205,6 +228,24 @@ function LineBuyHigh:new(setting, Log)
                 getMaxBack(numberBack, obj.Setting.array_candle[numberBack])
 
             end
+
+
+            obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
+             if(obj.points.maxOneDtName ~= 0 )then
+                
+                obj.LabelGraff:setFractal('fractalUp', obj.points.maxOne, obj.points.maxOneDt);
+                 obj.Log:save('|1|= obj.points.maxOne '..obj.points.maxOne..'  dt '.. obj.points.maxOneDtName)
+                end
+                
+            if(obj.points.maxTwoDtName ~= 0 )then
+                 obj.Log:save('|2|= obj.points.maxTwo '..obj.points.maxTwo..'  dt '.. obj.points.maxTwoDtName)
+                end
+            if(obj.points.maxThreeDtName ~= 0 )then
+             obj.Log:save('|3|= obj.points.ThreeNum '..obj.points.maxThree..'  dt '.. obj.points.maxThreeDtName  )
+            end
+   
+            
+         
         end
 
 

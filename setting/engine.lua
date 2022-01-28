@@ -29,7 +29,7 @@ function EngineSetting:new()
     setting.candle_test = 0
 
     -- count condles inside graffic
-    setting.lenInit = 120
+    setting.lenInit = 200
 
 
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки
@@ -407,6 +407,37 @@ function EngineSetting:new()
             return false
         end
     end
+
+
+    function EngineSetting:getTime(datetime)
+        
+        local hour = datetime.hour
+
+        if datetime.hour < 10 then hour = '0' .. datetime.hour end
+
+        local minute = datetime.min;
+
+        if datetime.min < 10 then  minute = '0' .. datetime.min end
+ 
+        return hour .. ':' .. minute;
+    end
+
+
+    function EngineSetting:getTimeFull(datetime)
+        
+        local hour = datetime.hour
+
+        if datetime.hour < 10 then hour = '0' .. datetime.hour end
+
+        local minute = datetime.min;
+
+        if datetime.min < 10 then  minute = '0' .. datetime.min end
+ 
+        return hour .. ':' .. minute;
+    end
+
+
+
 
     setmetatable(setting, self)
     self.__index = self
