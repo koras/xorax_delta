@@ -461,6 +461,7 @@ function Logic:new(setting, Log)
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
+        obj.calculateCandleForCohort:destructor()
         -- очистка графика от линий 
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end
