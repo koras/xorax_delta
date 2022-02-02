@@ -19,7 +19,7 @@ function Candle:new(setting, Log)
     obj.minDefault = 1000000000;
     obj.max = 0;
     obj.test = 'test';
-    obj.lenInit = 120
+    obj.lenInit = setting.lenInit
     obj.Initshift = 0
 
     obj.lineBuyHigh = lineBuyHighClass:new(obj.Setting, obj.Log)
@@ -74,7 +74,7 @@ function Candle:new(setting, Log)
 
         local localCandle = barCandle;
         localCandle.numberCandle = numberCandle;
-
+        
         if #obj.Setting.array_candle > 0 then
 
             for candle = 1, #obj.Setting.array_candle do
@@ -170,6 +170,12 @@ function Candle:new(setting, Log)
                 obj.Setting.line_candle_min_old = obj.Setting.candle_current_low;
                 obj.lineBuyHigh.updateLineCandleMinMax()
             end
+
+            
+        --    obj.Log:save('obj.Setting.candle_current_low '.. obj.Setting.candle_current_low )
+        ----    obj.Log:save('obj.Setting.candle_current_low '.. obj.Setting.candle_current_high )
+       --     obj.Log:save('#obj.Setting.array_candle '.. #obj.Setting.array_candle )
+
         else
 
             if obj.Setting.candle_current_high < localCandle.high then
@@ -183,7 +189,8 @@ function Candle:new(setting, Log)
             end
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
                 localCandle;
-        end 
+ 
+        end  
         --  candleGraff.addSignal(obj.Setting.array_candle); 
     end
 
@@ -253,7 +260,7 @@ function Candle:new(setting, Log)
         end
 
         setArrayCandles(bar, obj.Setting.number_of_candle);
-
+      
         -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
 
@@ -323,6 +330,8 @@ function Candle:new(setting, Log)
             end
             t = len + 1
         end
+        
+                 
     end
 
 

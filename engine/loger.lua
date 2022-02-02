@@ -14,7 +14,7 @@ function Log:new(setting)
 
     local function _saveFile(file, text)
 
-        if obj.Setting.log then
+     --   if obj.Setting.log then
             if (text ~= nil) then
                 f = io.open(file, "a");
                 if f == nil then
@@ -26,7 +26,7 @@ function Log:new(setting)
                 -- Закрывает файл
                 f:close();
             end
-        end
+      --  end
 
     end
 
