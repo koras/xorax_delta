@@ -30,18 +30,19 @@ function drawLabel:new(setting, Log)
     obj.PicPathSell = obj.path .. 'myDeals_sell'
     obj.PicPathBuy = obj.path .. 'myDeals_buy'
     obj.PicPathSTOP = obj.path .. 'line_stop.jpeg'
+    obj.fractal_up = obj.path .. 'f_ups.bmp'
 
     local function getPicture(Operation)
 
         if Operation == 'B' then
-            obj.IMAGE_PATH = obj.PicPathBuy .. obj.count .. '.bmp';
+            obj.IMAGE_PATH = obj.PicPathBuy .. '1.bmp';
         end
 
         if Operation == 'S' then
-            obj.IMAGE_PATH = obj.PicPathSell .. obj.count .. '.bmp';
+            obj.IMAGE_PATH = obj.PicPathSell .. '1.bmp';
         end
 
-        if Operation == 'redCircle' then obj.IMAGE_PATH = obj.circleRed end
+        if Operation == 'redCircle' then obj.IMAGE_PATH = obj.circleRed; end
         if Operation == 'greenCircle' then
             obj.IMAGE_PATH = obj.circleGreen
         end
@@ -64,110 +65,30 @@ function drawLabel:new(setting, Log)
         if Operation == 'purchase_low' then
             obj.IMAGE_PATH = obj.purchase_low
         end
+        if Operation == 'fractalUp' then
+            obj.IMAGE_PATH =  obj.fractal_up
+        end
+         
+        
 
         obj.label_params['IMAGE_PATH'] = obj.IMAGE_PATH;
 
     end
 
-    local function getImages(Operation)
-     
-        if Operation == 'B' then
-            obj.IMAGE_PATH = obj.PicPathBuy .. obj.count .. '.bmp'
-        end
-
-        if Operation == 'S' then
-            obj.IMAGE_PATH = obj.PicPathSell .. obj.count .. '.bmp'
-        end
-
-        if Operation == 'redCircle' then obj.IMAGE_PATH = obj.circleRed end
-        if Operation == 'greenCircle' then
-            obj.IMAGE_PATH = obj.circleGreen
-        end
-        if Operation == 'circleYellow' then
-            obj.IMAGE_PATH = obj.circleYellow
-        end
-        if Operation == 'circleBlue' then obj.IMAGE_PATH = obj.circleBlue end
-
-        if Operation == 'stop' then obj.IMAGE_PATH = obj.PicPathSTOP end
-        if Operation == 'purchase_height' then
-            obj.IMAGE_PATH = obj.purchase_height
-        end
-
-        if Operation == 'line_candle_min_max' then
-            obj.IMAGE_PATH = obj.line_candle_min_max
-        end
-
-        if Operation == 'purchase_low' then
-            obj.IMAGE_PATH = obj.purchase_low
-        end
- 
-        return obj.IMAGE_PATH;
+    local function getDateGraff(datetime)
+        local day = datetime.day;
+        if datetime.day < 10 then day = '0' .. datetime.day; end
+        local month = datetime.month;
+        if datetime.month < 10 then month = '0' .. datetime.month end
+        obj.label_params['DATE'] = datetime.year .. month .. day;
     end
 
-    function obj:set(Operation, Price, datetime, count, textInfo)
-
-        count = 1;
-
-        if (textInfo == nul) then textInfo = ''; end
-
-        obj.hour = datetime.hour;
-
-        if datetime.hour < 10 then obj.hour = '0' .. datetime.hour end
-
-        obj.minute = datetime.min;
-
-        if datetime.min < 10 then obj.minute = '0' .. datetime.min end
-
-        if Operation == "buy" then
-            obj.label_params['ALIGNMENT'] = 'BOTTOM';
-        else
-            obj.label_params['ALIGNMENT'] = 'TOP';
-        end
-
-        obj.currentTime = datetime.hour .. ':' .. datetime.min;
-
-        obj.label_params['ALIGNMENT'] = 'BOTTOM';
-        obj.label_params['IMAGE_PATH'] = getImages(Operation);
-
-        obj.day = datetime.day;
-        if datetime.day < 10 then obj.day = '0' .. datetime.day; end
-
-        obj.month = datetime.month;
-        if datetime.month < 10 then obj.month = '0' .. datetime.month end
-
-        obj.label_params['DATE'] = datetime.year .. obj.month .. obj.day
-        obj.label_params['TIME'] = obj.hour .. obj.minute .. '00'
-        obj.label_params['YVALUE'] = Price
-        obj.label_params['R'] = 255
-        obj.label_params['G'] = 255
-        obj.label_params['B'] = 0
-        obj.label_params['TRANSPARENCY'] = 0
-        obj.label_params['TRANSPARENT_BACKGROUND'] = 1
-        obj.label_params['FONT_FACE_NAME'] = "Webdings"
-        obj.label_params['FONT_HEIGHT'] = 14
-        obj.label_params['HINT'] = 'Price ' .. Price .. " \n " .. textInfo
-        local id = AddLabel(obj.Setting.tag, obj.label_params)
-        obj.Setting.labels[#obj.Setting.labels + 1] = id
-        return id
-    end
-
-    -- устанавливаем время для того чтобы на графике установить
-    local function setTime(datetime)
-        obj.hour = datetime.hour;
-        if datetime.hour < 10 then obj.hour = '0' .. datetime.hour end
-
-        obj.minute = datetime.min;
-
-        if datetime.min < 10 then obj.minute = '0' .. datetime.min end
-
-        obj.day = datetime.day;
-        if datetime.day < 10 then obj.day = '0' .. datetime.day; end
-
-        obj.month = datetime.month;
-        if datetime.month < 10 then obj.month = '0' .. datetime.month; end
-
-        obj.label_params['DATE'] = datetime.year .. obj.month .. obj.day;
-        obj.label_params['TIME'] = obj.hour .. obj.minute .. '00'
+    local function getTimeGraff(datetime)
+        local hour = datetime.hour;
+        if datetime.hour < 10 then hour = '0' .. datetime.hour end
+        local minute = datetime.min;
+        if datetime.min < 10 then minute = '0' .. datetime.min end
+        obj.label_params['TIME'] = hour .. minute .. '00'
     end
 
     local function setProperty()
@@ -187,9 +108,25 @@ function drawLabel:new(setting, Log)
                                        " \n " .. textInfo
     end
 
+    function obj:set(Operation, Price, datetime, count, textInfo)
+
+        getPicture(Operation)
+        getDateGraff(datetime)
+        getTimeGraff(datetime)
+        setPrice(Price)
+        setProperty()
+        setHint('')
+
+        local id = AddLabel(obj.Setting.tag, obj.label_params)
+        obj.Setting.labels[#obj.Setting.labels + 1] = id
+        return id
+    end
+
     -- удаляем с графика определённыую метку(линию или тэг)
     function obj:create(operation, price, datetime, quantity, textInfo)
-        setTime(datetime)
+        --  setTime(datetime)
+        getDateGraff(datetime)
+        getTimeGraff(datetime)
         setProperty()
         setPrice(price)
         getPicture(operation)

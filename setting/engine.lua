@@ -311,6 +311,12 @@ function EngineSetting:new()
     setting.fractals_collection = {};
     setting.fractal_up = 0;
     setting.fractal_down = 0;
+
+
+    
+    setting.fractals_point_collection = {};
+ 
+
     -- на какой свече была последняя операция по входу в рынок
     setting.candles_operation_last = 0;
     setting.range_down_price_candles = 0;
