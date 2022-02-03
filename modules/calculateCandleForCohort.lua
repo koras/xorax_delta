@@ -32,7 +32,7 @@ function LineBuyHigh:new(setting, Log)
     end
 
     local defaultMax = 10000000;
-    local defaultRange = 6;
+    local defaultRange = 7;
 
     -- очередь свечей
     local candleMaxQueue = 0;
@@ -67,11 +67,7 @@ function LineBuyHigh:new(setting, Log)
         if #obj.Setting.fractals_point_collection > 0 then 
             for labelCheck = 1, #obj.Setting.fractals_point_collection do
             --    obj.Log:save('==== '..data.price.. ' = ' .. obj.Setting.fractals_point_collection[labelCheck].price.. '==== '..data.dt ..' = '.. obj.Setting.fractals_point_collection[labelCheck].dt )
-                if obj.Setting.fractals_point_collection[labelCheck].price == data.price 
-             --   and  obj.Setting.fractals_point_collection[labelCheck].dt == dt
-                 then
-                  --  obj.Log:save('+++ '..data.price.. ' = ' .. obj.Setting.fractals_point_collection[labelCheck].price.. '==== '..data.dt ..' = '.. obj.Setting.fractals_point_collection[labelCheck].dt )
-               
+                if obj.Setting.fractals_point_collection[labelCheck].price == data.price then
                     return false
                 end
             end
@@ -83,19 +79,19 @@ function LineBuyHigh:new(setting, Log)
         -- мы перебираем все свечи и проверяем на свечах уровни
         local dt = obj.Setting:getTime(candleGraff.datetime)
 
-        --    loger.save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min);     
-        if candleMaxLast < candleGraff.high then
+       -- obj.Log:save(candleGraff.high..' = '.. dt);     
+        if candleMaxLast < candleGraff.high and candleMax < candleGraff.high then
             -- Претендент на фрактал 
-            if candleMax < candleGraff.high then
+            --if candleMax < candleGraff.high then
                 candleMax = candleGraff.high
                 datetimeMax = candleGraff.datetime
                 candleMaxQueue = candleRaundMax
                 --   obj.Log:save(number .. '  dt '.. candleMax .. '  '.. dt )
-            else
-                if candleMaxQueue < candleRaundMax then
-                    candleMaxQueue = candleMaxQueue + 1
-                end
-            end
+           -- else
+            --    if candleMaxQueue < candleRaundMax then
+             --       candleMaxQueue = candleMaxQueue + 1
+            --    end
+          ----  end
 
         else
 
@@ -137,9 +133,9 @@ function LineBuyHigh:new(setting, Log)
                 candleMinQueue = candleRaundMin
                --    obj.Log:save(number .. '  dt '.. candleMin .. '  '.. dt )
            -- else
-                if candleMinQueue < candleRaundMin then
-                    candleMinQueue = candleMinQueue + 1
-                end
+               -- if candleMinQueue < candleRaundMin then
+                --    candleMinQueue = candleMinQueue + 1
+            --    end
          --   end
 
         else
