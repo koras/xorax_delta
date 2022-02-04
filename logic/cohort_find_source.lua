@@ -1,12 +1,12 @@
 
 
-local Logic = {}
+local MLogic = {}
 
 -- phase:
 -- 1 get a target and direction
 -- 2 send stop order or limit
 
-function Logic:new(setting, Log)
+function MLogic:new(setting, Log)
 
     -- свойства
     local obj = {}
@@ -93,4 +93,4 @@ function Logic:new(setting, Log)
     return obj
 end
 
-return Logic
+return MLogic

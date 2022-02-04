@@ -1,6 +1,6 @@
 -- базовая логика
 local transactionService = dofile(script_path ..  "\\transaction\\transactionService.lua")-- базовая логика
---local math =  dofile(script_path ..  "\\transaction\\cohort_find_source.lua")
+local mathCohort =  dofile(script_path ..  "\\logic\\cohort_find_source.lua")
 --local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
 
 local Logic = {}
@@ -23,7 +23,7 @@ function Logic:new(setting, Log)
     function obj:init()
         -- транзакция
         obj.transaction = transactionService:new(obj.Setting, obj.Log);
-     --   obj.math  = math:new(obj.Setting, obj.Log);
+       obj.mathCohort   = mathCohort :new(obj.Setting, obj.Log);
       --  obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
     end
 
