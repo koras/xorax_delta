@@ -12,8 +12,8 @@ dofile(script_path .. "\\setting\\path.lua");
 local Gap = dofile(script_path .. "\\logic\\gap_engine.lua");
 local Cohort = dofile(script_path .. "\\logic\\cohort_engine.lua");
 local Loger = dofile(script_path .. "\\engine\\loger.lua");
-
 local candleClass = dofile(script_path .. "\\signals\\candle.lua")
+local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
 
  
  
@@ -30,6 +30,7 @@ function OnInit()
     obj.gap = Gap:new(obj.Setting, obj.Log);
     obj.cohort = Cohort:new(obj.Setting, obj.Log);
     obj.candleClass = candleClass:new(obj.Setting, obj.Log)
+    obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
     obj.gap.EngineOnInit()
     obj.cohort.EngineOnInit()
     
@@ -53,6 +54,8 @@ function main()
  
         -- get graffic and price
         obj.candleClass:getSignal(updateTick)
+        obj.calculateCandleForCohort:calculate();
+
 
         if obj.Setting.status then
             obj.gap:EngineMain()
@@ -100,4 +103,5 @@ function OnStop()
     obj.gap:EngineStop()
     obj.cohort:EngineStop()
     obj.candleClass:destructor()
+    obj.calculateCandleForCohort:destructor()
 end

@@ -115,6 +115,7 @@ function LineBuyHigh:new(setting, Log)
                 f.price = candleMax
                 f.datetime = datetimeMax
                 f.type = "max"
+                f.volume = candleGraff.volume;
                 f.dt = dt
                 
                 candleMax = 0;
@@ -160,17 +161,17 @@ function LineBuyHigh:new(setting, Log)
 
                 
                 candleMinFractal = candleMin
-
                 f.price = candleMin
                 f.datetime = datetimeMin
                 f.type = "min"
-                f.dt = dt 
+                f.dt = dt
+                f.volume = candleGraff.volume;
 
                 candleMin = defaultMax;
                 if checkLabel(f) then
                     f.labelId =  obj.LabelGraff:set('fractalUp', f.price, f.datetime);
                     obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
-                   end 
+                end 
             end
         end
         candleMinLast = candleGraff.low

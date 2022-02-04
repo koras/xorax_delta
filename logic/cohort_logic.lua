@@ -1,6 +1,7 @@
 -- базовая логика
 local transactionService = dofile(script_path ..  "\\transaction\\transactionService.lua")-- базовая логика
-local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
+local math =  dofile(script_path ..  "\\transaction\\cohort_find_source.lua")
+--local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
 
 local Logic = {}
 
@@ -22,8 +23,8 @@ function Logic:new(setting, Log)
     function obj:init()
         -- транзакция
         obj.transaction = transactionService:new(obj.Setting, obj.Log);
-
-        obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
+        obj.math  = math:new(obj.Setting, obj.Log);
+      --  obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
     end
 
     local Error = '';
@@ -407,9 +408,12 @@ function Logic:new(setting, Log)
     -- первоначальная логика которая решает как сработает гэп
     function logicGap()
 
-        obj.calculateCandleForCohort:calculate();
+       -- obj.calculateCandleForCohort:calculate();
 
         -- получаем направление для торговли в GAP
+
+        obj.math:searchStart()
+
        -- getDirection();
       --  openPosition()
       --  obj.Setting.cohorten.phase = 1
@@ -461,7 +465,7 @@ function Logic:new(setting, Log)
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
-        obj.calculateCandleForCohort:destructor()
+    --    obj.calculateCandleForCohort:destructor()
         -- очистка графика от линий 
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end

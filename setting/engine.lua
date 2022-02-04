@@ -315,6 +315,8 @@ function EngineSetting:new()
 
     
     setting.fractals_point_collection = {};
+    -- calculate trend
+    setting.trend = {};
  
 
     -- на какой свече была последняя операция по входу в рынок
