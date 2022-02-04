@@ -42,7 +42,7 @@ function LineBuyHigh:new(setting, Log)
     local datetimeMax = {};
     -- максимум по отношению к прошлому максимуму
     local candleMaxLast = 0;
-    -- последняя максимальная свеча
+    -- last max a candle
     local candleMaxFractal = 0;
 
  
@@ -53,9 +53,14 @@ function LineBuyHigh:new(setting, Log)
     local candleRaundMin = defaultRange;
     local datetimeMin = {};
     -- максимум по отношению к прошлому максимуму
-    local candleMinLast =defaultMax;
-    -- последняя максимальная свеча
+    local candleMinLast = defaultMax;
+    -- last minimal a candle
     local candleMinFractal = defaultMax;
+
+
+    function obj:deleteLabelId(labelId)
+        obj.LabelGraff:delete(obj.Setting.tag,labelId)
+    end
 
  
     function checkLabel(data)
@@ -67,15 +72,24 @@ function LineBuyHigh:new(setting, Log)
         if #obj.Setting.fractals_point_collection > 0 then 
             for labelCheck = 1, #obj.Setting.fractals_point_collection do
             --    obj.Log:save('==== '..data.price.. ' = ' .. obj.Setting.fractals_point_collection[labelCheck].price.. '==== '..data.dt ..' = '.. obj.Setting.fractals_point_collection[labelCheck].dt )
-                if obj.Setting.fractals_point_collection[labelCheck].price == data.price then
+
+                if obj.Setting.fractals_point_collection[labelCheck].price == data.price  then
                     return false
-                end
+                else
+                    if obj.Setting.fractals_point_collection[labelCheck].dt == data.dt  then
+                        -- delete old fractal 
+                        obj:deleteLabelId(labelId)
+                        obj.Setting.labels[labelCheck] = nil
+                        obj.Setting.fractals_point_collection[labelCheck] = nil
+                        return false
+                    end 
+                end 
             end
         end
         return true
     end
 
-    function getMax(number, candleGraff)
+    function getMax(candleGraff)
         -- мы перебираем все свечи и проверяем на свечах уровни
         local dt = obj.Setting:getTime(candleGraff.datetime)
 
@@ -86,12 +100,7 @@ function LineBuyHigh:new(setting, Log)
                 candleMax = candleGraff.high
                 datetimeMax = candleGraff.datetime
                 candleMaxQueue = candleRaundMax
-                --   obj.Log:save(number .. '  dt '.. candleMax .. '  '.. dt )
-           -- else
-            --    if candleMaxQueue < candleRaundMax then
-             --       candleMaxQueue = candleMaxQueue + 1
-            --    end
-          ----  end
+
 
         else
 
@@ -123,7 +132,7 @@ function LineBuyHigh:new(setting, Log)
 
 
 
-    function getMin(number, candleGraff)
+    function getMin(candleGraff)
         -- мы перебираем все свечи и проверяем на свечах уровни
         local dt = obj.Setting:getTime(candleGraff.datetime)
  
@@ -149,13 +158,13 @@ function LineBuyHigh:new(setting, Log)
                 -- есть максимум   
                 local f = {}  
 
-            --    obj.Log:save( ' ====== '..  f.labelId .. '  '.. dt )
+                
                 candleMinFractal = candleMin
 
                 f.price = candleMin
                 f.datetime = datetimeMin
                 f.type = "min"
-                f.dt = dt
+                f.dt = dt 
 
                 candleMin = defaultMax;
                 if checkLabel(f) then
@@ -178,9 +187,8 @@ function LineBuyHigh:new(setting, Log)
         if #obj.Setting.array_candle > 0 then
             for candle = 1, #obj.Setting.array_candle do
                 -- в одну сторону
-                getMax(candle, obj.Setting.array_candle[candle])
-                getMin(candle, obj.Setting.array_candle[candle]) 
-
+                getMax(obj.Setting.array_candle[candle])
+                getMin(obj.Setting.array_candle[candle]) 
             end
   
         end
@@ -229,14 +237,15 @@ function LineBuyHigh:new(setting, Log)
         if #obj.Setting.fractals_point_collection > 0 then 
             for label = 1, #obj.Setting.fractals_point_collection do
             --    obj.Log:save('============ LineBuyHigh:destructor')
-               -- if (obj.Setting.fractals_point_collection[label] ~= nil) then
-                    obj.LabelGraff:delete(obj.Setting.tag,
-                    obj.Setting.fractals_point_collection[label].labelId)
+               -- if (obj.Setting.fractals_point_collection[label] ~= nil) then 
+                    obj:deleteLabelId( obj.Setting.fractals_point_collection[label].labelId)
                     obj.Setting.labels[label] = nil
             --    end
             end
         end
     end
+
+    
     setmetatable(obj, self)
     self.__index = self;
     return obj
