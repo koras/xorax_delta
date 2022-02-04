@@ -15,10 +15,6 @@ local Loger = dofile(script_path .. "\\engine\\loger.lua");
 local candleClass = dofile(script_path .. "\\signals\\candle.lua")
 local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
 
- 
- 
-
- 
 
 
 function OnInit()
@@ -38,7 +34,6 @@ end
 
     -- when update a candle
 function updateTick(candle)
-
     obj.gap:updateTick(candle)
     obj.cohort:updateTick(candle)
 end
@@ -50,14 +45,13 @@ function main()
     obj.candleClass:getSignal(updateTick)
     
     while obj.Setting.Run do 
-        
- 
         -- get graffic and price
         obj.candleClass:getSignal(updateTick)
-        obj.calculateCandleForCohort:calculate();
+        -- get fractall 
 
 
         if obj.Setting.status then
+            obj.calculateCandleForCohort:calculate()
             obj.gap:EngineMain()
             obj.cohort:EngineMain()
         end

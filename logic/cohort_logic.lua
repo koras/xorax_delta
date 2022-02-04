@@ -112,6 +112,7 @@ function Logic:new(setting, Log)
     -- конвертируем цену
     -- @param price string
     function getPrice(price)
+        
         if obj.Setting.type_instrument == 3 then
 
             return tonumber(math.ceil(price));
