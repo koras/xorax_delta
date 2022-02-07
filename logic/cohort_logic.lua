@@ -411,12 +411,15 @@ function Logic:new(setting, Log)
 
         -- получаем направление для торговли в GAP
 
-        obj.mathCohort:searchStart()
+         local data = obj.mathCohort:searchStart()
 
-        -- getDirection();
-        --  openPosition()
-        --  obj.Setting.cohorten.phase = 1
-        --  nextEmulation()
+         if  data.result then
+         
+            -- getDirection();
+            --  openPosition()
+            --  obj.Setting.cohorten.phase = 1
+            --  nextEmulation()
+        end
 
     end
 
