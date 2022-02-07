@@ -166,6 +166,7 @@ function LineBuyHigh:new(setting, Log)
                -- candleMin = defaultMax;
                 if checkLabel(f) then
                     f.labelId =  obj.LabelGraff:set('fractalUp', f.price, f.datetime);
+               
                     obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
                 end 
             end

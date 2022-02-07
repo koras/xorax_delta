@@ -452,7 +452,7 @@ function Logic:new(setting, Log)
 
         if obj.Setting.cohorten.phase == 2 then
             -- stop traiding
-            obj.Log:save("-- setting.cohorten.phase == 2")
+           -- obj.Log:save("-- setting.cohorten.phase == 2")
 
         end
 
