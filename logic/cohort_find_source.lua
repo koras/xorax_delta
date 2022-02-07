@@ -115,19 +115,18 @@ function MLogic:new(setting, Log)
         --  message("result = " .. result);
 
     end
+
+    local percentSolve = 5;
+
     function obj:searchStart()
+        local data = {};
+          data.result = false;
 
-        if #obj.Setting.trendMax > 0 then
+        if #obj.Setting.trend > 0 then
+            for index = 1, #obj.Setting.trend do
+
+                local trend = obj.Setting.trend[index];
  
-            for trend = 1, #obj.Setting.trendMax do
-                --    obj.Log:save('==== '..data.price.. ' = ' .. obj.Setting.fractals_point_collection[labelCheck].price.. '==== '..data.dt ..' = '.. obj.Setting.fractals_point_collection[labelCheck].dt )
-                -- obj.Setting.current_price
-
-                if obj.Setting.trendMax[trend].type == "max" then
-
-                    trend = obj.Setting.trendMax[trend];
-
-                    --  local trendTime = obj.Setting:getTime(trend.datetime)
                     local a = {}
                     local b = {}
 
@@ -136,11 +135,32 @@ function MLogic:new(setting, Log)
 
                     b.x = getTimeTrend(trend.datetime) -- time
                     b.y = trend.price -- price
-                   percent =  getAccos(a, b)
-                --   obj.Log:save(obj.Setting.current_price..'==== '..trend.price.. ' dt '..trend.dt.. ' = ' .. b.x.. '='..a.x..'=== '.. ' = '.. percent)
+
+
+
+                   local percent =  getAccos(a, b)
+
+                  -- obj.Log:save('==== '..trend.price.. '   = '.. trend.dt..' '.. percent .. " ".. trend.type )
+
+                   if percent < percentSolve then 
+
+                        data = trend;
+                        data.result = true;
+                       --  obj.Log:save(b.y..'=   dt  ='..b.x..'=== '.. ' = '.. percent .. " ".. trend.type);
+                        return data
+                    end
+
+                  -- obj.Log:save(b.y..'=   dt  ='..b.x..'=== '.. ' = '.. percent .. " ".. trend.type)
                 end
-            end
-        end
+          --  end
+           
+              
+        end 
+
+        
+        return data
+ 
+     
     end
 
     if #obj.Setting.fractals_point_collection > 0 then

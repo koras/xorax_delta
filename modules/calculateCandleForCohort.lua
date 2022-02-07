@@ -180,33 +180,23 @@ function LineBuyHigh:new(setting, Log)
     --    local V = t[i].volume; -- Получить значение Volume для указанной свечи (объем сделок в свече)
     --    local T = t[i].datetime; -- Получить значение datetime для указанной свечи
 
-    
+    -- We are always found max and min a fractal
     local function getFractal() 
- 
-        obj.Setting.trendMin = {}
-        obj.Setting.trendMax = {}
+        obj.Setting.trend = {}
 
         if #obj.Setting.fractals_point_collection > 0 then
-
             for candle = 1, #obj.Setting.fractals_point_collection do
                 local fractal = obj.Setting.fractals_point_collection[candle];
-
+                
                 if(maxFractal < fractal.price) and fractal.type == "max" then
-                    maxFractal =  fractal.price
-                 --   maxFractal.type =  fractal.type
-                 --   maxFractal.dt =  fractal.dt
-                    obj.Setting.trendMax[#obj.Setting.trendMax+1] = fractal
-               --     obj.Log:save(fractal.price .. " / "..  fractal.type ..' = '.. fractal.dt..' .datetime = '..fractal.datetime.min)
-                end 
-                  
-                if(minFractal > fractal.price) and fractal.type == "min" then
+                    maxFractal =  fractal.price 
+                    obj.Setting.trend[#obj.Setting.trend+1] = fractal
+                 end 
+
+                if minFractal > fractal.price and fractal.type == "min" then 
                     minFractal =  fractal.price
-               --     minFractal.type =  fractal.type
-                --    minFractal.dt =  fractal.dt
-                    
-                    obj.Setting.trendMin[#obj.Setting.trendMin+1] = fractal
-                --    obj.Log:save(fractal.price .. " / "..  fractal.type ..' = '.. fractal.dt..' .datetime = '..fractal.datetime.min)
-                end
+                    obj.Setting.trend[#obj.Setting.trend+1] = fractal
+               end
             end 
         end
     end
@@ -231,6 +221,7 @@ function LineBuyHigh:new(setting, Log)
             getFractal()
         end
         maxFractal = 0
+        minFractal = defaultMax
          
     end
 
@@ -274,9 +265,7 @@ function LineBuyHigh:new(setting, Log)
     function obj:destructor()
         -- очистка графика от линий
         if #obj.Setting.fractals_point_collection > 0 then 
-            for label = 1, #obj.Setting.fractals_point_collection do
-            --    obj.Log:save('============ LineBuyHigh:destructor')
-               -- if (obj.Setting.fractals_point_collection[label] ~= nil) then 
+            for label = 1, #obj.Setting.fractals_point_collection do 
                     obj:deleteLabelId( obj.Setting.fractals_point_collection[label].labelId)
                     obj.Setting.labels[label] = nil
             --    end
