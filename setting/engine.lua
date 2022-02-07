@@ -85,6 +85,10 @@ function EngineSetting:new()
     setting.gap.timeWork.start = {700, 710}
  
     setting.cohort2 = {}
+
+
+
+    setting.percentSolve = 25
  
     --  0 - gap start 
     -- 1 - buy OR sell contract 
@@ -126,7 +130,9 @@ function EngineSetting:new()
 
     setting.cohorten = {}
     setting.cohorten.label = {}
-    setting.cohorten.phase = 0
+
+    -- to first
+    setting.cohorten.phase = 100
     -- stop
     setting.cohorten.label.redCircle_stop = 0
     -- take

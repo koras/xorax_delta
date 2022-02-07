@@ -21,45 +21,6 @@ function MLogic:new(setting, Log)
 
     function obj:init() end
 
-    --     function main2() 
-    --         -- например
-
-    --         local a = {}
-    --         local b = {}
-    --         local c = {}
-    --         local AB = {}
-    --         local AC = {}
-
-    --         a.x = 1133; 
-    --         a.y = 4135;
-    --         b.x = 1504 ;
-    --         b.y = 4100;
-
-    --         c.x = b.x;
-    --         c.y = a.y;
-
-    --         -- вычисляем вектор угла AB
-    --         AB.x = (b.x - a.x) ;
-    --         AB.y = (b.y - a.y) ;
-
-    --         -- вычисляем вектор угла AC
-    --         AC.x = (c.x - a.x) ;
-    --         AC.y = (c.y - a.y) ;
-
-    --         local x3  = (b.x - a.x);
-    --         local y3  = (b.y - a.y);
-
-    --     local  res =  math.acos( (x3*x3+y3*0) / ( ((x3^2+y3^2)^0.5) * ((x3^2+0^2)^0.5))); 
-
-    --    -- message("result = " ..   math.deg(res) )
-
-    --     --    local ans = math.acos(a:dot(b) / (a:len() * b:len()))
-    --     --    message(math.deg(ans))
-
-    --     --   local result = angle(x1, y1, z1, x2, y2, z2);
-    --     --  message("result = " .. result);
-
-    --     end;
 
     local function getTimeTrend(datetime)
 
@@ -82,12 +43,10 @@ function MLogic:new(setting, Log)
         local c = {}
         local AB = {}
         local AC = {}
-
         -- a.x = 1133; 
         -- a.y = 4135;
         -- b.x = 1504 ;
         -- b.y = 4100;
-
         c.x = b.x;
         c.y = a.y;
 
@@ -115,13 +74,12 @@ function MLogic:new(setting, Log)
         --  message("result = " .. result);
 
     end
-
-    local percentSolve = 5;
+ 
 
     function obj:searchStart()
         local data = {};
           data.result = false;
-
+          data.percent = 0
         if #obj.Setting.trend > 0 then
             for index = 1, #obj.Setting.trend do
 
@@ -136,21 +94,18 @@ function MLogic:new(setting, Log)
                     b.x = getTimeTrend(trend.datetime) -- time
                     b.y = trend.price -- price
 
-
-
                    local percent =  getAccos(a, b)
-
-                  -- obj.Log:save('==== '..trend.price.. '   = '.. trend.dt..' '.. percent .. " ".. trend.type )
-
-                   if percent < percentSolve then 
-
+    
+                   if percent < obj.Setting.percentSolve then 
                         data = trend;
-                        data.result = true;
-                       --  obj.Log:save(b.y..'=   dt  ='..b.x..'=== '.. ' = '.. percent .. " ".. trend.type);
+                        data.result = true
+                        data.percent = percent
+                        -- changing a phase
+                        
+                        obj.Setting.cohorten.phase = 0 
+                        obj.Log:save(   "phase / "..   obj.Setting.cohorten.phase )
                         return data
                     end
-
-                  -- obj.Log:save(b.y..'=   dt  ='..b.x..'=== '.. ' = '.. percent .. " ".. trend.type)
                 end
           --  end
            

@@ -385,20 +385,19 @@ function Logic:new(setting, Log)
     end
 
     -- получаем направление для торговли в GAP
-    local function getDirection()
-        obj.Log:save(obj.Setting.current_price .. ' >=   ' ..
-                         obj.Setting.array_candle[2].close);
+    local function getDirection(fractal)
 
-        if (obj.Setting.current_price >= obj.Setting.array_candle[2].close) then
+ 
 
+        if fractal.type == "min" then
+            -- buy a contract
             obj.Setting.gapper.direct = 'B';
         else
-            -- short
+             
+            -- sell a contract
             obj.Setting.gapper.direct = 'S';
         end
-
-        obj.Log:save('old price = ' .. obj.Setting.array_candle[2].close ..
-                         'setting.current_price = ' .. obj.Setting.current_price);
+ 
         obj.Log:save('direct = ' .. obj.Setting.gapper.direct)
 
     end
@@ -410,15 +409,19 @@ function Logic:new(setting, Log)
         -- obj.calculateCandleForCohort:calculate();
 
         -- получаем направление для торговли в GAP
-
-         local data = obj.mathCohort:searchStart()
-
-         if  data.result then
+        local fractal = {}
+        fractal.result = false;
+        
+        if   obj.Setting.cohorten.phase == 100 then
+            fractal = obj.mathCohort:searchStart()
+        end
+        
+        if  fractal.result  then
          
-            -- getDirection();
-            --  openPosition()
-            --  obj.Setting.cohorten.phase = 1
-            --  nextEmulation()
+              getDirection(fractal);
+              openPosition()
+               obj.Setting.cohorten.phase = 1
+              nextEmulation()
         end
 
     end
@@ -440,7 +443,7 @@ function Logic:new(setting, Log)
 
         if (obj.Setting.datetime == 0) then return; end
 
-        if obj.Setting.current_price ~= 0 and obj.Setting.cohorten.phase == 0 then
+        if obj.Setting.current_price ~= 0  then
 
             -- если время подошло, можно смотреть логику
             logicGap();
