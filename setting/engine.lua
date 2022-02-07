@@ -29,7 +29,7 @@ function EngineSetting:new()
     setting.candle_test = 0
 
     -- count condles inside graffic
-    setting.lenInit = 200
+    setting.lenInit = 500
 
 
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки

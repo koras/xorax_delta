@@ -23,12 +23,7 @@ function Candle:new(setting, Log)
     obj.Initshift = 0
 
     obj.lineBuyHigh = lineBuyHighClass:new(obj.Setting, obj.Log)
-
-    -- local script_path = getScriptPath()
-    -- local loger = dofile(script_path .. "\\engine\\loger.lua");
-    -- local lineBuyHigh = dofile(getScriptPath() .. "\\modules\\lineBuyHigh.lua")
-
-    -- local candleGraff = dofile(script_path .. "\\interface\\candleGraff.lua");
+ 
 
     local function calculateVolume(volume) end
 
@@ -224,16 +219,16 @@ function Candle:new(setting, Log)
                 --  Run = false;
                 return;
             end
-
+         
             if candlesArray[j - 1].datetime.hour ~= nil then
 
-                if candlesArray[j - 1].datetime.hour >= 10 then
+                if candlesArray[j - 1].datetime.hour >= 7 then
                     local dt = candlesArray[j - 1].datetime;
                     local bar = candlesArray[j - 1];
                     bar.numberCandle = first_candle + j - 1;
                     obj.Setting.array_candle[#obj.Setting.array_candle + 1] =bar;
 
-                   -- obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
+                  --  obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
          
                     i = i - 1
                 end
@@ -263,8 +258,7 @@ function Candle:new(setting, Log)
       
         -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
-
-        -- obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
+ 
       
         --obj.Setting.datetime = bar.datetime;
 

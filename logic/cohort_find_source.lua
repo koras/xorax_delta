@@ -127,7 +127,6 @@ function MLogic:new(setting, Log)
 
                     trend = obj.Setting.trendMax[trend];
 
-                    obj.Log:save('==== ' )
                     --  local trendTime = obj.Setting:getTime(trend.datetime)
                     local a = {}
                     local b = {}
@@ -138,7 +137,7 @@ function MLogic:new(setting, Log)
                     b.x = getTimeTrend(trend.datetime) -- time
                     b.y = trend.price -- price
                    percent =  getAccos(a, b)
-                   obj.Log:save(obj.Setting.current_price..'==== '..trend.price.. ' dt '..trend.dt.. ' = ' .. b.x.. '='..a.x..'=== '.. ' = '.. percent)
+                --   obj.Log:save(obj.Setting.current_price..'==== '..trend.price.. ' dt '..trend.dt.. ' = ' .. b.x.. '='..a.x..'=== '.. ' = '.. percent)
                 end
             end
         end
@@ -160,8 +159,7 @@ function MLogic:new(setting, Log)
                 obj.Setting.trendMin[#obj.Setting.trendMin + 1] = fractal
                 --    obj.Log:save(fractal.price .. " / "..  fractal.type ..' = '.. fractal.dt..' .datetime = '..fractal.datetime.min)
             end
-        end
-        obj.Log:save('============ ')
+        end 
     end
 
     setmetatable(obj, self)

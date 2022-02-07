@@ -94,7 +94,7 @@ function LineBuyHigh:new(setting, Log)
         return true
     end
 
-    local function getMax(candleGraff)
+    local function getMax(candleGraff,candle)
         -- мы перебираем все свечи и проверяем на свечах уровни
       --  local dt = obj.Setting:getTime(candleGraff.datetime)
 
@@ -104,33 +104,35 @@ function LineBuyHigh:new(setting, Log)
             --if candleMax < candleGraff.high then
                 candleMax = candleGraff.high
                 
-                candleMaxQueue = candleRaundMax
+                candleMaxQueue = 5
 
                 tmpCandleMax = candleGraff;
                 local tmpCandleMin = {};
 
         else
 
-            if candleMaxQueue ~= 0 then
-                candleMaxQueue = candleMaxQueue - 1
+            local dts = obj.Setting:getTime(candleGraff.datetime);
+            if candleMaxQueue ~= 0 or  candleMax > candleGraff.high then
+                candleMaxQueue = candleMaxQueue - 1 
+              --  obj.Log:save(candleMaxQueue .. "|".. candle ..'| '..dts..' price = '.. candleGraff.high)
             end
 
             if candleMaxQueue == 0 and candleMax ~= 0 then
+
+               -- obj.Log:save( "MAX " ..candleMaxQueue .. "|".. candle ..'| '..dts..' price = '.. candleGraff.high)
                 -- есть максимум   
-                local f = {}  
+                local f = {}
                 f.price = tmpCandleMax.high
                 f.datetime = tmpCandleMax.datetime
                 f.type = "max"
                 f.volume = candleGraff.volume;
                 f.dt = obj.Setting:getTime(tmpCandleMax.datetime)
                 
-                candleMax = 0;
+            --    candleMax = 0;
                 if checkLabel(f) then
                         f.labelId = obj.LabelGraff:set('fractalUp', f.price, f.datetime);
                         obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
-                end
-                --   obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
-                -- obj.Setting.fractals_point_collection
+                end 
             end
         end
         candleMaxLast = candleGraff.high
@@ -161,7 +163,7 @@ function LineBuyHigh:new(setting, Log)
                 f.dt = obj.Setting:getTime(tmpCandleMin.datetime)
                 f.volume = tmpCandleMin.volume;
 
-                candleMin = defaultMax;
+               -- candleMin = defaultMax;
                 if checkLabel(f) then
                     f.labelId =  obj.LabelGraff:set('fractalUp', f.price, f.datetime);
                     obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
@@ -205,17 +207,20 @@ function LineBuyHigh:new(setting, Log)
                     obj.Setting.trendMin[#obj.Setting.trendMin+1] = fractal
                 --    obj.Log:save(fractal.price .. " / "..  fractal.type ..' = '.. fractal.dt..' .datetime = '..fractal.datetime.min)
                 end
-            end
-            obj.Log:save('============ ')
+            end 
         end
     end
 
 
     function obj:calculate()
+
+      --  obj.Log:save( "#obj.Setting.array_candle " ..#obj.Setting.array_candle)
+            
+
         if #obj.Setting.array_candle > 0 then
             for candle = 1, #obj.Setting.array_candle do
                 -- в одну сторону
-                getMax(obj.Setting.array_candle[candle])
+                getMax(obj.Setting.array_candle[candle],candle)
                 getMin(obj.Setting.array_candle[candle])
             end
         end
@@ -223,11 +228,10 @@ function LineBuyHigh:new(setting, Log)
         --  obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
  
         if #obj.Setting.fractals_point_collection > 0 then
-     --       getFractal()
+            getFractal()
         end
         maxFractal = 0
-        
-                obj.Log:save('============ ')
+         
     end
 
     function obj:updateBuyLow()
