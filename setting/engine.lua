@@ -316,7 +316,8 @@ function EngineSetting:new()
     
     setting.fractals_point_collection = {};
     -- calculate trend
-    setting.trend = {};
+    setting.trendMin = {};
+    setting.trendMax = {};
  
 
     -- на какой свече была последняя операция по входу в рынок
@@ -425,7 +426,11 @@ function EngineSetting:new()
 
         local minute = datetime.min;
 
-        if datetime.min < 10 then  minute = '0' .. datetime.min end
+        if datetime.min < 10 then  
+            minute = '0' .. tostring(datetime.min )
+        else
+            minute = tostring(datetime.min)
+        end
  
         return hour .. ':' .. minute;
     end
@@ -439,7 +444,9 @@ function EngineSetting:new()
 
         local minute = datetime.min;
 
-        if datetime.min < 10 then  minute = '0' .. datetime.min end
+        if datetime.min < 10 then 
+             minute = '0' .. datetime.min
+            end
  
         return hour .. ':' .. minute;
     end

@@ -1,7 +1,8 @@
 -- базовая логика
-local transactionService = dofile(script_path ..  "\\transaction\\transactionService.lua")-- базовая логика
-local mathCohort =  dofile(script_path ..  "\\logic\\cohort_find_source.lua")
---local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
+local transactionService = dofile(script_path ..
+                                      "\\transaction\\transactionService.lua") -- базовая логика
+local mathCohort = dofile(script_path .. "\\logic\\cohort_find_source.lua")
+-- local calculateCandleForCohort = dofile(script_path ..  "\\modules\\calculateCandleForCohort.lua")
 
 local Logic = {}
 
@@ -23,8 +24,8 @@ function Logic:new(setting, Log)
     function obj:init()
         -- транзакция
         obj.transaction = transactionService:new(obj.Setting, obj.Log);
-       obj.mathCohort   = mathCohort :new(obj.Setting, obj.Log);
-      --  obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
+        obj.mathCohort = mathCohort:new(obj.Setting, obj.Log);
+        --  obj.calculateCandleForCohort = calculateCandleForCohort:new(obj.Setting, obj.Log)
     end
 
     local Error = '';
@@ -67,21 +68,21 @@ function Logic:new(setting, Log)
         -- local price = 0;
         if tostring(contract.direct) == "B" then
             obj.Setting.cohort.priceTake = contract.price +
-                                            obj.Setting.gapper.takeProfit
+                                               obj.Setting.gapper.takeProfit
             obj.Setting.cohort.priceStop = contract.price -
-                                            obj.Setting.gapper.stopLimit
+                                               obj.Setting.gapper.stopLimit
 
             obj.Setting.cohort.PRICE = obj.Setting.cohort.priceStop -
-                                        obj.Setting.gapper.takeProfit
+                                           obj.Setting.gapper.takeProfit
         else
             -- gap down
             obj.Setting.cohort.priceTake = contract.price -
-                                            obj.Setting.gapper.takeProfit
+                                               obj.Setting.gapper.takeProfit
             obj.Setting.cohort.priceStop = contract.price +
-                                            obj.Setting.gapper.stopLimit
+                                               obj.Setting.gapper.stopLimit
 
             obj.Setting.cohort.PRICE = obj.Setting.cohort.priceStop +
-                                        obj.Setting.gapper.takeProfit
+                                           obj.Setting.gapper.takeProfit
 
         end
         obj.Setting.PRICE = obj.Setting.cohort.PRICE;
@@ -112,7 +113,7 @@ function Logic:new(setting, Log)
     -- конвертируем цену
     -- @param price string
     function getPrice(price)
-        
+
         if obj.Setting.type_instrument == 3 then
 
             return tonumber(math.ceil(price));
@@ -128,34 +129,32 @@ function Logic:new(setting, Log)
         local stopPrice = 0
 
         if obj.Setting.cohorten.phase == 3 then
-         
+
             if tostring(obj.Setting.cohort.directionTake) == "B" then
 
                 -- покупка 
                 stopPrice = tonumber(obj.Setting.cohort.priceStop) -
                                 tonumber(obj.Setting.gapper.trolling_next_price);
 
-    
-                                
                 --  obj.Log:save(' stopPrice ' ..  stopPrice)
                 --   obj.Log:save('price  ' ..  price )
-                if  price < tonumber(stopPrice) then
+                if price < tonumber(stopPrice) then
                     -- переносим стоп
 
-                    local newStopPrice = tonumber(obj.Setting.cohort.priceStop) - tonumber(obj.Setting.gapper.trolling)
-                    
+                    local newStopPrice =
+                        tonumber(obj.Setting.cohort.priceStop) -
+                            tonumber(obj.Setting.gapper.trolling)
 
                     obj.Setting.cohort.priceStop = newStopPrice
                     obj.Setting.STOPPRICE2 = newStopPrice
-
 
                     obj.Log:save('Delete stop ' .. tonumber(price))
                     obj.Setting.cohorten.phase = 4
                     obj.transaction:deleteStop(obj.Setting.cohort.order_num)
 
                 else
-                   
-               --     obj.Log:save('nest stop B ' .. price - tonumber(stopPrice) )
+
+                    --     obj.Log:save('nest stop B ' .. price - tonumber(stopPrice) )
 
                 end
                 -- продажа
@@ -167,23 +166,22 @@ function Logic:new(setting, Log)
                 stopPrice = tonumber(obj.Setting.cohort.priceStop) +
                                 tonumber(obj.Setting.gapper.trolling_next_price);
 
-             
-                                
                 --  obj.Log:save(' stopPrice ' ..  stopPrice)
                 --   obj.Log:save('price  ' ..  price )
                 if tonumber(price) > tonumber(stopPrice) then
                     -- переносим стоп
-                    local newStopPrice = tonumber(obj.Setting.cohort.priceStop) + tonumber(obj.Setting.gapper.trolling)
-                    
+                    local newStopPrice =
+                        tonumber(obj.Setting.cohort.priceStop) +
+                            tonumber(obj.Setting.gapper.trolling)
 
                     obj.Setting.cohort.priceStop = newStopPrice
                     obj.Setting.STOPPRICE2 = newStopPrice
                     obj.Log:save('Delete stop ' .. tonumber(price))
                     obj.Setting.cohorten.phase = 4
-                    obj.transaction:deleteStop(obj.Setting.cohort.order_num); 
+                    obj.transaction:deleteStop(obj.Setting.cohort.order_num);
                 else
-                   
-                 --   obj.Log:save('nest stop S ' .. tonumber(stopPrice) - tonumber(price))
+
+                    --   obj.Log:save('nest stop S ' .. tonumber(stopPrice) - tonumber(price))
 
                 end
                 -- продажа
@@ -409,16 +407,16 @@ function Logic:new(setting, Log)
     -- первоначальная логика которая решает как сработает гэп
     function logicGap()
 
-       -- obj.calculateCandleForCohort:calculate();
+        -- obj.calculateCandleForCohort:calculate();
 
         -- получаем направление для торговли в GAP
 
-       -- obj.math:searchStart()
+        obj.mathCohort:searchStart()
 
-       -- getDirection();
-      --  openPosition()
-      --  obj.Setting.cohorten.phase = 1
-      --  nextEmulation()
+        -- getDirection();
+        --  openPosition()
+        --  obj.Setting.cohorten.phase = 1
+        --  nextEmulation()
 
     end
 
@@ -428,7 +426,7 @@ function Logic:new(setting, Log)
                                                   obj.Setting.CLASS_CODE,
                                                   obj.Setting.SEC_CODE,
                                                   "SEC_PRICE_STEP").param_value)
-      --  obj.Log:save("Current step price : " .. obj.Setting.SEC_PRICE_STEP)
+        --  obj.Log:save("Current step price : " .. obj.Setting.SEC_PRICE_STEP)
         if GET_GRAFFIC then
         else
             obj.Setting.Run = false;
@@ -436,25 +434,23 @@ function Logic:new(setting, Log)
     end
 
     function obj:conditionTimeTrading()
- 
+
         if (obj.Setting.datetime == 0) then return; end
 
-        
-        if  obj.Setting.current_price ~= 0 and obj.Setting.cohorten.phase == 0 then
-    
-                -- если время подошло, можно смотреть логику
-                logicGap();
-                --    obj.Setting.cohorten.phase = 1;
-        end
-        
+        if obj.Setting.current_price ~= 0 and obj.Setting.cohorten.phase == 0 then
 
-        if obj.Setting.cohorten.phase == 2   then
+            -- если время подошло, можно смотреть логику
+            logicGap();
+            --    obj.Setting.cohorten.phase = 1;
+        end
+
+        if obj.Setting.cohorten.phase == 2 then
             -- stop traiding
             obj.Log:save("-- setting.cohorten.phase == 2")
-     
+
         end
 
-        if obj.Setting.cohorten.phase == 1   then
+        if obj.Setting.cohorten.phase == 1 then
             --  obj.Log:save("-- setting.cohorten.phase == 1")
             -- look at closing a position
             -- closed positions 
@@ -466,7 +462,7 @@ function Logic:new(setting, Log)
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
-    --    obj.calculateCandleForCohort:destructor()
+        --    obj.calculateCandleForCohort:destructor()
         -- очистка графика от линий 
         -- obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);
     end
@@ -475,7 +471,7 @@ function Logic:new(setting, Log)
     -- стоп заявка установлена 
     function obj:EngineStopOrder(trade)
 
-      --  obj.Log:save('EngineStopOrder start')
+        --  obj.Log:save('EngineStopOrder start')
 
         if bit.band(trade.flags, 0) == 0 then
             obj.Log:save("bit.band(trade.flags, 0) == 0 then" .. trade.order_num)
@@ -485,22 +481,19 @@ function Logic:new(setting, Log)
             obj.Log:save("bit.band(trade.flags, 0) ~= 0 then" .. trade.order_num)
         end
 
-
-        if bit.band(trade.flags, 0) == 0 and  obj.Setting.cohorten.phase == 4 then
+        if bit.band(trade.flags, 0) == 0 and obj.Setting.cohorten.phase == 4 then
             -- устанавливаем новый стоп
             obj.Log:save("bit.band(trade.flags, 0) == 0 then" .. trade.order_num)
 
-                obj.Setting.cohort.order_num_stop = trade.order_num
-                obj.Log:save("setNewStop() setNewStop() setNewStop()" .. trade.order_num)
-                obj:setNewStop()
+            obj.Setting.cohort.order_num_stop = trade.order_num
+            obj.Log:save("setNewStop() setNewStop() setNewStop()" ..
+                             trade.order_num)
+            obj:setNewStop()
             --	Заявка активна, иначе не активна
         else
             --	Заявка активна, иначе не активна
             obj.Log:save("bit.band(trade.flags, 0) ~= 0 then" .. trade.order_num)
         end
-
-
-
 
         if bit.band(trade.flags, 2) == 0 then
 
@@ -510,7 +503,8 @@ function Logic:new(setting, Log)
             obj.Setting.cohort.order_num_stop = trade.order_num
 
             obj.Log:save('trade.order_num = ' .. trade.order_num)
-            obj.Log:save('obj.Setting.cohorten.phase = ' .. obj.Setting.cohorten.phase)
+            obj.Log:save('obj.Setting.cohorten.phase = ' ..
+                             obj.Setting.cohorten.phase)
 
             --   market.startContract(trade);
             --   marketcohort.executedContract(trade);
@@ -518,7 +512,8 @@ function Logic:new(setting, Log)
                 obj.Setting.cohort.order_num_stop = trade.order_num
                 obj.Setting.cohorten.phase = 3
                 obj.Log:save("-- set stop.. " .. trade.order_num)
-                obj.Log:save("obj.Setting.cohorten.phase " .. obj.Setting.cohorten.phase,
+                obj.Log:save("obj.Setting.cohorten.phase " ..
+                                 obj.Setting.cohorten.phase,
                              'obj:EngineStopOrder')
             end
 
@@ -562,9 +557,6 @@ function Logic:new(setting, Log)
             obj.Setting.cohort.order_num = trade.order_num
         end
 
-
-        
-
         if bit.band(trade.flags, 1) == 0 then
 
             -- или исполнение или снятие заявки 
@@ -591,7 +583,8 @@ function Logic:new(setting, Log)
         if bit.band(trade.flags, 5) == 1 and bit.band(trade.flags, 1) == 0 then
 
             obj.Log:save("DDDDDDDDDDDD " .. trade.order_num)
-            obj.Log:save("obj.Setting.cohorten.phase " .. obj.Setting.cohorten.phase)
+            obj.Log:save("obj.Setting.cohorten.phase " ..
+                             obj.Setting.cohorten.phase)
         else
 
             obj.Log:save("000000000000 " .. obj.Setting.cohorten.phase)
@@ -608,8 +601,8 @@ function Logic:new(setting, Log)
 
         if bit.band(trade.flags, 2) == 0 then
 
-            obj.Log:save("obj.Setting.cohorten.phase " .. obj.Setting.cohorten.phase,
-                         'obj:EngineTransReply')
+            obj.Log:save("obj.Setting.cohorten.phase " ..
+                             obj.Setting.cohorten.phase, 'obj:EngineTransReply')
             --   market.startContract(trade);
             --   marketcohort.executedContract(trade);
             if obj.Setting.cohort.order_num_stop == 0 then
