@@ -223,7 +223,7 @@ function LineBuyHigh:new(setting, Log)
         --  obj.Setting.fractals_point_collection[#obj.Setting.fractals_point_collection+1] = f
  
         if #obj.Setting.fractals_point_collection > 0 then
-            getFractal()
+     --       getFractal()
         end
         maxFractal = 0
         
