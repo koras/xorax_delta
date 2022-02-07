@@ -58,8 +58,7 @@ function LineBuyHigh:new(setting, Log)
 
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
-        -- очистка графика от линий
-        obj.Log:save('============ LineBuyHigh:destructor' )
+        -- очистка графика от линий 
 
         -- чистим все графики от мусора при остановке робота
         obj.LabelGraff:delete(obj.Setting.tag, obj.labelIdHigh);

@@ -19,16 +19,11 @@ function Candle:new(setting, Log)
     obj.minDefault = 1000000000;
     obj.max = 0;
     obj.test = 'test';
-    obj.lenInit = 120
+    obj.lenInit = setting.lenInit
     obj.Initshift = 0
 
     obj.lineBuyHigh = lineBuyHighClass:new(obj.Setting, obj.Log)
-
-    -- local script_path = getScriptPath()
-    -- local loger = dofile(script_path .. "\\engine\\loger.lua");
-    -- local lineBuyHigh = dofile(getScriptPath() .. "\\modules\\lineBuyHigh.lua")
-
-    -- local candleGraff = dofile(script_path .. "\\interface\\candleGraff.lua");
+ 
 
     local function calculateVolume(volume) end
 
@@ -74,7 +69,7 @@ function Candle:new(setting, Log)
 
         local localCandle = barCandle;
         localCandle.numberCandle = numberCandle;
-
+        
         if #obj.Setting.array_candle > 0 then
 
             for candle = 1, #obj.Setting.array_candle do
@@ -170,6 +165,12 @@ function Candle:new(setting, Log)
                 obj.Setting.line_candle_min_old = obj.Setting.candle_current_low;
                 obj.lineBuyHigh.updateLineCandleMinMax()
             end
+
+            
+        --    obj.Log:save('obj.Setting.candle_current_low '.. obj.Setting.candle_current_low )
+        ----    obj.Log:save('obj.Setting.candle_current_low '.. obj.Setting.candle_current_high )
+       --     obj.Log:save('#obj.Setting.array_candle '.. #obj.Setting.array_candle )
+
         else
 
             if obj.Setting.candle_current_high < localCandle.high then
@@ -183,7 +184,8 @@ function Candle:new(setting, Log)
             end
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] =
                 localCandle;
-        end 
+ 
+        end  
         --  candleGraff.addSignal(obj.Setting.array_candle); 
     end
 
@@ -217,16 +219,16 @@ function Candle:new(setting, Log)
                 --  Run = false;
                 return;
             end
-
+         
             if candlesArray[j - 1].datetime.hour ~= nil then
 
-                if candlesArray[j - 1].datetime.hour >= 10 then
+                if candlesArray[j - 1].datetime.hour >= 7 then
                     local dt = candlesArray[j - 1].datetime;
                     local bar = candlesArray[j - 1];
                     bar.numberCandle = first_candle + j - 1;
                     obj.Setting.array_candle[#obj.Setting.array_candle + 1] =bar;
 
-                   -- obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
+                  --  obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
          
                     i = i - 1
                 end
@@ -253,11 +255,10 @@ function Candle:new(setting, Log)
         end
 
         setArrayCandles(bar, obj.Setting.number_of_candle);
-
+      
         -- обновляем текущую стоимость
         obj.Setting.current_price = bar.close;
-
-        -- obj.Log:save('setting.current_price ======= ' .. obj.Setting.current_price);
+ 
       
         --obj.Setting.datetime = bar.datetime;
 
@@ -323,6 +324,8 @@ function Candle:new(setting, Log)
             end
             t = len + 1
         end
+        
+                 
     end
 
 

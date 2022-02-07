@@ -28,6 +28,10 @@ function EngineSetting:new()
     
     setting.candle_test = 0
 
+    -- count condles inside graffic
+    setting.lenInit = 500
+
+
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки
     setting.candle_current_low = 0; -- верхняя граница свечи; для промежутка покупки
 
@@ -69,6 +73,7 @@ function EngineSetting:new()
     setting.gap.order_num = 0;
     -- тейк профит
     setting.gap.priceProfit = 0
+  
     -- следующий шаг для передвижения стопа
     setting.gap.nextPriceStop = 0
     -- где должна быть цена чтобы мы передвинули стоп
@@ -79,7 +84,17 @@ function EngineSetting:new()
     -- This morning a gap
     setting.gap.timeWork.start = {700, 710}
  
+    setting.cohort2 = {}
 
+
+
+    setting.percentSolve = 25
+ 
+    --  0 - gap start 
+    -- 1 - buy OR sell contract 
+    -- 2 - closed position 
+    setting.cohort2.phase = 1212
+  
     setting.labels = {}
     setting.STOPPRICE = 0
     setting.SPREAD = 0
@@ -111,6 +126,43 @@ function EngineSetting:new()
 
     -- объект в котором храниться вся информация об открытой позиции
     setting.gap.data = {};
+
+
+    setting.cohorten = {}
+    setting.cohorten.label = {}
+
+    -- to first
+    setting.cohorten.phase = 100
+    -- stop
+    setting.cohorten.label.redCircle_stop = 0
+    -- take
+    setting.cohorten.label.redCircle_take = 0
+    -- next stop
+    setting.cohorten.label.circleBlue_next_stop = 0
+    -- next price point
+    setting.cohorten.label.circleYellow_next_price = 0
+    -- next price point
+    setting.cohorten.label.take_and_profit_trans_id = 0
+
+    setting.cohorten.stop = {}
+
+    -- transaction a request. When sent a stop request
+    setting.cohorten.stop.trans_id = 0
+    -- transaction get a request. When get number before sent stop a request
+    setting.cohorten.stop.order_num = 0
+
+    -- stop loss trans id
+    setting.cohorten.stop_loss_trans_id = 0
+    -- stop loss number
+    setting.cohorten.stop_loss_order_num = 0
+
+    -- объект в котором храниться вся информация об открытой позиции
+    setting.cohorten.data = {};
+
+
+
+
+
 
     setting.arrGraff = {};
 
@@ -265,6 +317,15 @@ function EngineSetting:new()
     setting.fractals_collection = {};
     setting.fractal_up = 0;
     setting.fractal_down = 0;
+
+
+    
+    setting.fractals_point_collection = {};
+    -- calculate trend
+    setting.trendMin = {};
+    setting.trendMax = {};
+ 
+
     -- на какой свече была последняя операция по входу в рынок
     setting.candles_operation_last = 0;
     setting.range_down_price_candles = 0;
@@ -361,6 +422,43 @@ function EngineSetting:new()
             return false
         end
     end
+
+
+    function EngineSetting:getTime(datetime)
+        
+        local hour = datetime.hour
+
+        if datetime.hour < 10 then hour = '0' .. datetime.hour end
+
+        local minute = datetime.min;
+
+        if datetime.min < 10 then  
+            minute = '0' .. tostring(datetime.min )
+        else
+            minute = tostring(datetime.min)
+        end
+ 
+        return hour .. ':' .. minute;
+    end
+
+
+    function EngineSetting:getTimeFull(datetime)
+        
+        local hour = datetime.hour
+
+        if datetime.hour < 10 then hour = '0' .. datetime.hour end
+
+        local minute = datetime.min;
+
+        if datetime.min < 10 then 
+             minute = '0' .. datetime.min
+            end
+ 
+        return hour .. ':' .. minute;
+    end
+
+
+
 
     setmetatable(setting, self)
     self.__index = self
