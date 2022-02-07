@@ -18,58 +18,67 @@ function drawLabel:new(setting, Log)
     obj.hour = ''
 
     obj.path = script_path .. '\\images\\'
-
-    obj.line_candle_min_max = obj.path .. 'line_candle_height.jpg'
-    obj.purchase_height = obj.path .. 'purchase_height.jpg'
-    obj.purchase_low = obj.path .. 'purchase_low.jpg'
-
-    obj.circleRed = obj.path .. 'circle_red.bmp'
-    obj.circleGreen = obj.path .. 'circle_green.bmp'
-    obj.circleYellow = obj.path .. 'circle_yellow.bmp'
-    obj.circleBlue = obj.path .. 'circle_blue.bmp'
-    obj.PicPathSell = obj.path .. 'myDeals_sell'
-    obj.PicPathBuy = obj.path .. 'myDeals_buy'
-    obj.PicPathSTOP = obj.path .. 'line_stop.jpeg'
-    obj.fractal_up = obj.path .. 'f_ups.bmp'
+ 
 
     local function getPicture(Operation)
-
+    --    obj.Log:save("Operation".. Operation   )
         if Operation == 'B' then
-            obj.IMAGE_PATH = obj.PicPathBuy .. '1.bmp';
+            obj.IMAGE_PATH = obj.path .. 'myDeals_buy1.bmp';
         end
 
         if Operation == 'S' then
-            obj.IMAGE_PATH = obj.PicPathSell .. '1.bmp';
+         --   obj.IMAGE_PATH = obj.path .. 'myDeals_sell1.bmp';
         end
 
-        if Operation == 'redCircle' then obj.IMAGE_PATH = obj.circleRed; end
+
+        
+        if Operation == 'sell_stop' then
+            obj.IMAGE_PATH = obj.path .. 'sell_stop.bmp';
+        end
+        if Operation == 'buy_stop' then
+            obj.IMAGE_PATH = obj.path .. 'buy_stop.bmp';
+        end
+
+        if Operation == 'sell_take' then
+            obj.IMAGE_PATH = obj.path .. 'sell_take.bmp';
+        end
+        if Operation == 'buy_take' then
+            obj.IMAGE_PATH = obj.path .. 'buy_take.bmp';
+        end
+
+
+
+
+        if Operation == 'redCircle' then
+            obj.IMAGE_PATH = obj.path .. 'circle_red.bmp'
+        end
         if Operation == 'greenCircle' then
-            obj.IMAGE_PATH = obj.circleGreen
+            obj.IMAGE_PATH = obj.path .. 'circle_green.bmp'
         end
         if Operation == 'circleYellow' then
-            obj.IMAGE_PATH = obj.circleYellow
+            obj.IMAGE_PATH = obj.path .. 'circle_yellow.bmp'
         end
         if Operation == 'circleBlue' then
-            obj.IMAGE_PATH = obj.circleBlue;
+            obj.IMAGE_PATH = obj.path .. 'circle_blue.bmp'
         end
 
-        if Operation == 'stop' then obj.IMAGE_PATH = obj.PicPathSTOP; end
+        if Operation == 'stop' then
+            obj.IMAGE_PATH = obj.path .. 'line_stop.jpeg'
+        end
         if Operation == 'purchase_height' then
-            obj.IMAGE_PATH = obj.purchase_height
+            obj.IMAGE_PATH = obj.path .. 'purchase_height.jpg'
         end
 
         if Operation == 'line_candle_min_max' then
-            obj.IMAGE_PATH = obj.line_candle_min_max
+            obj.IMAGE_PATH = obj.path .. 'line_candle_height.jpg'
         end
 
         if Operation == 'purchase_low' then
-            obj.IMAGE_PATH = obj.purchase_low
+            obj.IMAGE_PATH = obj.path .. 'purchase_low.jpg'
         end
         if Operation == 'fractalUp' then
-            obj.IMAGE_PATH =  obj.fractal_up
+            obj.IMAGE_PATH = obj.path .. 'f_ups.bmp'
         end
-         
-        
 
         obj.label_params['IMAGE_PATH'] = obj.IMAGE_PATH;
 
