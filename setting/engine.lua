@@ -96,6 +96,8 @@ function EngineSetting:new()
     setting.cohort2.phase = 1212
   
     setting.labels = {}
+    setting.labelsPosition = {}
+     
     setting.STOPPRICE = 0
     setting.SPREAD = 0
     setting.STOPPRICE2 = 0 --stopprice2, -- Цена Стоп-Лосса
@@ -274,20 +276,13 @@ function EngineSetting:new()
     -- количество контрактов добавленных трейдером
     setting.contract_add = 0;
 
-    -- какая последняя покупка была при падении
-    setting.SPRED_LONG_TREND_DOWN_LAST_PRICE = 0; -- 
-    -- когда следующая покупка при падении
-    setting.SPRED_LONG_TREND_DOWN_NEXT_BUY = 0;
+    
 
     setting.each_to_buy_step = 0; -- сколько подряд раз уже купили
 
     setting.each_to_buy_status_block = false; -- сколько подряд раз уже купили
 
-    -- Последняя цена сделки по продаже констракта
-    setting.SPRED_LONG_LOST_SELL = 0;
-
-    -- Последняя цена сделки по продаже констракта
-    setting.SPRED_LONG_LOST_SELL = 0.00;
+ 
 
     -- условия; Выше какого диапазона не покупать(на хаях)
     setting.not_buy_high = 0
@@ -365,11 +360,11 @@ function EngineSetting:new()
     function EngineSetting:CheckBit(flags, _bit)
         if type(flags) ~= "number" then
             loger.save(
-                "������!!! Checkbit: 1-� �������� �� �����!")
+                "!!! Checkbit: 1!")
         end
         if type(_bit) ~= "number" then
             loger.save(
-                "������!!! Checkbit: 2-� �������� �� �����!")
+                "!!! Checkbit: 2!")
         end
 
         if _bit == 0 then

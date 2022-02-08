@@ -201,10 +201,7 @@ function Logic:new(setting, Log)
             data.direct = obj.Setting.cohort.directionTake
             data.datetime = obj.Setting.datetime;
             data.trans_id = getRand();
-            --   data.relation_trans_id = trade.trans_id
             -- сколько контрактов исполнилось
-            --  data.use_contract = trade.qty
-            -- type order
             data.type = "NEW_ORDER";
             data.type = obj.Setting.gapper.typeTypeTake
             data.work = true
@@ -269,8 +266,7 @@ function Logic:new(setting, Log)
             obj.Setting.cohort.dataTake = data
             obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
 
-            obj.transaction:send(data.direct, data.type, data.price,
-                                 data.trans_id, trade.qty, data.phase);
+            obj.transaction:send(data.direct, data.type, data.price, data.trans_id, trade.qty, data.phase);
 
             nextEmulation();
         end
@@ -301,8 +297,7 @@ function Logic:new(setting, Log)
 
                     if obj.Setting.cohorten.phase == 1 then
                         -- сработать может только 1 раз
-                        obj:secondOperation(trade,
-                                            obj.Setting.sellTable[contract])
+                        obj:secondOperation(trade,  obj.Setting.sellTable[contract])
 
                     end
 
@@ -333,7 +328,7 @@ function Logic:new(setting, Log)
                 obj:executedContract(trade)
             elseif obj.Setting.cohorten.phase == 2 then
                 -- step 2
-
+                obj.Setting.cohorten.phase = 3;
                 obj.Log:save('obj:nextEmulation 2')
 
             elseif obj.Setting.cohorten.phase == 3 then
