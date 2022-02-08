@@ -27,7 +27,7 @@ function drawLabel:new(setting, Log)
         end
 
         if Operation == 'S' then
-         --   obj.IMAGE_PATH = obj.path .. 'myDeals_sell1.bmp';
+            obj.IMAGE_PATH = obj.path .. 'myDeals_sell1.bmp';
         end
 
 
@@ -143,6 +143,7 @@ function drawLabel:new(setting, Log)
 
         -- message(obj.label_params['DATE']..' - '..obj.label_params['TIME'] )
         local id = AddLabel(obj.Setting.tag, obj.label_params)
+
         obj.Setting.labels[#obj.Setting.labels + 1] = id
         return id
 
@@ -150,6 +151,11 @@ function drawLabel:new(setting, Log)
 
     -- удаляем с графика определённыую метку(линию или тэг)
     function obj:delete(tag, id) DelLabel(tag, id) end
+
+    function obj:deletePosition(tag, id) 
+  
+        DelLabel(tag, id)
+    end
 
     function obj:init(tag) obj.Log:save(tag .. ' tag ') end
 

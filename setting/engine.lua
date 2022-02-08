@@ -96,6 +96,8 @@ function EngineSetting:new()
     setting.cohort2.phase = 1212
   
     setting.labels = {}
+    setting.labelsPosition = {}
+     
     setting.STOPPRICE = 0
     setting.SPREAD = 0
     setting.STOPPRICE2 = 0 --stopprice2, -- Цена Стоп-Лосса

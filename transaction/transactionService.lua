@@ -131,8 +131,8 @@ function transactionService:new(setting, Log)
             if  obj.Transaction.ACTION == 'NEW_STOP_ORDER' then 
           
                 if  obj.Transaction.OPERATION == "B" then 
-                obj.LabelGraff:create('sell_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, text)
-                obj.LabelGraff:create('sell_take', obj.Transaction.STOPPRICE , datetime, obj.Transaction.QUANTITY, text)
+                    obj.LabelGraff:create('sell_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, text)
+                    obj.LabelGraff:create('sell_take', obj.Transaction.STOPPRICE , datetime, obj.Transaction.QUANTITY, text)
                 else 
                     obj.LabelGraff:create('buy_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, text)
                     obj.LabelGraff:create('buy_take', obj.Transaction.STOPPRICE , datetime, obj.Transaction.QUANTITY, text)
