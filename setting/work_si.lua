@@ -161,14 +161,8 @@ function Setting:new()
     -- +1 покупка, блокировка покупок
     setting.each_to_buy_to_block = 2; -- потом только решение за человеком или пока не будут проданы все позиции
 
-
-    -- рынок падает, увеличиваем растояние между покупками
-    setting.SPRED_LONG_TREND_DOWN = 30;
-    setting.SPRED_LONG_TREND_DOWN_SPRED = 40; -- на сколько увеличиваем растояние
-
-    -- рынок падает, увеличиваем растояние между покупками(минимальное число)
-    setting.SPRED_LONG_TREND_DOWN_minimal = 10;
-
+ 
+ 
 
     -- минимильное измерение в инструменте 
     setting.instrument_measurement = 1;

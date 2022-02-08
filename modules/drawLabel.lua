@@ -30,8 +30,6 @@ function drawLabel:new(setting, Log)
             obj.IMAGE_PATH = obj.path .. 'myDeals_sell1.bmp';
         end
 
-
-        
         if Operation == 'sell_stop' then
             obj.IMAGE_PATH = obj.path .. 'sell_stop.bmp';
         end
@@ -45,9 +43,6 @@ function drawLabel:new(setting, Log)
         if Operation == 'buy_take' then
             obj.IMAGE_PATH = obj.path .. 'buy_take.bmp';
         end
-
-
-
 
         if Operation == 'redCircle' then
             obj.IMAGE_PATH = obj.path .. 'circle_red.bmp'
