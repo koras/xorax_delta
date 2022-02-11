@@ -89,17 +89,17 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 10
-    setting.gapper.takeProfit = 100 
-    setting.gapper.stopLimit = 30
+    setting.gapper.well_price = 10;
+    setting.gapper.takeProfit = 300;
+    setting.gapper.stopLimit = 30;
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
-    setting.gapper.trolling_next_price = 100 
+    setting.gapper.trolling_next_price = 100
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 75 
+    setting.gapper.trolling = 75
     -- Величина защитного спрэда.
-    setting.gapper.SPREAD = 30
+    setting.gapper.SPREAD = 30;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.gapper.typeType = 'stop';
     setting.gapper.typeTypeTake = '';
@@ -111,15 +111,15 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.cohort.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.cohort.well_price = 10
-    setting.cohort.takeProfit = 300
-    setting.cohort.stopLimit = 30
+    setting.cohort.well_price = 10;
+    setting.cohort.takeProfit = 300;
+    setting.cohort.stopLimit = 30;
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
-    setting.cohort.trolling_next_price = 30 --  100
+    setting.cohort.trolling_next_price = 100
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.cohort.trolling = 25 -- 75
+    setting.cohort.trolling = 75
     -- Величина защитного спрэда.
     setting.cohort.SPREAD = 30;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
@@ -161,14 +161,8 @@ function Setting:new()
     -- +1 покупка, блокировка покупок
     setting.each_to_buy_to_block = 2; -- потом только решение за человеком или пока не будут проданы все позиции
 
-
-    -- рынок падает, увеличиваем растояние между покупками
-    setting.SPRED_LONG_TREND_DOWN = 30;
-    setting.SPRED_LONG_TREND_DOWN_SPRED = 40; -- на сколько увеличиваем растояние
-
-    -- рынок падает, увеличиваем растояние между покупками(минимальное число)
-    setting.SPRED_LONG_TREND_DOWN_minimal = 10;
-
+ 
+ 
 
     -- минимильное измерение в инструменте 
     setting.instrument_measurement = 1;

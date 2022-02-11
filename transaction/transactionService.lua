@@ -109,25 +109,21 @@ function transactionService:new(setting, Log)
         obj.Transaction.QUANTITY = contractsCount
     end
 
-    -- 
-    local function execute(transId)
-        if obj.Setting.emulation then
+
+    -- execute order
+    local function executeEmulation(transId)
             -- mode edulation
             --message('transactionService:send')
             -- данные собраны по ходу формирования транкзакции
             -- ставим метку
             local price = obj.Transaction.PRICE 
             local datetime = obj.Setting.datetime
-         
-             
             local text ='create new position for label '
 
             if tostring(obj.Transaction.ACTION) == 'NEW_ORDER' then
               obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, obj.Transaction.QUANTITY, text)
             end 
-            -- take
-           --  obj.LabelGraff:create('take', price, datetime, obj.Transaction.QUANTITY, text)
-            --stop
+            
             if  obj.Transaction.ACTION == 'NEW_STOP_ORDER' then 
           
                 if  obj.Transaction.OPERATION == "B" then 
@@ -138,7 +134,19 @@ function transactionService:new(setting, Log)
                     obj.LabelGraff:create('buy_take', obj.Transaction.STOPPRICE , datetime, obj.Transaction.QUANTITY, text)
                 end
          --   obj.Setting.labelsTransaction[#obj.Setting.labelsTransaction + 1] = labelId;
-            end
+            end 
+
+            
+            if  obj.Transaction.ACTION == "KILL_STOP_ORDER" then 
+                 obj.LabelGraff:create('delete_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, text)
+            end 
+             
+    end
+
+    -- execute order
+    local function execute(transId)
+        if obj.Setting.emulation then
+            executeEmulation(transId)
            -- set(Operation, Price, datetime, count, textInfo)
         else
             -- http://luaq.ru/sendTransaction.html
