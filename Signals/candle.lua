@@ -241,14 +241,10 @@ function Candle:new(setting, Log)
 
     -- логика обновления данных из графика
     local function setBarCandle(bar, collbackFunc)
-
         bar.numberCandle = obj.Setting.number_of_candle;
-
         if obj.Setting.old_number_of_candle ~= obj.Setting.number_of_candle then
-
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] = bar;
             obj.Setting.old_number_of_candle = obj.Setting.number_of_candle;
-
         else
             -- обновляем бар в таблице
             obj.Setting.array_candle[#obj.Setting.array_candle] = bar;

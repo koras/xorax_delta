@@ -123,7 +123,7 @@ function Logic:new(setting, Log)
     end
 
     function obj:tick(candle)
-
+        obj:nextEmulation();
         local price = getPrice(candle.close)
         --    obj.Log:save('price=  ' .. price, 'obj:tick')
         local stopPrice = 0
@@ -216,7 +216,7 @@ function Logic:new(setting, Log)
             obj.transaction:send(data.direct, data.type, data.price,
                                  data.trans_id, data.contract, data.phase);
 
-            nextEmulation();
+             obj:nextEmulation();
             obj.Setting.cohorten.phase = 3
             obj.Log:save('obj:setNewStop() end  ' .. obj.Setting.cohorten.phase)
         end
@@ -267,8 +267,7 @@ function Logic:new(setting, Log)
             obj.Setting.sellTable[(#obj.Setting.sellTable + 1)] = data;
 
             obj.transaction:send(data.direct, data.type, data.price, data.trans_id, trade.qty, data.phase);
-
-            nextEmulation();
+            obj:nextEmulation() 
         end
         obj.Log:save('obj.Setting.cohorten.phase ' .. obj.Setting.cohorten.phase)
     end
@@ -312,8 +311,22 @@ function Logic:new(setting, Log)
         end
 
     end
+    function obj:checkStop()
 
-    function nextEmulation()
+      --  obj.Log:save('obj.Setting.cohort.direct' .. obj.Setting.cohort.direct)
+   
+        if (obj.Setting.cohort.direct == 'B') and  obj.Transaction.STOPPRICE2 < obj.Setting.current_price then
+            obj.Log:save('(obj.Setting.cohort.direct == B) and  obj.Transaction.STOPPRICE2 > obj.Setting.current_price'.. obj.Transaction.STOPPRICE2 .. " = ".. obj.Setting.current_price)
+        end
+
+        if (obj.Setting.cohort.direct == 'S')  and  obj.Transaction.STOPPRICE2 > obj.Setting.current_price then
+            obj.Log:save('(obj.Setting.cohort.direct == S)  and  obj.Transaction.STOPPRICE2 < obj.Setting.current_price'.. obj.Transaction.STOPPRICE2 .. " = ".. obj.Setting.current_price)
+        end
+     
+
+    end 
+
+    function obj:nextEmulation()
         if obj.Setting.emulation then
             if obj.Setting.cohorten.phase == 1 then
                 obj.Log:save('obj:nextEmulation 1')
@@ -333,6 +346,12 @@ function Logic:new(setting, Log)
 
             elseif obj.Setting.cohorten.phase == 3 then
                 -- step 3
+
+                obj.Log:save('obj.Setting.cohort.direct')
+   
+                 -- check stop for 
+                 obj:checkStop()
+                
             else
                 print "The program has been terminated\nThank you!"
             end
@@ -416,7 +435,8 @@ function Logic:new(setting, Log)
               getDirection(fractal);
               openPosition()
                obj.Setting.cohorten.phase = 1
-              nextEmulation()
+               obj:nextEmulation()
+              --nextEmulation()
         end
 
     end

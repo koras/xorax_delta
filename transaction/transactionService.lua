@@ -138,7 +138,7 @@ function transactionService:new(setting, Log)
 
             
             if  obj.Transaction.ACTION == "KILL_STOP_ORDER" then 
-                 obj.LabelGraff:create('delete_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, text)
+                 obj.LabelGraff:create('delete_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, 'delete')
             end 
              
     end

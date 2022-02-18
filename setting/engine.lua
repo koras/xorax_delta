@@ -88,12 +88,8 @@ function EngineSetting:new()
 
 
 
-    setting.percentSolve = 25
+    setting.percentSolve = 85
  
-    --  0 - gap start 
-    -- 1 - buy OR sell contract 
-    -- 2 - closed position 
-    setting.cohort2.phase = 1212
   
     setting.labels = {}
     setting.labelsPosition = {}

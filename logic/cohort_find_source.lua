@@ -95,7 +95,8 @@ function MLogic:new(setting, Log)
                     b.y = trend.price -- price
 
                    local percent =  getAccos(a, b)
-    
+                    
+
                    if percent < obj.Setting.percentSolve then 
                         data = trend;
                         data.result = true
