@@ -1,5 +1,5 @@
  
-
+-- test
 script_path = getScriptPath()
 
 dofile(script_path .. "\\setting\\path.lua");
