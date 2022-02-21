@@ -129,6 +129,21 @@ function EngineSetting:new()
     setting.cohorten = {}
     setting.cohorten.label = {}
 
+    -- not found direction
+    setting.cohorten.direct = "N"
+    setting.cohorten.directionTake= "N"
+
+
+    -- Take Take Take Take Take 
+    setting.cohorten.priceTake = 0
+    -- stop
+    setting.cohorten.priceTake = 0
+
+    setting.cohorten.PRICE= 0
+
+
+
+
     -- to first
     setting.cohorten.phase = 100
     -- stop

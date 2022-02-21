@@ -97,7 +97,7 @@ function Setting:new()
     -- движение цены от текущей позиции
     setting.gapper.trolling_next_price = 50
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 75 
+    setting.gapper.trolling = 35 
     -- Величина защитного спрэда.
     setting.gapper.SPREAD = 30
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
@@ -106,8 +106,7 @@ function Setting:new()
 
 
     
-    setting.cohort = {};
-    setting.cohort.price = 4444
+    setting.cohort = {}; 
     -- сколько использовать контрактов для гэпа
     setting.cohort.use_contract = 1;
     -- разрыв цены от открытия позиции

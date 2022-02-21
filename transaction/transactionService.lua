@@ -63,14 +63,14 @@ function transactionService:new(setting, Log)
         
             if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
           
-                obj.Log:save(" ==== 2 ")
+              --  obj.Log:save(" ==== 2 ")
                 obj.Transaction.SPREAD =  tostring(math.ceil(obj.Setting.SPREAD))
                 obj.Transaction.STOPPRICE =  tostring(math.ceil( obj.Setting.STOPPRICE))  
                 obj.Transaction.STOPPRICE2 = tostring(math.ceil( obj.Setting.STOPPRICE2)) --stopprice2, -- Цена Стоп-Лосса
-                obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
-                obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
-                obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
-                obj.Log:save(" obj.Transaction.PRICE  " ..    obj.Transaction.PRICE)
+             --   obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
+             --   obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
+            --    obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
+            --    obj.Log:save(" obj.Transaction.PRICE  " ..    obj.Transaction.PRICE)
             end
 
         else 
@@ -82,10 +82,10 @@ function transactionService:new(setting, Log)
                 obj.Transaction.STOPPRICE =  tostring( obj.Setting.STOPPRICE) 
                 -- stopprice2, -- Цена Стоп-Лосса 
                 obj.Transaction.STOPPRICE2 = tostring( obj.Setting.STOPPRICE2) --stopprice2, -- Цена Стоп-Лосса
-                obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
-                obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
-                obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
-                obj.Log:save("obj.Transaction.STOPPRICE2 " ..obj.Transaction.STOPPRICE2)
+             --   obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
+             --   obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
+             --   obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
+              --  obj.Log:save("obj.Transaction.STOPPRICE2 " ..obj.Transaction.STOPPRICE2)
             end
 
         end;

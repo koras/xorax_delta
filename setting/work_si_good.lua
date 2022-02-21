@@ -106,8 +106,8 @@ function Setting:new()
 
 
     
-    setting.cohort = {};
-    setting.cohort.price = 4444
+    setting.cohort = {}
+    
     -- сколько использовать контрактов для гэпа
     setting.cohort.use_contract = 1;
     -- разрыв цены от открытия позиции
