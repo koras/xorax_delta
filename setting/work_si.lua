@@ -46,7 +46,7 @@ function Setting:new()
     setting.CLASS_CODE = "SPBFUT"
 
     -- код бумаги. Название бумаги разная от месяца к месяцу 
-    setting.SEC_CODE = "SiH2"
+    setting.SEC_CODE = "SiU2"
     
     -- пароль для чтения данных
     setting.password = "12345"
@@ -65,7 +65,7 @@ function Setting:new()
     setting.type_instrument = 3;
 
     -- минимальная прибыль
-    setting.profit_range = 100;
+    setting.profit_range = 500;
 
     -- минимальная прибыль при больших заявках при торговле веерной продажей
     setting.profit_range_array = 80;
@@ -83,15 +83,15 @@ function Setting:new()
 
     -- сколько использовать контрактов по умолчанию в режиме скальпинга
     setting.use_contract = 1;
-    obj.lenInit = 120
+
     
     setting.gapper = {};
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 10
-    setting.gapper.takeProfit = 50
-    setting.gapper.stopLimit = 30
+    setting.gapper.well_price = 100
+    setting.gapper.takeProfit = 1500
+    setting.gapper.stopLimit = 200
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
@@ -110,17 +110,18 @@ function Setting:new()
     -- сколько использовать контрактов для гэпа
     setting.cohort.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.cohort.well_price = 10
-    setting.cohort.takeProfit = 300
-    setting.cohort.stopLimit = 30
+    setting.cohort.well_price = 100
+    setting.cohort.takeProfit = 600
+    setting.cohort.stopLimit = 1
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
-    setting.cohort.trolling_next_price = 30 --  100
+    setting.cohort.trolling_next_price = 150 --  100
+
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.cohort.trolling = 25 -- 75
+    setting.cohort.trolling = 55 -- 75
     -- Величина защитного спрэда.
-    setting.cohort.SPREAD = 30;
+    setting.cohort.SPREAD = 50;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.cohort.typeType = 'stop';
     setting.cohort.typeTypeTake = '';
@@ -177,6 +178,9 @@ function Setting:new()
     setting.spred_default = 50;
     -- на сколько исзменять параметр в панели управления
     setting.spred_limit = 11;
+
+    -- Отсутп от края графика
+    setting.indentFromCandle = 20
 
     -- увеличение промежутка между стопами
     setting.spred_range = 50;

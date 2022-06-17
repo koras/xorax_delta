@@ -106,6 +106,16 @@ function MLogic:new(setting, Log)
                         obj.Setting.cohorten.phase = 0 
                         obj.Log:save(   "phase / "..   obj.Setting.cohorten.phase )
                         return data
+                   else
+
+                    
+                    if(percent < 30)  then
+                      
+                      -- max or min
+                        --  obj.Log:save(  trend.type ..  " "..   percent.."%" )
+
+                    end
+                    --.type
                     end
                 end
           --  end

@@ -46,7 +46,7 @@ function Setting:new()
     setting.CLASS_CODE = "SPBFUT"
 
     -- код бумаги. Название бумаги разная от месяца к месяцу 
-    setting.SEC_CODE = "SiH2"
+    setting.SEC_CODE = "SiM2"
     
     -- пароль для чтения данных
     setting.password = "12345"
@@ -97,7 +97,7 @@ function Setting:new()
     -- движение цены от текущей позиции
     setting.gapper.trolling_next_price = 100
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 75
+    setting.gapper.trolling = 50
     -- Величина защитного спрэда.
     setting.gapper.SPREAD = 30;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа

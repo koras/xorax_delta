@@ -118,12 +118,17 @@ function transactionService:new(setting, Log)
             -- ставим метку
             local price = obj.Transaction.PRICE 
             local datetime = obj.Setting.datetime
+          -- local datetime = os.date("!*t",os.time())
+           obj.Log:save('executeEmulation ' ..  datetime.hour..":"..datetime.min..":".. datetime.sec)
+          -- obj.Log:save('executeEmulation ' ..  datetime3.hour..":"..datetime3.min..":".. datetime3.sec)
             local text ='create new position for label '
 
             if tostring(obj.Transaction.ACTION) == 'NEW_ORDER' then
               obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, obj.Transaction.QUANTITY, text)
             end 
-            
+             
+
+
             if  obj.Transaction.ACTION == 'NEW_STOP_ORDER' then 
           
                 if  obj.Transaction.OPERATION == "B" then 
