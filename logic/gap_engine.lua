@@ -10,6 +10,7 @@ function Engine:new(setting, Log)
     local obj = {}
     obj.Log = Log
     obj.Setting = setting
+    obj.LogicClass = LogicClass
 
     function obj:EngineOnInit()
         -- логика  

@@ -1,6 +1,7 @@
 -- базовые функции, чтобы не переносить с одного файла в другой
 local CohortClass = dofile(script_path .. "\\logic\\cohort_logic.lua") 
 
+
 local Engine = {}
 
 function Engine:new(setting, Log)
@@ -12,7 +13,7 @@ function Engine:new(setting, Log)
 
     function obj:EngineOnInit()
         -- логика  
-
+ 
         obj.cohort = CohortClass:new(obj.Setting, obj.Log)
         obj.cohort:init()
         --  работа с графиком
@@ -124,8 +125,7 @@ function Engine:new(setting, Log)
     -- Функция вызывается терминалом QUIK при выставлении новой стоп-заявки или при изменении параметров существующей стоп-заявки (Таблица стоп-заявок).
     -- OnStopOrder(stop_order)
     function obj:EngineTransReply(trans_reply)
-        obj.Log:save('startEngine EngineTransReply ' .. trans_reply.trans_id ..
-                         '/' .. trans_reply.order_num);
+        obj.Log:save('startEngine EngineTransReply ' .. trans_reply.trans_id .. '/' .. trans_reply.order_num);
 
         obj.cohort:EngineTransReply(trans_reply)
 

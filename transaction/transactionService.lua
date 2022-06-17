@@ -63,14 +63,14 @@ function transactionService:new(setting, Log)
         
             if(obj.Transaction.ACTION == 'NEW_STOP_ORDER') then 
           
-                obj.Log:save(" ==== 2 ")
+              --  obj.Log:save(" ==== 2 ")
                 obj.Transaction.SPREAD =  tostring(math.ceil(obj.Setting.SPREAD))
                 obj.Transaction.STOPPRICE =  tostring(math.ceil( obj.Setting.STOPPRICE))  
                 obj.Transaction.STOPPRICE2 = tostring(math.ceil( obj.Setting.STOPPRICE2)) --stopprice2, -- Цена Стоп-Лосса
-                obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
-                obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
-                obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
-                obj.Log:save(" obj.Transaction.PRICE  " ..    obj.Transaction.PRICE)
+             --   obj.Log:save("obj.Transaction.SPREAD 1 " ..  obj.Transaction.SPREAD)
+             --   obj.Log:save("obj.Transaction.STOPPRICE  1 " ..  obj.Transaction.STOPPRICE )
+            --    obj.Log:save(" obj.Transaction.STOPPRICE2  1 " ..   obj.Transaction.STOPPRICE2 )
+            --    obj.Log:save(" obj.Transaction.PRICE  " ..    obj.Transaction.PRICE)
             end
 
         else 
@@ -82,10 +82,10 @@ function transactionService:new(setting, Log)
                 obj.Transaction.STOPPRICE =  tostring( obj.Setting.STOPPRICE) 
                 -- stopprice2, -- Цена Стоп-Лосса 
                 obj.Transaction.STOPPRICE2 = tostring( obj.Setting.STOPPRICE2) --stopprice2, -- Цена Стоп-Лосса
-                obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
-                obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
-                obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
-                obj.Log:save("obj.Transaction.STOPPRICE2 " ..obj.Transaction.STOPPRICE2)
+             --   obj.Log:save("  obj.Transaction.SPREAD 2 " ..  obj.Transaction.SPREAD)
+             --   obj.Log:save("obj.Transaction.STOPPRICE  2 " ..  obj.Transaction.STOPPRICE )
+             --   obj.Log:save(" obj.Transaction.STOPPRICE2  2 " ..   obj.Transaction.STOPPRICE2 )
+              --  obj.Log:save("obj.Transaction.STOPPRICE2 " ..obj.Transaction.STOPPRICE2)
             end
 
         end;
@@ -109,25 +109,26 @@ function transactionService:new(setting, Log)
         obj.Transaction.QUANTITY = contractsCount
     end
 
-    -- 
-    local function execute(transId)
-        if obj.Setting.emulation then
+
+    -- execute order
+    local function executeEmulation(transId)
             -- mode edulation
             --message('transactionService:send')
             -- данные собраны по ходу формирования транкзакции
             -- ставим метку
             local price = obj.Transaction.PRICE 
             local datetime = obj.Setting.datetime
-         
-             
+          -- local datetime = os.date("!*t",os.time())
+           obj.Log:save('executeEmulation ' ..  datetime.hour..":"..datetime.min..":".. datetime.sec)
+          -- obj.Log:save('executeEmulation ' ..  datetime3.hour..":"..datetime3.min..":".. datetime3.sec)
             local text ='create new position for label '
 
             if tostring(obj.Transaction.ACTION) == 'NEW_ORDER' then
               obj.LabelGraff:create(obj.Transaction.OPERATION, price, datetime, obj.Transaction.QUANTITY, text)
             end 
-            -- take
-           --  obj.LabelGraff:create('take', price, datetime, obj.Transaction.QUANTITY, text)
-            --stop
+             
+
+
             if  obj.Transaction.ACTION == 'NEW_STOP_ORDER' then 
           
                 if  obj.Transaction.OPERATION == "B" then 
@@ -138,7 +139,19 @@ function transactionService:new(setting, Log)
                     obj.LabelGraff:create('buy_take', obj.Transaction.STOPPRICE , datetime, obj.Transaction.QUANTITY, text)
                 end
          --   obj.Setting.labelsTransaction[#obj.Setting.labelsTransaction + 1] = labelId;
-            end
+            end 
+
+            
+            if  obj.Transaction.ACTION == "KILL_STOP_ORDER" then 
+                 obj.LabelGraff:create('delete_stop', obj.Transaction.STOPPRICE2 , datetime, obj.Transaction.QUANTITY, 'delete')
+            end 
+             
+    end
+
+    -- execute order
+    local function execute(transId)
+        if obj.Setting.emulation then
+            executeEmulation(transId)
            -- set(Operation, Price, datetime, count, textInfo)
         else
             -- http://luaq.ru/sendTransaction.html

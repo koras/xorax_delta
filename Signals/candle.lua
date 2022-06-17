@@ -198,6 +198,8 @@ function Candle:new(setting, Log)
     -- вызывается для сигналов
     local function initCandles()
 
+                 obj.Log:save(  ' -----------------'  )
+   
         -- local lenInit = 120
         -- local Initshift = 0
         local currentCandle = getNumCandles(obj.Setting.tag);
@@ -228,27 +230,21 @@ function Candle:new(setting, Log)
                     bar.numberCandle = first_candle + j - 1;
                     obj.Setting.array_candle[#obj.Setting.array_candle + 1] =bar;
 
-                  --  obj.Log:save(tostring(dt.hour .. ":".. dt.min .. '   '..#obj.Setting.array_candle +1  .. " |  ".. bar.close))
-         
+             
                     i = i - 1
                 end
                 j = j - 1
             end
             t = obj.lenInit + 1
-        end
-        -- candleGraff.addSignal(obj.Setting.array_candle)
+        end 
     end
 
     -- логика обновления данных из графика
     local function setBarCandle(bar, collbackFunc)
-
         bar.numberCandle = obj.Setting.number_of_candle;
-
         if obj.Setting.old_number_of_candle ~= obj.Setting.number_of_candle then
-
             obj.Setting.array_candle[#obj.Setting.array_candle + 1] = bar;
             obj.Setting.old_number_of_candle = obj.Setting.number_of_candle;
-
         else
             -- обновляем бар в таблице
             obj.Setting.array_candle[#obj.Setting.array_candle] = bar;
@@ -269,7 +265,7 @@ function Candle:new(setting, Log)
     -- вызывается для сигналов
     function obj:getSignal(collbackFunc)
 
-    
+        local barLocal = {}
 
         if obj.Setting.number_of_candle_init then
 
@@ -282,18 +278,22 @@ function Candle:new(setting, Log)
             return;
         end
         local shift = 0;
-        local len = 10
+        local len = obj.Setting.lenInit
 
         -- seconds = os.time(datetime); -- в seconds 
 
         obj.Setting.number_of_candle = getNumCandles(obj.Setting.tag);
-
+--        obj.Setting.array_candle = {};
+        obj.Log:save(  ' +++++++++++++++++++++++++++++++++++++++++'  )
+   
         bars_temp, res, legend = getCandlesByIndex(obj.Setting.tag, 0,
                                                    obj.Setting.number_of_candle -
                                                        2 * len - shift, 2 * len)
         -- analyse candles  
         i = len
-        j = 2 * len
+        j = 2 * len 
+        local firstKye = j - 1
+            obj.Setting.array_candle = {};
         while i >= 1 do
 
             if candlesArray[j - 1] == nil then
@@ -301,38 +301,40 @@ function Candle:new(setting, Log)
                 --    Run = false
                 return;
             end
+            -- current time
+            obj.Setting.datetime = bars_temp[firstKye].datetime;
+
+          -- obj.Log:save( 'b44444  ' ..  barLocal.datetime.hour..":"..barLocal.datetime.min)
+
 
             if bars_temp[j - 1].datetime.hour ~= nil then
-
+              local J =   j - 1; 
             --    obj.Setting.datetime = bars_temp[j - 1].datetime;
 
-                 if bars_temp[j - 1].datetime.hour >= 7 then
+                -- if bars_temp[j - 1].datetime.hour >= 7 then
 
-                    --    loger.save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min); 
+                --    obj.Log:save('currentTime 5555 = '.. bars_temp[j - 1].datetime.hour.. ':' .. bars_temp[j - 1].datetime.min); 
                     local bar = bars_temp[j - 1];
-                    initCandle(bar);
-
+                    initCandle(bar); 
                     if obj.bigCandle <= i then
                         obj.bigCandle = i;
                         -- чтобы всегда был доступ к текущему времени
                         setBarCandle(bar, collbackFunc);
+
                     end
                     i = i - 1
 
-                end
+             --   end
                 j = j - 1
             end
             t = len + 1
         end
-        
-                 
+
+
+      --  local datetime = barLocal.datetime 
+        --obj.Log:save('barLocalbarLocalbarLocal ' ..  datetime.hour..":"..datetime.min..":".. datetime.sec)
+
     end
-
-
-
-
-    
-
     -- вызывается при остановке скрипта при кнопке стоп
     function obj:destructor()
         obj.lineBuyHigh.destructor()

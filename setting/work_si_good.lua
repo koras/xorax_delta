@@ -46,7 +46,7 @@ function Setting:new()
     setting.CLASS_CODE = "SPBFUT"
 
     -- код бумаги. Название бумаги разная от месяца к месяцу 
-    setting.SEC_CODE = "SiU2"
+    setting.SEC_CODE = "SiM2"
     
     -- пароль для чтения данных
     setting.password = "12345"
@@ -65,7 +65,7 @@ function Setting:new()
     setting.type_instrument = 3;
 
     -- минимальная прибыль
-    setting.profit_range = 500;
+    setting.profit_range = 100;
 
     -- минимальная прибыль при больших заявках при торговле веерной продажей
     setting.profit_range_array = 80;
@@ -83,45 +83,45 @@ function Setting:new()
 
     -- сколько использовать контрактов по умолчанию в режиме скальпинга
     setting.use_contract = 1;
-
+   obj.lenInit = 120
     
     setting.gapper = {};
     -- сколько использовать контрактов для гэпа
     setting.gapper.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.gapper.well_price = 100
-    setting.gapper.takeProfit = 1500
-    setting.gapper.stopLimit = 200
+    setting.gapper.well_price = 10;
+    setting.gapper.takeProfit = 300;
+    setting.gapper.stopLimit = 30;
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
-    setting.gapper.trolling_next_price = 50
+    setting.gapper.trolling_next_price = 100
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.gapper.trolling = 35 
+    setting.gapper.trolling = 50
     -- Величина защитного спрэда.
-    setting.gapper.SPREAD = 30
+    setting.gapper.SPREAD = 30;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.gapper.typeType = 'stop';
     setting.gapper.typeTypeTake = '';
 
 
     
-    setting.cohort = {}; 
+    setting.cohort = {}
+    
     -- сколько использовать контрактов для гэпа
     setting.cohort.use_contract = 1;
     -- разрыв цены от открытия позиции
-    setting.cohort.well_price = 100
-    setting.cohort.takeProfit = 600
-    setting.cohort.stopLimit = 1
+    setting.cohort.well_price = 10;
+    setting.cohort.takeProfit = 300;
+    setting.cohort.stopLimit = 30;
     -- на какую еденицу тролить стоп за ценой. Если цена продвинулась на N шагов от текущего стопа
     -- то стоп необходимо передвинуть 
     -- движение цены от текущей позиции
-    setting.cohort.trolling_next_price = 150 --  100
-
+    setting.cohort.trolling_next_price = 100
     -- сдвигаем стоп на N шагов по направлению тейка
-    setting.cohort.trolling = 55 -- 75
+    setting.cohort.trolling = 75
     -- Величина защитного спрэда.
-    setting.cohort.SPREAD = 50;
+    setting.cohort.SPREAD = 30;
     -- тип заявки на тейке. Есть лимитка, тэйк или тейк в зависимости от стопа
     setting.cohort.typeType = 'stop';
     setting.cohort.typeTypeTake = '';
@@ -136,8 +136,9 @@ function Setting:new()
     -- по умолчанию стоят тейки
     setting.sell_take_or_limit = true
 
-    
-    
+
+    setting.SPRED_LONG_BUY_UP = 2 -- условия; не покупаем если здесь ранее мы купили | вверх диапозон;
+    setting.SPRED_LONG_BUY_down = 1 -- условия; не покупаем если здесь ранее мы купили | вниз диапозон
 
     setting.not_buy_high_UP = 400 -- условия; цена входа при запуске скрипта 
     setting.not_buy_high_change = 30 --  изменения в контрольеой панели
@@ -160,14 +161,8 @@ function Setting:new()
     -- +1 покупка, блокировка покупок
     setting.each_to_buy_to_block = 2; -- потом только решение за человеком или пока не будут проданы все позиции
 
-
-    -- рынок падает, увеличиваем растояние между покупками
-    setting.SPRED_LONG_TREND_DOWN = 30;
-    setting.SPRED_LONG_TREND_DOWN_SPRED = 40; -- на сколько увеличиваем растояние
-
-    -- рынок падает, увеличиваем растояние между покупками(минимальное число)
-    setting.SPRED_LONG_TREND_DOWN_minimal = 10;
-
+ 
+ 
 
     -- минимильное измерение в инструменте 
     setting.instrument_measurement = 1;
@@ -178,9 +173,6 @@ function Setting:new()
     setting.spred_default = 50;
     -- на сколько исзменять параметр в панели управления
     setting.spred_limit = 11;
-
-    -- Отсутп от края графика
-    setting.indentFromCandle = 20
 
     -- увеличение промежутка между стопами
     setting.spred_range = 50;

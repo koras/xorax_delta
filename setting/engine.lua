@@ -30,6 +30,7 @@ function EngineSetting:new()
 
     -- count condles inside graffic
     setting.lenInit = 500
+ 
 
 
     setting.candle_current_high = 0; -- верхняя граница свечи; для промежутка покупки
@@ -53,6 +54,19 @@ function EngineSetting:new()
     setting.timeWork.start = {'7:00', '14:00'};
     setting.timeWork.lunch = {'14:05', '18:45'};
     setting.timeWork.supper = {'19:00', '23:50'};
+
+
+
+
+    -- delay
+
+    -- delay in minutes ofter an event
+    setting.delayTime = 1
+    setting.startDelayTime = 0
+ 
+
+
+
 
     -- status gap
     setting.gap = {}
@@ -88,12 +102,8 @@ function EngineSetting:new()
 
 
 
-    setting.percentSolve = 25
+    setting.percentSolve = 80
  
-    --  0 - gap start 
-    -- 1 - buy OR sell contract 
-    -- 2 - closed position 
-    setting.cohort2.phase = 1212
   
     setting.labels = {}
     setting.labelsPosition = {}
@@ -132,6 +142,20 @@ function EngineSetting:new()
 
     setting.cohorten = {}
     setting.cohorten.label = {}
+
+    -- not found direction
+    setting.cohorten.direct = "N"
+    setting.cohorten.directionTake= "N"
+
+
+    -- Take Take Take Take Take 
+    setting.cohorten.priceTake = 0
+    -- stop 
+
+    setting.cohorten.PRICE= 0
+
+
+
 
     -- to first
     setting.cohorten.phase = 100
@@ -438,9 +462,7 @@ function EngineSetting:new()
 
 
     function EngineSetting:getTimeFull(datetime)
-        
         local hour = datetime.hour
-
         if datetime.hour < 10 then hour = '0' .. datetime.hour end
 
         local minute = datetime.min;
@@ -448,7 +470,6 @@ function EngineSetting:new()
         if datetime.min < 10 then 
              minute = '0' .. datetime.min
             end
- 
         return hour .. ':' .. minute;
     end
 

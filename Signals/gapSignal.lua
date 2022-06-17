@@ -108,10 +108,8 @@ end
 
 -- вычисляем сигнал
 local function calculateSignal(object)
-
     calculateVolume(object.volume)
     calculatePrice(object.close, object.datetime)
-
 end
 
 -- local function  setRange(range)

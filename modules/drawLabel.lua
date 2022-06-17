@@ -74,7 +74,9 @@ function drawLabel:new(setting, Log)
         if Operation == 'fractalUp' then
             obj.IMAGE_PATH = obj.path .. 'f_ups.bmp'
         end
-
+        if Operation == 'delete_stop' then
+            obj.IMAGE_PATH = obj.path .. 'delete_stop.bmp'
+        end 
         obj.label_params['IMAGE_PATH'] = obj.IMAGE_PATH;
 
     end

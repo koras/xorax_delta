@@ -85,7 +85,6 @@ end
 
  -- @link http://luaq.ru/OnTransReply.html
  -- Функция вызывается терминалом QUIK при получении ответа на транзакцию пользователя
-
 function OnTransReply(trans_reply) 
     obj.gap:EngineTransReply(trans_reply)
     obj.cohort:EngineTransReply(trans_reply)
